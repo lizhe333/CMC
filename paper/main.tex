@@ -1,0 +1,151 @@
+% !TEX program = xelatex
+\documentclass[UTF8,12pt,a4paper,fontset=fandol]{ctexart}
+
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,bm,mathtools}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{needspace,placeins}
+\usepackage{booktabs,array,longtable,tabularx,multirow}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,calc}
+
+\graphicspath{{figures/}}
+\sisetup{detect-all,per-mode=symbol}
+\linespread{1.43}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+\setlist{nosep,leftmargin=2.2em}
+\captionsetup{font=small,labelsep=quad}
+\hypersetup{hidelinks}
+\numberwithin{equation}{section}
+
+\ctexset{
+  section/number       = \arabic{section},
+  subsection/number    = \arabic{section}.\arabic{subsection},
+  subsubsection/number = \arabic{section}.\arabic{subsection}.\arabic{subsubsection}
+}
+
+\titleformat{\section}
+  {\centering\fontsize{14pt}{18pt}\heiti\bfseries}
+  {\arabic{section}}{1em}{}
+\titleformat{\subsection}
+  {\fontsize{12pt}{16pt}\heiti\bfseries}
+  {\arabic{section}.\arabic{subsection}}{1em}{}
+\titleformat{\subsubsection}
+  {\fontsize{12pt}{16pt}\heiti\bfseries}
+  {\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}{1em}{}
+
+\titlespacing*{\section}{0pt}{14pt}{9pt}
+\titlespacing*{\subsection}{0pt}{10pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{8pt}{4pt}
+\AddToHook{cmd/section/before}{\FloatBarrier\Needspace{5\baselineskip}}
+\AddToHook{cmd/subsection/before}{\Needspace{4\baselineskip}}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{black!3},
+  frame=single,
+  breaklines=true,
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true
+}
+
+% 草稿开关：提交前改为 \draftmodefalse。
+\newif\ifdraftmode
+\draftmodetrue
+\newcommand{\draftnote}[1]{%
+  \ifdraftmode
+    \par\smallskip\noindent
+    \fcolorbox{red!65!black}{red!4}{%
+      \parbox{0.94\textwidth}{\color{red!65!black}\textbf{待确认：}#1}%
+    }\par\smallskip
+  \fi
+}
+\newcommand{\resultblank}[1]{%
+  \ifmmode\text{\color{red!65!black}【#1】}%
+  \else\textcolor{red!65!black}{【#1】}%
+  \fi
+}
+
+\newcommand{\papertitle}[1]{%
+  \thispagestyle{empty}
+  \begin{center}
+    {\fontsize{17.3pt}{22pt}\heiti\bfseries #1}
+  \end{center}
+  \vspace{1em}
+}
+
+\newcommand{\abstractcn}[2]{%
+  \begin{center}{\fontsize{14pt}{17pt}\heiti\bfseries 摘要}\end{center}
+  #1\par
+  \vspace{1em}
+  {\heiti\bfseries 关键词：}#2\par
+  \newpage
+}
+
+\newcommand{\placeholderfigure}[2]{%
+  \ifdraftmode
+  \begin{figure}[H]
+    \centering
+    \fbox{\parbox{0.78\textwidth}{\centering\vspace{1.8em}#1\vspace{1.8em}}}
+    \caption{#2}
+  \end{figure}
+  \fi
+}
+
+\begin{document}
+\pagestyle{plain}
+
+\papertitle{药材热风烘干过程中的热湿耦合与收缩效应建模}
+
+\abstractcn{%
+本文针对圆柱形中药材的热风烘干过程，围绕预热阶段、全过程干燥、达标时刻判定和尺寸收缩四个递进问题建立模型。
+
+针对问题一，本文根据附件~1 的烘房温湿度边界与附录~2 的材料参数，建立\resultblank{模型名称}，得到 $0$--$1800\,\mathrm{s}$ 内药材径向温度和干基含水率分布。数值结果表明\resultblank{填写最重要的定量结论及验证结果}。
+
+针对问题二，本文进一步引入温度、含水率相关的密度、比热容、导热系数和扩散系数，建立\resultblank{全过程热湿耦合模型与阶段衔接方式}，获得前 $3\,\mathrm{h}$ 的完整时空结果，并发现\resultblank{填写机制性结论}。
+
+针对问题三，本文以药材内部最大含水率低于 $0.15\,\mathrm{kg/kg}$ 为终止条件，通过\resultblank{事件定位方法}确定烘干时长为\resultblank{结果及单位}，同时完成规定间隔的结果导出与一致性校验。
+
+针对问题四，本文将实测半径变化引入归一化空间坐标，在移动边界上重建水分输运模型，并通过\resultblank{固定半径/变化半径等控制变量比较}区分尺寸收缩与物性公式变化的作用，得到烘干时长为\resultblank{结果及单位}。
+
+最后，本文从网格与时间步收敛、边界条件、质量平衡和关键参数敏感性等方面验证模型。\resultblank{填写验证结论，避免只写“误差较小”}。
+}{%
+热湿耦合 \quad 非线性扩散 \quad 数值仿真 \quad 移动边界 \quad 烘干时长
+}
+
+\tableofcontents
+\newpage
+
+\input{sections/1_problem_restatement}
+\input{sections/2_data_framework}
+\input{sections/3_assumptions}
+\input{sections/4_symbols}
+\begingroup
+\linespread{1.20}\selectfont
+\input{sections/model_preparation}
+\input{sections/5_q1_preheating}
+\endgroup
+\input{sections/6_q2_full_drying}
+\input{sections/7_q3_end_time}
+\input{sections/8_q4_shrinkage}
+\input{sections/9_verification_sensitivity}
+\input{sections/10_evaluation}
+
+\newpage
+\input{references}
+
+\newpage
+\input{sections/A_code}
+
+\end{document}

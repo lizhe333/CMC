@@ -1,0 +1,10 @@
+{
+  "n_intervals": 20,
+  "dr_m": 0.001,
+  "runtime_s": 2.629418300000907,
+  "integrator": {
+    "nfev": 16320,
+    "njev": 272,
+    "nlu": 1767
+  }
+}

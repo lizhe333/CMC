@@ -1,0 +1,49 @@
+\section{问题三：烘干时长判定}
+
+在问题二的全过程模型基础上，本问对每一时刻的全部径向位置检查含水率达标条件，确定首次全部满足要求的时刻。
+
+\subsection{终止条件}
+
+题目要求药材各处的干基含水率均低于 $C_{\mathrm{lim}}=0.15\,\mathrm{kg/kg}$。因此定义
+
+\begin{equation}
+  C_{\max}(t)=\max_{0\le r\le R_0} C(r,t),
+  \label{eq:q3-cmax}
+\end{equation}
+
+烘干时长为
+
+\begin{equation}
+  t_{\mathrm{end}}
+  =\inf\left\{t>0:C_{\max}(t)<C_{\mathrm{lim}}\right\}.
+  \label{eq:q3-end-time}
+\end{equation}
+
+计算时对全部径向节点求最大值，而不预先把中心含水率当作唯一判据；只有数值结果证明含水率始终沿半径单调时，才能将“中心最湿”作为简化结论。
+
+\subsection{终点事件定位}
+
+\paragraph{步骤一：长时间推进。}
+继续运行问题二的求解器，保存每隔 $60\,\mathrm{s}$、每隔 $0.1\,\mathrm{cm}$ 的完整结果。
+
+\paragraph{步骤二：包围首次达标时刻。}
+寻找相邻两个输出或内部时间点 $t_a<t_b$，使 $C_{\max}(t_a)\ge C_{\mathrm{lim}}$ 且 $C_{\max}(t_b)<C_{\mathrm{lim}}$。
+
+\paragraph{步骤三：细化终点。}
+在 $[t_a,t_b]$ 内采用\resultblank{事件检测、二分或局部插值}确定首次达标时间，并重新检查整个空间网格。
+
+\paragraph{步骤四：验证。}
+给出终点前后两个时刻的 $C_{\max}$，证明报告的时间是“首次全部达标”，而不是只给一个已经达标的较晚时刻。
+
+\subsection{结果}
+
+\input{tables/q3_moisture}
+
+\placeholderfigure{建议放置最大含水率随时间变化曲线，并放大 $0.15\,\mathrm{kg/kg}$ 附近的首次穿越窗口。}{烘干终点的事件定位}
+
+由式~\eqref{eq:q3-end-time} 得烘干时长为\resultblank{数值}\,h。终点控制位置为\resultblank{径向位置及判定依据}；终点前后的最大含水率分别为\resultblank{数值}和\resultblank{数值}。
+
+\subsection{本问小结}
+
+本问将问题二的全过程状态转化为严格的空间最大值事件，生成 \texttt{result3.xlsx}，并为问题四提供固定半径条件下的对照烘干时长。
+

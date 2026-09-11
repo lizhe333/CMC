@@ -1,0 +1,72 @@
+\section{问题二：变物性全过程模型}
+
+\subsection{从问题一到问题二的扩展}
+
+问题二在第~\ref{sec:model-preparation} 节的径向传热与扩散框架中，引入附录~3 的状态相关物性，描述预热平衡与恒温干燥两个阶段。第一问提供方程及数值处理的基准，但全过程状态应依据本问物性关系求得；阶段切换时延续本问计算得到的内部温度与含水率，不人为重置。
+
+\subsection{状态相关物性}
+
+附录~3 给出的经验公式为
+
+\begin{align}
+  \rho(C)&=650+128C, \\
+  c_p(C)&=1450+2736\frac{C}{C+1}, \\
+  k(C)&=0.21+0.38\frac{C}{C+1}, \\
+  D(C,T)&=2.4\times10^{-3}
+  \exp\left(-\frac{0.45}{C}\right)
+  \exp\left(-\frac{3850}{T}\right),
+  \qquad T\text{ 取 K}.
+  \label{eq:q2-properties}
+\end{align}
+
+沿用式~\eqref{eq:prep-heat}、\eqref{eq:prep-moisture} 的通量框架，并按本问条件扩展为：
+
+\begin{align}
+  \rho(C)c_p(C)\frac{\partial T}{\partial t}
+  &=\frac{1}{r}\frac{\partial}{\partial r}
+  \left[rk(C)\frac{\partial T}{\partial r}\right]
+  +\resultblank{经确认的热湿耦合项}, \\
+  \frac{\partial C}{\partial t}
+  &=\frac{1}{r}\frac{\partial}{\partial r}
+  \left[rD(C,T)\frac{\partial C}{\partial r}\right].
+  \label{eq:q2-pde}
+\end{align}
+
+\draftnote{不能把变系数 $k(C)$ 或 $D(C,T)$ 直接移到散度算子外。若最终采用保守质量形式，应同步修改式~\eqref{eq:q2-pde}、问题三阈值计算和问题四收缩域推导。}
+
+\subsection{阶段衔接与数值算法}
+
+设阶段转换时刻为 $t_b$。烘房边界写成分段函数
+
+\begin{equation}
+  \bigl(T_\infty(t),C_\infty(t)\bigr)=
+  \begin{cases}
+    \bigl(T_{\infty,1}(t),C_{\infty,1}(t)\bigr), & 0\le t\le t_b,\\
+    \bigl(T_{\infty,2},C_{\infty,2}\bigr), & t>t_b.
+  \end{cases}
+  \label{eq:q2-stage-boundary}
+\end{equation}
+
+内部状态在转换时刻连续：
+
+\begin{equation}
+  T(r,t_b^+)=T(r,t_b^-),
+  \qquad C(r,t_b^+)=C(r,t_b^-).
+  \label{eq:q2-continuity}
+\end{equation}
+
+数值实现采用\resultblank{求解方法}，每步更新状态相关物性，并对极小含水率下的指数计算设置物理范围检查。输出时间间隔与内部时间步分离，完整结果仍按题面要求每秒记录。
+
+\subsection{前三小时结果}
+
+\input{tables/q2_temperature}
+\input{tables/q2_moisture}
+
+\placeholderfigure{建议展示中心、半径中点和表面的温度/含水率时间曲线，标注阶段转换时刻。}{全过程模型在前三小时内的状态演化}
+
+\draftnote{结果解释应说明状态相关物性如何随温度、含水率变化，以及这种变化如何影响中心与表面的响应差异；避免只重复表中数值。}
+
+\subsection{本问小结}
+
+本问在问题一基础上加入\resultblank{最终确认的变物性和耦合机制}，生成 \texttt{result2.xlsx}，并为问题三提供可持续推进至达标时刻的全过程求解器。
+

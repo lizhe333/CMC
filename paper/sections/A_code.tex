@@ -1,0 +1,26 @@
+\section*{附录 A\quad 核心代码与文件说明}
+\addcontentsline{toc}{section}{附录 A 核心代码与文件说明}
+
+最终支撑材料建议按下列模块组织：
+
+\begin{table}[H]
+  \centering
+  \caption{代码与输出文件对应关系}
+  \begin{tabularx}{\textwidth}{p{0.25\textwidth}Xp{0.25\textwidth}}
+    \toprule
+    建议文件 & 功能 & 主要输出 \\
+    \midrule
+    \texttt{data\_io.py} & 附件读取、单位转换、插值和模板写入 & 清洗后的边界与半径数据 \\
+    \texttt{solver\_fixed.py} & 问题一至三的固定区域热湿求解器 & 时空状态数组 \\
+    \texttt{solver\_shrink.py} & 问题四的归一化坐标和移动边界求解器 & 收缩域时空状态数组 \\
+    \texttt{event\_time.py} & 空间最大含水率与首次达标事件 & 烘干时长 \\
+    \texttt{validate.py} & 收敛、边界、守恒和 Excel 格式检查 & 校验报告 \\
+    \texttt{make\_figures.py} & 从同源结果数据生成论文图表 & \texttt{figures/} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\draftnote{本模板暂不嵌入虚构代码。实现完成后只选取能够说明核心离散、边界处理和终点判断的片段；完整代码随支撑材料提交。}
+
+% 示例：代码存在后取消注释。
+% \lstinputlisting[language=Python,caption={固定区域求解器核心函数}]{../code/solver_fixed.py}

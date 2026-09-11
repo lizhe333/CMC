@@ -1,0 +1,36 @@
+\section{符号说明}
+
+本文主要符号如表~\ref{tab:symbols} 所示。下标 $\infty$ 表示烘房环境量，下标 $s$ 表示药材表面量。
+
+\begin{longtable}{>{\centering\arraybackslash}p{0.16\textwidth}p{0.58\textwidth}>{\centering\arraybackslash}p{0.16\textwidth}}
+\caption{主要符号说明}\label{tab:symbols}\\
+\toprule
+符号 & 说明 & 单位 \\
+\midrule
+\endfirsthead
+\toprule
+符号 & 说明 & 单位 \\
+\midrule
+\endhead
+$r$ & 到药材中心轴线的径向距离 & $\mathrm{m}$ \\
+$t$ & 烘干开始后的时间 & $\mathrm{s}$ \\
+$R_0$ & 不考虑收缩时的药材半径，$R_0=0.02$ & $\mathrm{m}$ \\
+$R(t)$ & 考虑收缩时的药材半径 & $\mathrm{m}$ \\
+$\xi$ & 归一化径向坐标，$\xi=\frac{r}{R(t)}$ & -- \\
+$T(r,t)$ & 药材内部温度 & $\mathrm{K}$ 或 ${}^\circ\mathrm{C}$ \\
+$C(r,t)$ & 药材内部干基含水率 & $\mathrm{kg/kg}$ \\
+$T_\infty(t)$ & 烘房温度 & $\mathrm{K}$ 或 ${}^\circ\mathrm{C}$ \\
+$C_\infty(t)$ & 烘房水分浓度 & $\mathrm{kg/kg}$ \\
+$\rho(C)$ & 药材密度 & $\mathrm{kg/m^3}$ \\
+$c_p(C)$ & 药材比热容 & $\mathrm{J/(kg\cdot K)}$ \\
+$k(C)$ & 药材导热系数 & $\mathrm{W/(m\cdot K)}$ \\
+$D(C,T)$ & 水分扩散系数 & $\mathrm{m^2/s}$ \\
+$h$ & 对流换热系数 & $\mathrm{W/(m^2\cdot K)}$ \\
+$h_m$ & 对流传质系数 & $\mathrm{m/s}$ \\
+$C_{\mathrm{lim}}$ & 烘干达标阈值，$C_{\mathrm{lim}}=0.15$ & $\mathrm{kg/kg}$ \\
+$t_{\mathrm{end}}$ & 药材内部各处首次全部达标的时间 & $\mathrm{s}$ 或 $\mathrm{h}$ \\
+\bottomrule
+\end{longtable}
+
+\draftnote{温度在偏微分方程中可采用摄氏度，但附录经验式中的 $T$ 明确使用开尔文。代码、符号表和公式应统一命名，并在代入经验式前显式换算。}
+

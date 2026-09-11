@@ -1,0 +1,91 @@
+\section{问题四：考虑收缩的移动边界模型}
+
+本问在第~\ref{sec:model-preparation} 节的传递定律基础上，进一步引入附件~2 的半径变化及附录~4 的物性关系。输运方程、表面交换和空间积分须与变化区域相适应。
+
+\subsection{移动区域与归一化坐标}
+
+附件~2 给出药材半径 $R(t)$。为避免随时间重新划分物理网格，引入固定计算坐标
+
+\begin{equation}
+  \xi=\frac{r}{R(t)},\qquad 0\le \xi\le 1.
+  \label{eq:q4-xi}
+\end{equation}
+
+对任意状态 $F(r,t)=\widetilde F(\xi,t)$，坐标变换满足
+
+\begin{equation}
+  \left.\frac{\partial F}{\partial t}\right|_r
+  =\left.\frac{\partial \widetilde F}{\partial t}\right|_\xi
+  -\frac{\dot R(t)}{R(t)}\xi
+  \frac{\partial \widetilde F}{\partial \xi},
+  \qquad
+  \frac{\partial F}{\partial r}
+  =\frac{1}{R(t)}\frac{\partial \widetilde F}{\partial \xi}.
+  \label{eq:q4-transform}
+\end{equation}
+
+式~\eqref{eq:q4-transform} 只给出坐标恒等关系；最终方程还必须与干基含水率的质量守恒口径一致。不能只把问题三程序中的 $R_0$ 替换为 $R(t)$。
+
+\subsection{问题四物性参数}
+
+附录~4 给出的经验公式为
+
+\begin{align}
+  \rho(C)&=760+90C, \\
+  c_p(C)&=1850+2150\frac{C}{C+1}, \\
+  k(C)&=0.12+0.20\frac{C}{C+1}, \\
+  D(C,T)&=4.2\times10^{-4}
+  \exp\left(-\frac{0.30}{C}\right)
+  \exp\left(-\frac{3850}{T}\right),
+  \qquad T\text{ 取 K}.
+  \label{eq:q4-properties}
+\end{align}
+
+移动边界方程、表面通量和体积积分均在 $R(t)$ 下重写。半径数据在采样点之间采用\resultblank{单调插值或分段插值方法}，并对 $\dot R(t)$ 的数值稳定性进行检查。
+
+\subsection{区分收缩效应与物性变化}
+
+问题三采用附录~3，问题四采用附录~4，同时问题四还加入 $R(t)$。为了避免把两种变化混在一起，设置表~\ref{tab:q4-controls} 的 $2\times2$ 对照。
+
+\begin{table}[H]
+  \centering
+  \caption{问题四的控制变量对照设计}
+  \label{tab:q4-controls}
+  \begin{tabular}{ccc}
+    \toprule
+    方案 & 半径 & 物性经验公式 \\
+    \midrule
+    A & 固定 $R_0$ & 附录~3 \\
+    B & 变化 $R(t)$ & 附录~3 \\
+    C & 固定 $R_0$ & 附录~4 \\
+    D & 变化 $R(t)$ & 附录~4 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+其中 A 对应问题三主结果，D 对应问题四主结果；A 与 B 的差异用于观察几何收缩影响，A 与 C 的差异用于观察物性公式变化，四组联合用于检查二者的交互作用。该对照属于补充数值实验，应与题目规定的主结果分开呈现。
+
+\subsection{终止条件与结果}
+
+移动区域下定义
+
+\begin{equation}
+  C_{\max}^{(s)}(t)=\max_{0\le \xi\le1}\widetilde C(\xi,t),
+  \qquad
+  t_{\mathrm{end}}^{(s)}=\inf\left\{t>0:C_{\max}^{(s)}(t)<0.15\right\}.
+  \label{eq:q4-end-time}
+\end{equation}
+
+\input{tables/q4_moisture}
+
+表中固定位置按 $0.5\,\mathrm{cm}$ 间隔列到当前表面以内，并单独给出实时表面值；超出当前药材区域的位置不做空间外推。最终列数和表头以附件~3 的 \texttt{result4.xlsx} 模板为准。
+
+\placeholderfigure{建议同时展示半径曲线、归一化坐标下的含水率剖面，以及四组控制实验的达标时刻。}{尺寸收缩及物性变化对烘干过程的影响}
+
+考虑收缩后，药材烘干时长为\resultblank{数值}\,h。相对于固定半径基准，纯几何收缩、物性公式变化及其组合的影响分别为\resultblank{对照结果与单位}。
+
+\draftnote{只有完成控制变量对照后，才能把某部分时长变化解释为收缩效应。若附件仅给半径而没有长度变化，应明确体积、密度和干物质守恒如何同时处理。}
+
+\subsection{本问小结}
+
+本问利用归一化坐标把求解区域固定到 $[0,1]$，生成 \texttt{result4.xlsx}，并通过对照实验解释尺寸变化与经验物性的独立影响。

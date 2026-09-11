@@ -1,0 +1,59 @@
+\section{模型验证与敏感性分析}
+
+验证围绕本题的具体失效风险设计，不用“曲线平滑”替代正确性检查。
+
+\subsection{离散精度与收敛}
+
+分别改变径向网格数 $N_r$ 和内部时间步 $\Delta t$，比较题面指定节点、最大含水率和烘干终点。以加密前后的终点相对变化
+
+\begin{equation}
+  \varepsilon_t=
+  \frac{\left|t_{\mathrm{end}}^{\mathrm{fine}}-t_{\mathrm{end}}^{\mathrm{base}}\right|}
+  {t_{\mathrm{end}}^{\mathrm{fine}}}
+  \label{eq:convergence}
+\end{equation}
+
+作为主要收敛指标，并给出\resultblank{预先确定的容许标准}。
+
+\subsection{初边值与守恒检查}
+
+\begin{enumerate}
+  \item $t=0$ 时所有径向节点应恢复题面初值；$r=0$ 的数值梯度应满足中心对称条件。
+  \item 表面离散通量应与对流边界的热量或水分交换量一致，符号方向不得相反。
+  \item 对含水率场进行体积积分，比较内部总水分变化与表面累计传质通量。问题四应使用随 $R(t)$ 变化的体积元。
+  \item 每个 Excel 的时间列、空间列、单位、工作表名称和四位小数格式必须与附件~3 模板一致。
+\end{enumerate}
+
+\subsection{物理合理性检查}
+
+检查温度是否超出边界与初值能够支持的范围，含水率是否出现负值或非物理振荡，材料参数是否始终位于正值范围。若温度或含水率并非单调变化，应回到附件边界和通量方向解释，不能直接删除异常点。
+
+\subsection{关键参数敏感性}
+
+优先选择传质系数 $h_m$、扩散系数经验式和烘房恒温值等直接控制干燥速率的量。对参数 $p$ 进行规定比例扰动，使用无量纲敏感度
+
+\begin{equation}
+  S_p=\frac{\Delta t_{\mathrm{end}}/t_{\mathrm{end}}}
+  {\Delta p/p}
+  \label{eq:sensitivity}
+\end{equation}
+
+比较其对烘干时长的影响。若题面没有给出参数的统计误差分布，相关结果称为“情景敏感性”，不解释为置信区间。
+
+\begin{table}[H]
+  \centering
+  \caption{验证项目及最终证据位置}
+  \label{tab:validation-contracts}
+  \begin{tabularx}{\textwidth}{p{0.22\textwidth}Xp{0.22\textwidth}}
+    \toprule
+    验证项目 & 判定内容 & 证据位置 \\
+    \midrule
+    网格和时间步收敛 & 指定输出与达标时刻是否稳定 & \resultblank{图/表编号} \\
+    初始与边界条件 & 初值、中心梯度、表面通量是否满足 & \resultblank{结果文件} \\
+    水分平衡 & 内部水分变化与累计表面通量残差 & \resultblank{图/表编号} \\
+    阈值首次穿越 & 终点前未达标、终点后全部达标 & \resultblank{图/表编号} \\
+    Excel 格式契约 & 行列、单位、表名和精度符合模板 & \resultblank{校验日志} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+

@@ -1,0 +1,5 @@
+{
+  "n_intervals": 5120,
+  "status": "SOLVER_FAILED",
+  "error": "Q2DomainError('Appendix 3 requires strictly positive moisture C.')"
+}

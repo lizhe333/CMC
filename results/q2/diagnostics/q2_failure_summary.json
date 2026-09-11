@@ -1,0 +1,286 @@
+{
+  "status": "REFINEMENT_REQUIRED",
+  "boundary_source": "D:\\mathsmatical_modeling\\compition\\2026\\附件1.xlsx",
+  "template_backup": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\source\\result2_template_original.xlsx",
+  "requested_end_s": 10800,
+  "convergence": {
+    "status": "REFINEMENT_REQUIRED",
+    "reason": "Did not pass separate e_T/e_C thresholds by n=10240."
+  },
+  "records": [
+    {
+      "n_intervals": 20,
+      "dr_m": 0.001,
+      "runtime_s": 4.177144399989629,
+      "integrator": {
+        "nfev": 16651,
+        "njev": 274,
+        "nlu": 1768
+      }
+    },
+    {
+      "n_intervals": 40,
+      "dr_m": 0.0005,
+      "runtime_s": 5.337201200003619,
+      "integrator": {
+        "nfev": 17165,
+        "njev": 325,
+        "nlu": 1886
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 0.001267847318025872,
+          "threshold": 5e-05,
+          "all_time_s": 2940,
+          "all_radius_cm": 2.0,
+          "max_paper": 0.0008333173333312516,
+          "paper_time_s": 5400,
+          "paper_radius_cm": 2.0,
+          "same_rounded_paper": false,
+          "pass_all": false
+        },
+        "moisture": {
+          "max_all": 0.04104950735952162,
+          "threshold": 5e-05,
+          "all_time_s": 33,
+          "all_radius_cm": 2.0,
+          "max_paper": 0.0007412410916978196,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": false,
+          "pass_all": false
+        }
+      },
+      "temperature_threshold_pass": false,
+      "moisture_threshold_pass": false,
+      "paper_rounding_pass": false
+    },
+    {
+      "n_intervals": 80,
+      "dr_m": 0.00025,
+      "runtime_s": 6.743778999996721,
+      "integrator": {
+        "nfev": 22275,
+        "njev": 582,
+        "nlu": 2656
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 0.0003166645473484664,
+          "threshold": 5e-05,
+          "all_time_s": 2940,
+          "all_radius_cm": 2.0,
+          "max_paper": 0.00020845175100703273,
+          "paper_time_s": 5400,
+          "paper_radius_cm": 2.0,
+          "same_rounded_paper": false,
+          "pass_all": false
+        },
+        "moisture": {
+          "max_all": 0.02136970095358315,
+          "threshold": 5e-05,
+          "all_time_s": 9,
+          "all_radius_cm": 2.0,
+          "max_paper": 0.00018609439714101228,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": false,
+          "pass_all": false
+        }
+      },
+      "temperature_threshold_pass": false,
+      "moisture_threshold_pass": false,
+      "paper_rounding_pass": false
+    },
+    {
+      "n_intervals": 160,
+      "dr_m": 0.000125,
+      "runtime_s": 6.4119425999961095,
+      "integrator": {
+        "nfev": 21145,
+        "njev": 431,
+        "nlu": 2240
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 7.917353023856322e-05,
+          "threshold": 5e-05,
+          "all_time_s": 2939,
+          "all_radius_cm": 2.0,
+          "max_paper": 5.222988524167249e-05,
+          "paper_time_s": 5400,
+          "paper_radius_cm": 2.0,
+          "same_rounded_paper": false,
+          "pass_all": false
+        },
+        "moisture": {
+          "max_all": 0.010865611329725855,
+          "threshold": 5e-05,
+          "all_time_s": 2,
+          "all_radius_cm": 2.0,
+          "max_paper": 4.657454298140351e-05,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": false,
+          "pass_all": false
+        }
+      },
+      "temperature_threshold_pass": false,
+      "moisture_threshold_pass": false,
+      "paper_rounding_pass": false
+    },
+    {
+      "n_intervals": 320,
+      "dr_m": 6.25e-05,
+      "runtime_s": 8.729672900008154,
+      "integrator": {
+        "nfev": 21679,
+        "njev": 404,
+        "nlu": 2224
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 2.0201608300851603e-05,
+          "threshold": 5e-05,
+          "all_time_s": 2940,
+          "all_radius_cm": 2.0,
+          "max_paper": 1.293507341415534e-05,
+          "paper_time_s": 5400,
+          "paper_radius_cm": 2.0,
+          "same_rounded_paper": true,
+          "pass_all": true
+        },
+        "moisture": {
+          "max_all": 0.004975141349719436,
+          "threshold": 5e-05,
+          "all_time_s": 1,
+          "all_radius_cm": 2.0,
+          "max_paper": 1.1646997397640746e-05,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": false,
+          "pass_all": false
+        }
+      },
+      "temperature_threshold_pass": true,
+      "moisture_threshold_pass": false,
+      "paper_rounding_pass": false
+    },
+    {
+      "n_intervals": 640,
+      "dr_m": 3.125e-05,
+      "runtime_s": 15.982913899992127,
+      "integrator": {
+        "nfev": 25223,
+        "njev": 550,
+        "nlu": 2656
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 7.711746725647117e-06,
+          "threshold": 5e-05,
+          "all_time_s": 6120,
+          "all_radius_cm": 2.0,
+          "max_paper": 3.233819597880938e-06,
+          "paper_time_s": 5400,
+          "paper_radius_cm": 2.0,
+          "same_rounded_paper": false,
+          "pass_all": true
+        },
+        "moisture": {
+          "max_all": 0.0010672011960779493,
+          "threshold": 5e-05,
+          "all_time_s": 1,
+          "all_radius_cm": 2.0,
+          "max_paper": 2.9115612814045733e-06,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": true,
+          "pass_all": false
+        }
+      },
+      "temperature_threshold_pass": true,
+      "moisture_threshold_pass": false,
+      "paper_rounding_pass": false
+    },
+    {
+      "n_intervals": 1280,
+      "dr_m": 1.5625e-05,
+      "runtime_s": 35.252054900003714,
+      "integrator": {
+        "nfev": 30435,
+        "njev": 884,
+        "nlu": 3629
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 5.416917105094399e-06,
+          "threshold": 5e-05,
+          "all_time_s": 6480,
+          "all_radius_cm": 2.0,
+          "max_paper": 9.000753493637603e-07,
+          "paper_time_s": 5400,
+          "paper_radius_cm": 2.0,
+          "same_rounded_paper": true,
+          "pass_all": true
+        },
+        "moisture": {
+          "max_all": 0.00024396275943994183,
+          "threshold": 5e-05,
+          "all_time_s": 1,
+          "all_radius_cm": 2.0,
+          "max_paper": 7.285063796658164e-07,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": true,
+          "pass_all": false
+        }
+      },
+      "temperature_threshold_pass": true,
+      "moisture_threshold_pass": false,
+      "paper_rounding_pass": true
+    },
+    {
+      "n_intervals": 2560,
+      "dr_m": 7.8125e-06,
+      "runtime_s": 90.545695599998,
+      "integrator": {
+        "nfev": 33067,
+        "njev": 1141,
+        "nlu": 4138
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 6.2531007216648504e-06,
+          "threshold": 5e-05,
+          "all_time_s": 6480,
+          "all_radius_cm": 2.0,
+          "max_paper": 2.579370814714821e-07,
+          "paper_time_s": 7200,
+          "paper_radius_cm": 2.0,
+          "same_rounded_paper": false,
+          "pass_all": true
+        },
+        "moisture": {
+          "max_all": 5.995705758143899e-05,
+          "threshold": 5e-05,
+          "all_time_s": 1,
+          "all_radius_cm": 2.0,
+          "max_paper": 1.8201909535164873e-07,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": true,
+          "pass_all": false
+        }
+      },
+      "temperature_threshold_pass": true,
+      "moisture_threshold_pass": false,
+      "paper_rounding_pass": false
+    },
+    {
+      "n_intervals": 5120,
+      "status": "SOLVER_FAILED",
+      "error": "Q2DomainError('Appendix 3 requires strictly positive moisture C.')"
+    }
+  ]
+}

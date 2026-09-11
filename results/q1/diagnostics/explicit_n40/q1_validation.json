@@ -1,0 +1,141 @@
+{
+  "status": "REFINEMENT_REQUIRED",
+  "boundary_source": "D:\\mathsmatical_modeling\\compition\\2026\\附件1.xlsx",
+  "boundary_sheet": "Sheet1",
+  "boundary_samples": 241,
+  "boundary_time_range_s": [
+    0.0,
+    14400.0
+  ],
+  "boundary_interpolation": "piecewise linear, no extrapolation",
+  "model": "Q1: fixed radius, independent heat and effective dry-basis diffusion",
+  "assumptions": [
+    "ignore end transport",
+    "constant dry skeleton",
+    "no latent-heat feedback",
+    "boundary concentration on problem scale"
+  ],
+  "parameters": {
+    "rho": 820,
+    "cp": 2600,
+    "k": 0.36,
+    "h": 25.0,
+    "hm": 8e-07,
+    "radius_m": 0.02,
+    "T0_C": 28,
+    "C0_kg_per_kg": 2.55
+  },
+  "refinement": [
+    {
+      "n_intervals": 20,
+      "dr_m": 0.001,
+      "dt_s": 1.0,
+      "runtime_s": 1.5900146999920253,
+      "weights": {
+        "heat_center": 0.6754221388367729,
+        "heat_interior": 0.33771106941838647,
+        "heat_surface": 0.36174953095684803,
+        "moisture_center": 0.028,
+        "moisture_interior": 0.014,
+        "moisture_surface": 0.015443037974683528
+      },
+      "temperature_range_C": [
+        28.0,
+        36.78481426375679
+      ],
+      "moisture_range_kg_per_kg": [
+        1.5119351134099306,
+        2.55
+      ],
+      "max_mass_balance_residual": 2.220446049250313e-15
+    },
+    {
+      "n_intervals": 40,
+      "dr_m": 0.0005,
+      "dt_s": 0.25,
+      "runtime_s": 0.002313400007551536,
+      "weights": {
+        "heat_center": 0.6754221388367729,
+        "heat_interior": 0.33771106941838647,
+        "heat_surface": 0.3495837242026266,
+        "moisture_center": 0.028,
+        "moisture_interior": 0.014,
+        "moisture_surface": 0.014716981132075443
+      },
+      "temperature_range_C": [
+        28.0,
+        36.78537390686419
+      ],
+      "moisture_range_kg_per_kg": [
+        1.510648205557198,
+        2.55
+      ],
+      "max_mass_balance_residual": 2.220446049250313e-15,
+      "difference_from_previous": {
+        "max_temperature_C": 0.0018658091452792291,
+        "max_moisture_kg_per_kg": 0.046452212027673134,
+        "paper_temperature_C": 0.0018658091452792291,
+        "paper_moisture_kg_per_kg": 0.032488461944536695,
+        "same_rounded_paper_temperature": false,
+        "same_rounded_paper_moisture": false
+      }
+    }
+  ],
+  "temporal_refinement_difference": {
+    "max_temperature_C": 0.00023897482142487547,
+    "max_moisture_kg_per_kg": 0.00014047865872424126,
+    "paper_temperature_C": 0.00023897021017660336,
+    "paper_moisture_kg_per_kg": 5.8135388886437767e-05,
+    "same_rounded_paper_temperature": false,
+    "same_rounded_paper_moisture": false
+  },
+  "final_run": {
+    "n_intervals": 40,
+    "dr_m": 0.0005,
+    "dt_s": 0.125,
+    "runtime_s": 0.004268599994247779,
+    "weights": {
+      "heat_center": 0.33771106941838647,
+      "heat_interior": 0.16885553470919323,
+      "heat_surface": 0.1747918621013133,
+      "moisture_center": 0.014,
+      "moisture_interior": 0.007,
+      "moisture_surface": 0.0073584905660377216
+    },
+    "temperature_range_C": [
+      28.0,
+      36.78546238309726
+    ],
+    "moisture_range_kg_per_kg": [
+      1.5106592113039032,
+      2.55
+    ],
+    "max_mass_balance_residual": 2.6645352591003757e-15
+  },
+  "absolute_difference_threshold": 5e-05,
+  "accuracy_statement": "Empirical grid differences, not rigorous error bounds. Four-decimal formatting alone does not prove four-decimal accuracy.",
+  "template": "Recreated from problem PDF, Appendix 1",
+  "environment": {
+    "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+    "executable": "C:\\Users\\32898\\anaconda3\\python.exe",
+    "numpy": "2.1.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "runtime_s": 1.6134153000020888,
+  "end_temperature_C": [
+    33.575238626414155,
+    33.77189880630531,
+    34.36406045543588,
+    35.36201444439064,
+    36.78546238309726
+  ],
+  "end_moisture_kg_per_kg": [
+    2.5499902688186364,
+    2.549699164547853,
+    2.538128342344436,
+    2.3756895006640057,
+    1.5106592113039032
+  ],
+  "end_mean_moisture": 2.293193112284737,
+  "workbook_cell_validation": "PASS: every numerical output and coordinate reread"
+}
