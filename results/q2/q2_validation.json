@@ -1,0 +1,616 @@
+{
+  "status": "NUMERICAL_CHECKS_PASSED",
+  "spatial_records": [
+    {
+      "n_intervals": 20,
+      "dr_m": 0.001,
+      "runtime_s": 2.629418300000907,
+      "integrator": {
+        "nfev": 16320,
+        "njev": 272,
+        "nlu": 1767
+      }
+    },
+    {
+      "n_intervals": 40,
+      "dr_m": 0.0005,
+      "runtime_s": 4.0516761999988375,
+      "integrator": {
+        "nfev": 17337,
+        "njev": 340,
+        "nlu": 1906
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 0.0012670991100662832,
+          "threshold": 5e-05,
+          "all_time_s": 2940,
+          "all_radius_cm": 2.0,
+          "max_paper": 0.0008333085455447531,
+          "paper_time_s": 5400,
+          "paper_radius_cm": 2.0,
+          "same_rounded_paper": false,
+          "pass_all": false
+        },
+        "moisture": {
+          "max_all": 0.041049528994952844,
+          "threshold": 5e-05,
+          "all_time_s": 33,
+          "all_radius_cm": 2.0,
+          "max_paper": 0.0007412416444965153,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": false,
+          "pass_all": false
+        }
+      },
+      "temperature_threshold_pass": false,
+      "moisture_threshold_pass": false,
+      "paper_rounding_pass": false
+    },
+    {
+      "n_intervals": 80,
+      "dr_m": 0.00025,
+      "runtime_s": 4.007419999999911,
+      "integrator": {
+        "nfev": 17042,
+        "njev": 386,
+        "nlu": 2023
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 0.0003167184735204387,
+          "threshold": 5e-05,
+          "all_time_s": 2940,
+          "all_radius_cm": 2.0,
+          "max_paper": 0.00020843572567486035,
+          "paper_time_s": 5400,
+          "paper_radius_cm": 2.0,
+          "same_rounded_paper": false,
+          "pass_all": false
+        },
+        "moisture": {
+          "max_all": 0.021369705571748998,
+          "threshold": 5e-05,
+          "all_time_s": 9,
+          "all_radius_cm": 2.0,
+          "max_paper": 0.00018609459156637698,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": false,
+          "pass_all": false
+        }
+      },
+      "temperature_threshold_pass": false,
+      "moisture_threshold_pass": false,
+      "paper_rounding_pass": false
+    },
+    {
+      "n_intervals": 160,
+      "dr_m": 0.000125,
+      "runtime_s": 7.9985355000007985,
+      "integrator": {
+        "nfev": 17089,
+        "njev": 401,
+        "nlu": 2041
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 7.958957842646441e-05,
+          "threshold": 5e-05,
+          "all_time_s": 2940,
+          "all_radius_cm": 2.0,
+          "max_paper": 5.2160568245085415e-05,
+          "paper_time_s": 5400,
+          "paper_radius_cm": 2.0,
+          "same_rounded_paper": false,
+          "pass_all": false
+        },
+        "moisture": {
+          "max_all": 0.010865613379152261,
+          "threshold": 5e-05,
+          "all_time_s": 2,
+          "all_radius_cm": 2.0,
+          "max_paper": 4.657417352982307e-05,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": false,
+          "pass_all": false
+        }
+      },
+      "temperature_threshold_pass": false,
+      "moisture_threshold_pass": false,
+      "paper_rounding_pass": false
+    },
+    {
+      "n_intervals": 320,
+      "dr_m": 6.25e-05,
+      "runtime_s": 10.914459599998736,
+      "integrator": {
+        "nfev": 16933,
+        "njev": 403,
+        "nlu": 2019
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 1.990132577134318e-05,
+          "threshold": 5e-05,
+          "all_time_s": 3480,
+          "all_radius_cm": 2.0,
+          "max_paper": 1.305712721944019e-05,
+          "paper_time_s": 5400,
+          "paper_radius_cm": 2.0,
+          "same_rounded_paper": true,
+          "pass_all": true
+        },
+        "moisture": {
+          "max_all": 0.0049751435679747935,
+          "threshold": 5e-05,
+          "all_time_s": 1,
+          "all_radius_cm": 2.0,
+          "max_paper": 1.164722499558124e-05,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": false,
+          "pass_all": false
+        }
+      },
+      "temperature_threshold_pass": true,
+      "moisture_threshold_pass": false,
+      "paper_rounding_pass": false
+    },
+    {
+      "n_intervals": 640,
+      "dr_m": 3.125e-05,
+      "runtime_s": 11.592804300000353,
+      "integrator": {
+        "nfev": 16743,
+        "njev": 371,
+        "nlu": 1994
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 6.4723758015361454e-06,
+          "threshold": 5e-05,
+          "all_time_s": 2940,
+          "all_radius_cm": 2.0,
+          "max_paper": 3.285546370079828e-06,
+          "paper_time_s": 5400,
+          "paper_radius_cm": 2.0,
+          "same_rounded_paper": false,
+          "pass_all": true
+        },
+        "moisture": {
+          "max_all": 0.00106720119781345,
+          "threshold": 5e-05,
+          "all_time_s": 1,
+          "all_radius_cm": 2.0,
+          "max_paper": 2.9119213333927974e-06,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": true,
+          "pass_all": false
+        }
+      },
+      "temperature_threshold_pass": true,
+      "moisture_threshold_pass": false,
+      "paper_rounding_pass": false
+    },
+    {
+      "n_intervals": 1280,
+      "dr_m": 1.5625e-05,
+      "runtime_s": 19.396258900000248,
+      "integrator": {
+        "nfev": 16591,
+        "njev": 370,
+        "nlu": 1985
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 4.0038828217348055e-06,
+          "threshold": 5e-05,
+          "all_time_s": 7140,
+          "all_radius_cm": 2.0,
+          "max_paper": 8.230453829582984e-07,
+          "paper_time_s": 3600,
+          "paper_radius_cm": 2.0,
+          "same_rounded_paper": true,
+          "pass_all": true
+        },
+        "moisture": {
+          "max_all": 0.00024395579019920177,
+          "threshold": 5e-05,
+          "all_time_s": 1,
+          "all_radius_cm": 2.0,
+          "max_paper": 7.273920754613528e-07,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": true,
+          "pass_all": false
+        }
+      },
+      "temperature_threshold_pass": true,
+      "moisture_threshold_pass": false,
+      "paper_rounding_pass": true
+    },
+    {
+      "n_intervals": 2560,
+      "dr_m": 7.8125e-06,
+      "runtime_s": 37.25771569999961,
+      "integrator": {
+        "nfev": 16711,
+        "njev": 381,
+        "nlu": 1981
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 4.065436968403446e-06,
+          "threshold": 5e-05,
+          "all_time_s": 10140,
+          "all_radius_cm": 2.0,
+          "max_paper": 1.7819514397388048e-07,
+          "paper_time_s": 3600,
+          "paper_radius_cm": 2.0,
+          "same_rounded_paper": true,
+          "pass_all": true
+        },
+        "moisture": {
+          "max_all": 5.99612884411016e-05,
+          "threshold": 5e-05,
+          "all_time_s": 1,
+          "all_radius_cm": 2.0,
+          "max_paper": 1.8233319076799148e-07,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": true,
+          "pass_all": false
+        }
+      },
+      "temperature_threshold_pass": true,
+      "moisture_threshold_pass": false,
+      "paper_rounding_pass": true
+    },
+    {
+      "n_intervals": 5120,
+      "dr_m": 3.90625e-06,
+      "runtime_s": 88.45296889999918,
+      "integrator": {
+        "nfev": 16665,
+        "njev": 382,
+        "nlu": 1975
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 4.082620343126564e-06,
+          "threshold": 5e-05,
+          "all_time_s": 5280,
+          "all_radius_cm": 2.0,
+          "max_paper": 2.0669195066602697e-07,
+          "paper_time_s": 5400,
+          "paper_radius_cm": 2.0,
+          "same_rounded_paper": false,
+          "pass_all": true
+        },
+        "moisture": {
+          "max_all": 1.493538254093707e-05,
+          "threshold": 5e-05,
+          "all_time_s": 1,
+          "all_radius_cm": 2.0,
+          "max_paper": 4.586137958284553e-08,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": true,
+          "pass_all": true
+        }
+      },
+      "temperature_threshold_pass": true,
+      "moisture_threshold_pass": true,
+      "paper_rounding_pass": false
+    },
+    {
+      "n_intervals": 10240,
+      "dr_m": 1.953125e-06,
+      "runtime_s": 212.89066349999848,
+      "integrator": {
+        "nfev": 16576,
+        "njev": 359,
+        "nlu": 1967
+      },
+      "difference_from_previous": {
+        "temperature": {
+          "max_all": 3.426780764925752e-06,
+          "threshold": 5e-05,
+          "all_time_s": 7920,
+          "all_radius_cm": 2.0,
+          "max_paper": 8.740685331076747e-08,
+          "paper_time_s": 5400,
+          "paper_radius_cm": 0.0,
+          "same_rounded_paper": true,
+          "pass_all": true
+        },
+        "moisture": {
+          "max_all": 3.7319183077144658e-06,
+          "threshold": 5e-05,
+          "all_time_s": 1,
+          "all_radius_cm": 2.0,
+          "max_paper": 1.1514138087420633e-08,
+          "paper_time_s": 1800,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": true,
+          "pass_all": true
+        }
+      },
+      "temperature_threshold_pass": true,
+      "moisture_threshold_pass": true,
+      "paper_rounding_pass": true,
+      "time_refinement": {
+        "temperature": {
+          "max_all": 3.751869769530458e-06,
+          "threshold": 5e-05,
+          "all_time_s": 2520,
+          "all_radius_cm": 2.0,
+          "max_paper": 1.148853598920141e-07,
+          "paper_time_s": 5400,
+          "paper_radius_cm": 1.5,
+          "same_rounded_paper": true,
+          "pass_all": true
+        },
+        "moisture": {
+          "max_all": 4.5482732469182e-08,
+          "threshold": 5e-05,
+          "all_time_s": 5760,
+          "all_radius_cm": 2.0,
+          "max_paper": 8.271761053890714e-10,
+          "paper_time_s": 7200,
+          "paper_radius_cm": 0.0,
+          "same_rounded_paper": true,
+          "pass_all": true
+        }
+      },
+      "time_refinement_pass": true
+    }
+  ],
+  "final_n_intervals": 10240,
+  "separate_thresholds": {
+    "temperature_C": 5e-05,
+    "moisture_kg_per_kg": 5e-05
+  },
+  "time_refinement": {
+    "temperature": {
+      "max_all": 3.751869769530458e-06,
+      "threshold": 5e-05,
+      "all_time_s": 2520,
+      "all_radius_cm": 2.0,
+      "max_paper": 1.148853598920141e-07,
+      "paper_time_s": 5400,
+      "paper_radius_cm": 1.5,
+      "same_rounded_paper": true,
+      "pass_all": true
+    },
+    "moisture": {
+      "max_all": 4.5482732469182e-08,
+      "threshold": 5e-05,
+      "all_time_s": 5760,
+      "all_radius_cm": 2.0,
+      "max_paper": 8.271761053890714e-10,
+      "paper_time_s": 7200,
+      "paper_radius_cm": 0.0,
+      "same_rounded_paper": true,
+      "pass_all": true
+    }
+  },
+  "accuracy_statement": "Empirical grid/time differences, not rigorous error bounds.",
+  "boundary_source": "D:\\mathsmatical_modeling\\compition\\2026\\附件1.xlsx",
+  "boundary_sheet": "Sheet1",
+  "boundary_samples": 241,
+  "boundary_time_range_s": [
+    0.0,
+    14400.0
+  ],
+  "requested_end_s": 10800,
+  "formal_workbook_time_range_s": [
+    1,
+    10800
+  ],
+  "formal_workbook_interpretation": "User-approved Q2 scope: official result2.xlsx contains t=1..10800 s. The wording 'entire drying process' may require extension after Q3 determines the endpoint and post-14400 s boundary.",
+  "parameters": {
+    "radius_m": 0.02,
+    "length_m": 0.25,
+    "initial_temperature_C": 28.0,
+    "initial_moisture_kg_per_kg": 2.55,
+    "h_W_m2K": 25.0,
+    "hm_m_s": 8e-07,
+    "h_assumption": "Appendix 2 is labelled Q1; Q2 has no new h, so this is a missing-parameter continuation assumption.",
+    "hm_assumption": "Appendix 2 is labelled Q1; Q2 has no new hm, so this is a missing-parameter continuation assumption."
+  },
+  "model": "Q2 fixed-radius axisymmetric variable-property coupled FV+BDF",
+  "moisture_parameterization": "log(C) for BDF internal state; reported C=exp(log(C))",
+  "boundary_interpolation": "piecewise linear, no extrapolation",
+  "restart_file": "q2_restart.npz",
+  "workbook_validation": {
+    "path": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q2\\result2_candidate_3h.xlsx",
+    "sheets": {
+      "温度": {
+        "rows": 10800,
+        "columns": 21,
+        "four_decimal_match": true
+      },
+      "水分浓度": {
+        "rows": 10800,
+        "columns": 21,
+        "four_decimal_match": true
+      }
+    }
+  },
+  "sensitivity": [
+    {
+      "case": "baseline",
+      "h_W_m2K": 25.0,
+      "hm_m_s": 8e-07,
+      "T_center_C": 49.849495585177436,
+      "T_surface_C": 49.966412935738234,
+      "C_center_kg_per_kg": 1.7661771011361722,
+      "C_surface_kg_per_kg": 1.008123122878544,
+      "runtime_s": 299.3686688,
+      "delta_T_center_C": 0.0,
+      "delta_T_surface_C": 0.0,
+      "delta_C_center_kg_per_kg": 0.0,
+      "delta_C_surface_kg_per_kg": 0.0
+    },
+    {
+      "case": "h_minus20",
+      "h_W_m2K": 20.0,
+      "hm_m_s": 8e-07,
+      "T_center_C": 49.72034265550544,
+      "T_surface_C": 49.865347691665136,
+      "C_center_kg_per_kg": 1.7765668895332756,
+      "C_surface_kg_per_kg": 1.0096393577198872,
+      "runtime_s": 299.46867010000096,
+      "delta_T_center_C": -0.12915292967199576,
+      "delta_T_surface_C": -0.10106524407309792,
+      "delta_C_center_kg_per_kg": 0.010389788397103361,
+      "delta_C_surface_kg_per_kg": 0.0015162348413431115
+    },
+    {
+      "case": "h_plus20",
+      "h_W_m2K": 30.0,
+      "hm_m_s": 8e-07,
+      "T_center_C": 49.907189953541696,
+      "T_surface_C": 50.012964418075136,
+      "C_center_kg_per_kg": 1.7596157764494746,
+      "C_surface_kg_per_kg": 1.0067327596341924,
+      "runtime_s": 308.78411140000026,
+      "delta_T_center_C": 0.057694368364259674,
+      "delta_T_surface_C": 0.046551482336901984,
+      "delta_C_center_kg_per_kg": -0.006561324686697567,
+      "delta_C_surface_kg_per_kg": -0.001390363244351711
+    },
+    {
+      "case": "hm_minus20",
+      "h_W_m2K": 25.0,
+      "hm_m_s": 6.4e-07,
+      "T_center_C": 49.8369000298899,
+      "T_surface_C": 49.95609618146277,
+      "C_center_kg_per_kg": 1.8581465777479664,
+      "C_surface_kg_per_kg": 1.1774940355323409,
+      "runtime_s": 295.4714292000008,
+      "delta_T_center_C": -0.01259555528753964,
+      "delta_T_surface_C": -0.010316754275464746,
+      "delta_C_center_kg_per_kg": 0.09196947661179422,
+      "delta_C_surface_kg_per_kg": 0.16937091265379678
+    },
+    {
+      "case": "hm_plus20",
+      "h_W_m2K": 25.0,
+      "hm_m_s": 9.6e-07,
+      "T_center_C": 49.85946087984969,
+      "T_surface_C": 49.97473387979296,
+      "C_center_kg_per_kg": 1.6920554402502448,
+      "C_surface_kg_per_kg": 0.8736700820801072,
+      "runtime_s": 285.6241007999997,
+      "delta_T_center_C": 0.009965294672255709,
+      "delta_T_surface_C": 0.008320944054723611,
+      "delta_C_center_kg_per_kg": -0.07412166088592742,
+      "delta_C_surface_kg_per_kg": -0.1344530407984369
+    }
+  ],
+  "environment": {
+    "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+    "executable": "C:\\Users\\32898\\anaconda3\\python.exe",
+    "numpy": "2.1.3",
+    "scipy": "1.15.3",
+    "openpyxl": "3.1.5",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "official_workbook": "D:\\mathsmatical_modeling\\compition\\2026\\A题\\A题\\附件\\附件3\\result2.xlsx",
+  "official_workbook_validation": {
+    "path": "D:\\mathsmatical_modeling\\compition\\2026\\A题\\A题\\附件\\附件3\\result2.xlsx",
+    "sheets": {
+      "温度": {
+        "rows": 10800,
+        "columns": 21,
+        "four_decimal_match": true
+      },
+      "水分浓度": {
+        "rows": 10800,
+        "columns": 21,
+        "four_decimal_match": true
+      }
+    }
+  },
+  "sensitivity_grid": {
+    "n_intervals": 10240,
+    "end_s": 10800,
+    "one_factor_levels": "baseline and +/-20 percent"
+  },
+  "workbook_style_validation": {
+    "path": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q2\\result2_candidate_3h.xlsx",
+    "template": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\source\\result2_template_original.xlsx",
+    "sheets": {
+      "温度": {
+        "template_style_match": true,
+        "existing_widths_preserved": true,
+        "new_columns_width_source": "F",
+        "new_columns": "G:V"
+      },
+      "水分浓度": {
+        "template_style_match": true,
+        "existing_widths_preserved": true,
+        "new_columns_width_source": "F",
+        "new_columns": "G:V"
+      }
+    }
+  },
+  "official_workbook_style_validation": {
+    "path": "D:\\mathsmatical_modeling\\compition\\2026\\A题\\A题\\附件\\附件3\\result2.xlsx",
+    "template": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\source\\result2_template_original.xlsx",
+    "sheets": {
+      "温度": {
+        "template_style_match": true,
+        "existing_widths_preserved": true,
+        "new_columns_width_source": "F",
+        "new_columns": "G:V"
+      },
+      "水分浓度": {
+        "template_style_match": true,
+        "existing_widths_preserved": true,
+        "new_columns_width_source": "F",
+        "new_columns": "G:V"
+      }
+    }
+  },
+  "historical_diagnostics": {
+    "obsolete": true,
+    "directory": "diagnostics/archive/historical_raw_c",
+    "files": [
+      "q2_failure_summary.json",
+      "q2_n5120_failure.json"
+    ],
+    "current_entrypoint": "q2_validation.json and diagnostics/q2_n*.json"
+  },
+  "jacobian_evidence": "diagnostics/jacobian_center_difference.json",
+  "figure_validation": {
+    "files": [
+      "q2_fields.png",
+      "q2_fields.pdf"
+    ],
+    "profile_seconds": [
+      1800,
+      3600,
+      5400,
+      7200,
+      9000,
+      10800
+    ],
+    "profile_labels": [
+      "0.5 h",
+      "1 h",
+      "1.5 h",
+      "2 h",
+      "2.5 h",
+      "3 h"
+    ],
+    "legend_verified": true
+  },
+  "sensitivity_interpretation": "Compare relative changes within the same output variable; do not compare temperature and moisture changes across units."
+}

@@ -1,0 +1,39 @@
+{
+  "base": {
+    "rtol": 1e-09,
+    "atol": 1e-11,
+    "max_step_before_s": 5.0,
+    "max_step_after_s": 60.0
+  },
+  "tight": {
+    "rtol": 1e-10,
+    "atol": 1e-12,
+    "max_step_before_s": 2.5,
+    "max_step_after_s": 30.0
+  },
+  "event": {
+    "coarse_time_s": 206900.07784038855,
+    "fine_time_s": 206900.06493837715,
+    "abs_difference_s": 0.012902011396363378,
+    "relative_difference": 6.235866286560179e-08,
+    "relative_threshold": 0.0001,
+    "absolute_threshold_s": 30.0,
+    "pass": true
+  },
+  "fields": {
+    "common_start_s": 0,
+    "common_end_s": 206880,
+    "common_rows": 3449,
+    "temperature_max_abs": 6.3088754700402205e-06,
+    "moisture_max_abs": 4.5482732469182e-08,
+    "temperature_threshold": 5e-05,
+    "moisture_threshold": 5e-05,
+    "temperature_pass": true,
+    "moisture_pass": true,
+    "pass": true
+  },
+  "monotonicity_base": 2.220446049250313e-15,
+  "monotonicity_tight": 2.6645352591003757e-15,
+  "monotonicity_pass": true,
+  "pass": true
+}

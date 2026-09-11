@@ -1,0 +1,115 @@
+{
+  "source_q1": "results/q1/q1_fields.npz",
+  "source_q2": "results/q2/q2_fields.npz",
+  "common_time_s": [
+    0,
+    1800
+  ],
+  "initial_and_boundary_match": true,
+  "common_radius_m": 0.02,
+  "common_h": 25.0,
+  "common_hm": 8e-07,
+  "initial_properties": {
+    "q1": {
+      "rho": 820.0,
+      "cp": 2600.0,
+      "k": 0.36,
+      "volumetric_heat_capacity": 2132000,
+      "alpha": 1.6885553470919323e-07,
+      "D": 4.937655094173937e-09
+    },
+    "q2": {
+      "rho": 976.4,
+      "cp": 3415.295774647887,
+      "k": 0.48295774647887324,
+      "volumetric_heat_capacity": 3334694.7943661967,
+      "alpha": 1.448281705704542e-07,
+      "D": 5.641680373025664e-09
+    }
+  },
+  "at_1800s": {
+    "temperature_C": [
+      {
+        "radius_cm": 0.0,
+        "q1": 33.575344828308396,
+        "q2": 32.18924463741961,
+        "q2_minus_q1": -1.386100190888783
+      },
+      {
+        "radius_cm": 0.5,
+        "q1": 33.772001918190306,
+        "q2": 32.38211420520654,
+        "q2_minus_q1": -1.3898877129837643
+      },
+      {
+        "radius_cm": 1.0,
+        "q1": 34.364160798713954,
+        "q2": 32.96594010780599,
+        "q2_minus_q1": -1.3982206909079622
+      },
+      {
+        "radius_cm": 1.5,
+        "q1": 35.362124592238445,
+        "q2": 33.96077897221195,
+        "q2_minus_q1": -1.4013456200264969
+      },
+      {
+        "radius_cm": 2.0,
+        "q1": 36.78556034654053,
+        "q2": 35.41302009997157,
+        "q2_minus_q1": -1.3725402465689598
+      }
+    ],
+    "moisture_kg_per_kg": [
+      {
+        "radius_cm": 0.0,
+        "q1": 2.549992404014126,
+        "q2": 2.549934100065531,
+        "q2_minus_q1": -5.8303948595295196e-05
+      },
+      {
+        "radius_cm": 0.5,
+        "q1": 2.549723932948946,
+        "q2": 2.5488838505611704,
+        "q2_minus_q1": -0.0008400823877754426
+      },
+      {
+        "radius_cm": 1.0,
+        "q1": 2.538300542387139,
+        "q2": 2.5255580376472295,
+        "q2_minus_q1": -0.012742504739909677
+      },
+      {
+        "radius_cm": 1.5,
+        "q1": 2.375469868489932,
+        "q2": 2.3257039662505496,
+        "q2_minus_q1": -0.049765902239382154
+      },
+      {
+        "radius_cm": 2.0,
+        "q1": 1.5102346297990572,
+        "q2": 1.6486177687543648,
+        "q2_minus_q1": 0.13838313895530763
+      }
+    ]
+  },
+  "maximum_difference_common_domain": {
+    "temperature_C": {
+      "absolute_difference": 1.4019736049075675,
+      "time_s": 1800,
+      "radius_cm": 1.4
+    },
+    "moisture_kg_per_kg": {
+      "absolute_difference": 0.13838313895530763,
+      "time_s": 1800,
+      "radius_cm": 2.0
+    }
+  },
+  "interpretation": "Both constitutive relations and coupling differ. Differences are model comparisons, not experimental errors or isolated causal effects of coupling.",
+  "q2_published_numerics": {
+    "rtol": 1e-10,
+    "atol": 1e-12,
+    "max_step_s": 2.5,
+    "n_intervals": 10240.0
+  }
+}

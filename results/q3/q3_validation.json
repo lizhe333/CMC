@@ -1,0 +1,399 @@
+{
+  "status": "NUMERICAL_CHECKS_PASSED",
+  "boundary_source": "D:\\mathsmatical_modeling\\compition\\2026\\附件1.xlsx",
+  "boundary_sheet": "Sheet1",
+  "platform": {
+    "interval_s": [
+      10800.0,
+      14400.0
+    ],
+    "sample_count": 61,
+    "checks": {
+      "temperature_C.std": true,
+      "temperature_C.slope": true,
+      "temperature_C.jump": true,
+      "moisture_kg_per_kg.std": true,
+      "moisture_kg_per_kg.slope": true,
+      "moisture_kg_per_kg.jump": true
+    },
+    "pass": true,
+    "temperature_C": {
+      "sample_count": 61,
+      "mean": 49.998934426229496,
+      "sample_std": 0.15435336826607313,
+      "linear_slope_per_hour": 0.0028239026969783076,
+      "last_value": 50.165,
+      "last_minus_mean": 0.1660655737705028,
+      "std_limit": 0.5,
+      "slope_limit_abs": 0.15435336826607313,
+      "jump_limit_abs": 0.30870673653214625,
+      "pass_std": true,
+      "pass_slope": true,
+      "pass_jump": true
+    },
+    "moisture_kg_per_kg": {
+      "sample_count": 61,
+      "mean": 0.049987540983606554,
+      "sample_std": 0.00015012945233702923,
+      "linear_slope_per_hour": -1.2882072977259796e-05,
+      "last_value": 0.04986,
+      "last_minus_mean": -0.00012754098360655275,
+      "std_limit": 0.001,
+      "slope_limit_abs": 0.00015012945233702923,
+      "jump_limit_abs": 0.00030025890467405846,
+      "pass_std": true,
+      "pass_slope": true,
+      "pass_jump": true
+    },
+    "decision": "platform supports the stated nominal post-14400 s boundary; final-hour means are retained for sensitivity",
+    "interpretation": "Engineering screening only; not a proof of future multi-day stationarity."
+  },
+  "parameters": {
+    "radius_m": 0.02,
+    "length_m": 0.25,
+    "initial_temperature_C": 28.0,
+    "initial_moisture_kg_per_kg": 2.55,
+    "h_W_m2K": 25.0,
+    "hm_m_s": 8e-07,
+    "post_14400_temperature_C": 50.0,
+    "post_14400_moisture_kg_per_kg": 0.05,
+    "h_assumption": "Q3 continues the Q2 coefficient because no new h is supplied.",
+    "hm_assumption": "Q3 continues the Q2 coefficient because no new hm is supplied."
+  },
+  "model": "Q3 fixed-radius axisymmetric variable-property coupled FV+BDF; log(C) internal coordinate",
+  "n_intervals": 10240,
+  "dr_m": 1.953125e-06,
+  "rtol": 1e-10,
+  "atol": 1e-12,
+  "max_step_before_s": 2.5,
+  "max_step_after_s": 30.0,
+  "runtime_s": 1616.0869736000004,
+  "integrator": {
+    "nfev": 57930,
+    "njev": 984,
+    "nlu": 7907,
+    "positivity_retries": 0
+  },
+  "event": {
+    "status": "EVENT_LOCATED",
+    "definition": "first t with max_r C(r,t) <= 0.15 kg/kg; strict below is reported after the event",
+    "time_s": 206900.06493837715,
+    "time_h": 57.47224026066032,
+    "center_C": 0.15,
+    "max_C": 0.15,
+    "event_residual_C": 0.0,
+    "event_residual_within_tolerance": true,
+    "min_C": 0.05265949697489955,
+    "center_minus_max_C": 0.0,
+    "grid_event_bracket_s": [
+      206899.43179049337,
+      206900.06493837715
+    ],
+    "grid_event_bracket_width_s": 0.6331478837819304,
+    "center_event_time_s": 206900.06493837715,
+    "center_event_bracket_s": [
+      206899.43179049337,
+      206900.06493837715
+    ],
+    "center_event_bracket_width_s": 0.6331478837819304,
+    "strict_before_time_s": 206899.56493837715,
+    "strict_after_time_s": 206900.56493837715,
+    "strict_before_max_C": 0.15000014564461916,
+    "strict_after_max_C": 0.14999985435610924,
+    "strict_before_pass": true,
+    "strict_after_pass": true,
+    "state_file": "q3_event.npz"
+  },
+  "grid_event_crosscheck": {
+    "status": "CENTER_AND_GRID_AGREE",
+    "grid_max_event_time_s": 206900.06493837715,
+    "center_event_time_s": 206900.06493837715,
+    "grid_center_time_difference_s": 0.0,
+    "event_center_minus_grid_max_C": 0.0,
+    "center_event_within_monotonicity_tolerance": true
+  },
+  "strict_event_evidence": {
+    "pass": true,
+    "event_root_pass": true,
+    "event_residual_C": 0.0,
+    "event_residual_tolerance_C": 1e-09,
+    "before_time_s": 206899.56493837715,
+    "after_time_s": 206900.56493837715,
+    "before_max_C": 0.15000014564461916,
+    "after_max_C": 0.14999985435610924,
+    "bracket_width_s": 0.6331478837819304
+  },
+  "monotonicity": {
+    "max_positive_neighbor_jump_kg_per_kg": 2.6645352591003757e-15,
+    "max_center_gap_kg_per_kg": 2.220446049250313e-15,
+    "tolerance_kg_per_kg": 1e-08,
+    "pass": true,
+    "checked_accepted_states": 26801,
+    "checked_midpoint_states": 26456,
+    "checked_output_states": 3793
+  },
+  "result3_time_schema": "60,120,...,floor(t_dry/60)*60; no non-minute endpoint row",
+  "workbook_validation": {
+    "path": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q3\\result3_candidate.xlsx",
+    "sheet": "Sheet1",
+    "rows": 3448,
+    "columns": 21,
+    "time_schema": "60,120,...,floor(t_dry/60)*60; no non-minute endpoint row",
+    "four_decimal_match": true
+  },
+  "official_workbook": "D:\\mathsmatical_modeling\\compition\\2026\\A题\\A题\\附件\\附件3\\result3.xlsx",
+  "convergence": {
+    "coarse_n": 5120,
+    "fine_n": 10240,
+    "relative_time_threshold": 0.0001,
+    "absolute_time_threshold_s": 30.0,
+    "temperature_field_threshold_C": 5e-05,
+    "moisture_field_threshold_kg_per_kg": 5e-05,
+    "spatial": {
+      "coarse_n": 5120,
+      "fine_n": 10240,
+      "event": {
+        "coarse_time_s": 206899.43937557944,
+        "fine_time_s": 206900.07784038855,
+        "abs_difference_s": 0.6384648091043346,
+        "relative_difference": 3.085860652004555e-06,
+        "relative_threshold": 0.0001,
+        "absolute_threshold_s": 30.0,
+        "pass": true
+      },
+      "fields": {
+        "common_start_s": 0,
+        "common_end_s": 206880,
+        "common_rows": 3449,
+        "temperature_max_abs": 4.841787244913576e-06,
+        "moisture_max_abs": 1.2193720115988294e-06,
+        "temperature_threshold": 5e-05,
+        "moisture_threshold": 5e-05,
+        "temperature_pass": true,
+        "moisture_pass": true,
+        "pass": true
+      },
+      "monotonicity_coarse": 2.220446049250313e-15,
+      "monotonicity_fine": 2.220446049250313e-15,
+      "monotonicity_pass": true,
+      "pass": true
+    },
+    "temporal": {
+      "base": {
+        "rtol": 1e-09,
+        "atol": 1e-11,
+        "max_step_before_s": 5.0,
+        "max_step_after_s": 60.0
+      },
+      "tight": {
+        "rtol": 1e-10,
+        "atol": 1e-12,
+        "max_step_before_s": 2.5,
+        "max_step_after_s": 30.0
+      },
+      "event": {
+        "coarse_time_s": 206900.07784038855,
+        "fine_time_s": 206900.06493837715,
+        "abs_difference_s": 0.012902011396363378,
+        "relative_difference": 6.235866286560179e-08,
+        "relative_threshold": 0.0001,
+        "absolute_threshold_s": 30.0,
+        "pass": true
+      },
+      "fields": {
+        "common_start_s": 0,
+        "common_end_s": 206880,
+        "common_rows": 3449,
+        "temperature_max_abs": 6.3088754700402205e-06,
+        "moisture_max_abs": 4.5482732469182e-08,
+        "temperature_threshold": 5e-05,
+        "moisture_threshold": 5e-05,
+        "temperature_pass": true,
+        "moisture_pass": true,
+        "pass": true
+      },
+      "monotonicity_base": 2.220446049250313e-15,
+      "monotonicity_tight": 2.6645352591003757e-15,
+      "monotonicity_pass": true,
+      "pass": true
+    },
+    "status": "PASSED",
+    "selected_final_settings": {
+      "n_intervals": 10240,
+      "rtol": 1e-10,
+      "atol": 1e-12,
+      "max_step_s": 30.0
+    }
+  },
+  "sensitivity": {
+    "status": "PASSED",
+    "rows": [
+      {
+        "status": "EVENT_LOCATED",
+        "n_intervals": 1000,
+        "h_W_m2K": 25.0,
+        "hm_m_s": 8e-07,
+        "plateau_temperature_C": 49.998934426229496,
+        "plateau_moisture_kg_per_kg": 0.049987540983606554,
+        "time_s": 206888.2869610396,
+        "time_h": 57.468968600288775,
+        "center_C": 0.15,
+        "max_C": 0.15,
+        "runtime_s": 53.21558069999992,
+        "monotonicity_max_positive_neighbor_jump_kg_per_kg": 1.7763568394002505e-15,
+        "case": "final_hour_mean",
+        "delta_time_s_vs_baseline": -11.777977337565972,
+        "nominal_reference_time_s_same_n": 206882.2081474891,
+        "delta_time_s_vs_nominal_same_n": 6.078813550499035
+      },
+      {
+        "status": "EVENT_LOCATED",
+        "n_intervals": 1000,
+        "h_W_m2K": 25.0,
+        "hm_m_s": 8e-07,
+        "plateau_temperature_C": 50.165,
+        "plateau_moisture_kg_per_kg": 0.04986,
+        "time_s": 205791.60688299913,
+        "time_h": 57.164335245277535,
+        "center_C": 0.15,
+        "max_C": 0.15,
+        "runtime_s": 55.19036369999958,
+        "monotonicity_max_positive_neighbor_jump_kg_per_kg": 1.7763568394002505e-15,
+        "case": "last_observation",
+        "delta_time_s_vs_baseline": -1108.4580553780252,
+        "nominal_reference_time_s_same_n": 206882.2081474891,
+        "delta_time_s_vs_nominal_same_n": -1090.6012644899602
+      },
+      {
+        "status": "EVENT_LOCATED",
+        "n_intervals": 1000,
+        "h_W_m2K": 20.0,
+        "hm_m_s": 8e-07,
+        "plateau_temperature_C": 50.0,
+        "plateau_moisture_kg_per_kg": 0.05,
+        "time_s": 206953.17204488063,
+        "time_h": 57.48699223468906,
+        "center_C": 0.15,
+        "max_C": 0.15,
+        "runtime_s": 53.2613194000005,
+        "monotonicity_max_positive_neighbor_jump_kg_per_kg": 1.7763568394002505e-15,
+        "case": "h_minus20",
+        "delta_time_s_vs_baseline": 53.10710650347755,
+        "nominal_reference_time_s_same_n": 206882.2081474891,
+        "delta_time_s_vs_nominal_same_n": 70.96389739154256
+      },
+      {
+        "status": "EVENT_LOCATED",
+        "n_intervals": 1000,
+        "h_W_m2K": 30.0,
+        "hm_m_s": 8e-07,
+        "plateau_temperature_C": 50.0,
+        "plateau_moisture_kg_per_kg": 0.05,
+        "time_s": 206835.29068270483,
+        "time_h": 57.454247411862454,
+        "center_C": 0.15,
+        "max_C": 0.15,
+        "runtime_s": 46.29431359999944,
+        "monotonicity_max_positive_neighbor_jump_kg_per_kg": 1.7763568394002505e-15,
+        "case": "h_plus20",
+        "delta_time_s_vs_baseline": -64.77425567232422,
+        "nominal_reference_time_s_same_n": 206882.2081474891,
+        "delta_time_s_vs_nominal_same_n": -46.91746478425921
+      },
+      {
+        "status": "EVENT_LOCATED",
+        "n_intervals": 1000,
+        "h_W_m2K": 25.0,
+        "hm_m_s": 6.4e-07,
+        "plateau_temperature_C": 50.0,
+        "plateau_moisture_kg_per_kg": 0.05,
+        "time_s": 212994.511192165,
+        "time_h": 59.16514199782361,
+        "center_C": 0.15,
+        "max_C": 0.15,
+        "runtime_s": 73.64529249999941,
+        "monotonicity_max_positive_neighbor_jump_kg_per_kg": 1.7763568394002505e-15,
+        "case": "hm_minus20",
+        "delta_time_s_vs_baseline": 6094.446253787843,
+        "nominal_reference_time_s_same_n": 206882.2081474891,
+        "delta_time_s_vs_nominal_same_n": 6112.303044675908
+      },
+      {
+        "status": "EVENT_LOCATED",
+        "n_intervals": 1000,
+        "h_W_m2K": 25.0,
+        "hm_m_s": 9.6e-07,
+        "plateau_temperature_C": 50.0,
+        "plateau_moisture_kg_per_kg": 0.05,
+        "time_s": 203136.42326358188,
+        "time_h": 56.42678423988386,
+        "center_C": 0.15,
+        "max_C": 0.15,
+        "runtime_s": 61.57992360000026,
+        "monotonicity_max_positive_neighbor_jump_kg_per_kg": 1.7763568394002505e-15,
+        "case": "hm_plus20",
+        "delta_time_s_vs_baseline": -3763.6416747952753,
+        "nominal_reference_time_s_same_n": 206882.2081474891,
+        "delta_time_s_vs_nominal_same_n": -3745.7848839072103
+      }
+    ]
+  },
+  "independent_radau": {
+    "status": "PASSED",
+    "n_intervals": 1000,
+    "start_s": 14400,
+    "end_s": 18000,
+    "temperature_max_abs_C": 2.58798849017694e-09,
+    "moisture_max_abs_kg_per_kg": 4.895868155330163e-10,
+    "temperature_threshold_C": 5e-05,
+    "moisture_threshold_kg_per_kg": 5e-05,
+    "bdf_nfev": 23082,
+    "radau_nfev": 751,
+    "radau_runtime_s": 1.0463103000001865,
+    "total_runtime_s": 39.509659100000135
+  },
+  "mass_balance": {
+    "max_abs_residual": 3.1874480876936673e-07,
+    "initial_mean_moisture": 2.5499999999999994,
+    "max_relative_residual": 1.249979642232811e-07,
+    "relative_tolerance": 0.0001,
+    "pass": true,
+    "interpretation": "effective moisture-equation boundary-flux closure; relative residual is normalized by the initial mean moisture"
+  },
+  "gate_summary": {
+    "event": true,
+    "platform": true,
+    "monotonicity": true,
+    "center_grid_crosscheck": true,
+    "strict_event": true,
+    "event_root": true,
+    "workbook": true,
+    "mass_balance": true,
+    "convergence": true,
+    "radau": true,
+    "sensitivity": true,
+    "q2_same_grid_compatibility": true
+  },
+  "field_output": {
+    "rows": 3449,
+    "radius_points": 21,
+    "mass_balance_max_abs": 3.1874480876936673e-07,
+    "mass_balance_max_relative": 1.249979642232811e-07,
+    "q2_compatibility_status": "SAME_GRID_COMPARISON",
+    "q2_compatibility_temperature_max_abs": 2.1316282072803006e-14,
+    "q2_compatibility_moisture_max_abs": 8.881784197001252e-16
+  },
+  "limitations": [
+    "The post-14400 s boundary is a model extension supported by a final-hour platform screen, not future observations.",
+    "The one-dimensional radial approximation and omitted latent-heat feedback are not quantified here.",
+    "Mass balance is an effective moisture-equation flux audit."
+  ],
+  "official_workbook_validation": {
+    "path": "D:\\mathsmatical_modeling\\compition\\2026\\A题\\A题\\附件\\附件3\\result3.xlsx",
+    "sheet": "Sheet1",
+    "rows": 3448,
+    "columns": 21,
+    "time_schema": "60,120,...,floor(t_dry/60)*60; no non-minute endpoint row",
+    "four_decimal_match": true
+  }
+}

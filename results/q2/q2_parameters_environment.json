@@ -1,0 +1,44 @@
+{
+  "parameters": {
+    "radius_m": 0.02,
+    "length_m": 0.25,
+    "initial_temperature_C": 28.0,
+    "initial_moisture_kg_per_kg": 2.55,
+    "h_W_m2K": 25.0,
+    "hm_m_s": 8e-07,
+    "h_assumption": "Appendix 2 is labelled Q1; Q2 has no new h, so this is a missing-parameter continuation assumption.",
+    "hm_assumption": "Appendix 2 is labelled Q1; Q2 has no new hm, so this is a missing-parameter continuation assumption."
+  },
+  "environment": {
+    "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+    "executable": "C:\\Users\\32898\\anaconda3\\python.exe",
+    "numpy": "2.1.3",
+    "scipy": "1.15.3",
+    "openpyxl": "3.1.5",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "boundary_source": "D:\\mathsmatical_modeling\\compition\\2026\\附件1.xlsx",
+  "boundary_sheet": "Sheet1",
+  "boundary_interpolation": "piecewise linear, no extrapolation",
+  "model": "Q2 fixed-radius axisymmetric variable-property coupled FV+BDF",
+  "moisture_parameterization": "log(C) for BDF internal state; reported C=exp(log(C))",
+  "requested_end_s": 10800,
+  "sensitivity_grid": {
+    "n_intervals": 10240,
+    "end_s": 10800,
+    "one_factor_levels": "baseline and +/-20 percent"
+  },
+  "historical_diagnostics": {
+    "obsolete": true,
+    "directory": "diagnostics/archive/historical_raw_c"
+  },
+  "jacobian_evidence": "diagnostics/jacobian_center_difference.json",
+  "figure_profile_seconds": [
+    1800,
+    3600,
+    5400,
+    7200,
+    9000,
+    10800
+  ]
+}

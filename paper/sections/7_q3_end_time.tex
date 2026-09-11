@@ -1,49 +1,91 @@
-\section{问题三：烘干时长判定}
+\section{问题三：烘干时间}
 
-在问题二的全过程模型基础上，本问对每一时刻的全部径向位置检查含水率达标条件，确定首次全部满足要求的时刻。
+\subsection{问题分析}
 
-\subsection{终止条件}
+第三问要求确定药材各处含水率均低于 $0.15\,\mathrm{kg/kg}$ 的烘干时间。沿用第二问的固定半径、变物性模型及式~\eqref{eq:q2-pde}、\eqref{eq:q2-ibvp}，将计算延续至满足干燥要求。由于内部失水滞后于表面，\textbf{终止条件应由全域最大含水率确定}。
 
-题目要求药材各处的干基含水率均低于 $C_{\mathrm{lim}}=0.15\,\mathrm{kg/kg}$。因此定义
+附件~1 覆盖的前 $4\,\mathrm h$ 采用分段线性插值。其最后一小时的温度和环境水分浓度均值分别为 $49.9989\,^\circ\mathrm C$ 和 $0.0499875\,\mathrm{kg/kg}$，表明观测末段已接近稳定设定值。因此，假设此后烘房继续保持该工况，取
 
 \begin{equation}
-  C_{\max}(t)=\max_{0\le r\le R_0} C(r,t),
-  \label{eq:q3-cmax}
+  T_\infty=50\,^\circ\mathrm C,\qquad
+  C_\infty=0.05\,\mathrm{kg/kg}.
+  \label{eq:q3-long-boundary}
 \end{equation}
 
-烘干时长为
+\subsection{终点判定}
+
+记药材内部最大含水率为 $M(t)$，临界烘干时间 $t_d$ 定义为
 
 \begin{equation}
-  t_{\mathrm{end}}
-  =\inf\left\{t>0:C_{\max}(t)<C_{\mathrm{lim}}\right\}.
+  \left\{
+  \begin{aligned}
+    M(t)&=\max_{0\le r\le R_0}C(r,t),\\
+    t_d&=\inf\left\{t\ge0:M(t)\le0.15\right\}.
+  \end{aligned}
+  \right.
   \label{eq:q3-end-time}
 \end{equation}
 
-计算时对全部径向节点求最大值，而不预先把中心含水率当作唯一判据；只有数值结果证明含水率始终沿半径单调时，才能将“中心最湿”作为简化结论。
+其中 $R_0=0.02\,\mathrm m$，$C$ 的单位为 $\mathrm{kg/kg}$。临界状态满足 $M(t_d)=0.15$；当含水率继续下降时，药材随即进入严格低于阈值的状态。
 
-\subsection{终点事件定位}
+全过程径向分布检查表明，在数值容差范围内，含水率由中心向表面递减，各级加密网格均支持\textbf{圆心为最后达标的位置}。采用分段线性重构时，节点间不产生新的极值，因而在本次数值解中可将终点条件简化为
 
-\paragraph{步骤一：长时间推进。}
-继续运行问题二的求解器，保存每隔 $60\,\mathrm{s}$、每隔 $0.1\,\mathrm{cm}$ 的完整结果。
+\begin{equation}
+  M(t)=C(0,t),\qquad C(0,t_d)=0.15.
+  \label{eq:q3-center-event}
+\end{equation}
 
-\paragraph{步骤二：包围首次达标时刻。}
-寻找相邻两个输出或内部时间点 $t_a<t_b$，使 $C_{\max}(t_a)\ge C_{\mathrm{lim}}$ 且 $C_{\max}(t_b)<C_{\mathrm{lim}}$。
+\subsection{模型求解}
 
-\paragraph{步骤三：细化终点。}
-在 $[t_a,t_b]$ 内采用\resultblank{事件检测、二分或局部插值}确定首次达标时间，并重新检查整个空间网格。
+沿用第二问的守恒空间离散和 BDF 自适应积分，联立推进温度场与含水率场，并监测终止函数
 
-\paragraph{步骤四：验证。}
-给出终点前后两个时刻的 $C_{\max}$，证明报告的时间是“首次全部达标”，而不是只给一个已经达标的较晚时刻。
+\[
+  g(t)=C(0,t)-0.15
+\]
 
-\subsection{结果}
+的首次下降过零。利用连续插值求根得到 $t_d$，再以全域最大含水率复核，确认临界点前尚未全部达标、临界点后已低于阈值。按题意每隔 $60\,\mathrm s$、每隔 $0.1\,\mathrm{cm}$ 保存结果，论文表中的终点行直接取临界状态。
+
+\noindent\textbf{数值检验。}
+空间网格加密和时间积分精化后，烘干时间分别变化 $0.6385\,\mathrm s$ 和 $0.0129\,\mathrm s$，相对变化均小于 $10^{-4}$，绝对变化均小于 $30\,\mathrm s$，说明终点定位对数值精度设置较为稳定。
+
+\subsection{结果分析}
+
+在式~\eqref{eq:q3-long-boundary} 的持续稳定工况假设下，计算得到\textbf{临界烘干时间为 $57.4722\,\mathrm h$}。每隔 $6\,\mathrm h$ 及临界时刻的含水率见表~\ref{tab:q3-moisture}，末行为临界时刻的计算结果。
 
 \input{tables/q3_moisture}
 
-\placeholderfigure{建议放置最大含水率随时间变化曲线，并放大 $0.15\,\mathrm{kg/kg}$ 附近的首次穿越窗口。}{烘干终点的事件定位}
+临界时刻，圆心含水率为 $0.1500\,\mathrm{kg/kg}$，表面已降至 $0.0527\,\mathrm{kg/kg}$；圆心控制条件与全域判据给出的临界时间一致。终点前后的检查确认，最大含水率由高于 $0.15$ 降至低于 $0.15$。因此表中末行表示达标的临界状态，严格低于阈值发生在继续干燥之后。
 
-由式~\eqref{eq:q3-end-time} 得烘干时长为\resultblank{数值}\,h。终点控制位置为\resultblank{径向位置及判定依据}；终点前后的最大含水率分别为\resultblank{数值}和\resultblank{数值}。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\textwidth]{figures/q3_moisture_max.pdf}
+  \caption{最大含水率的变化及烘干终点}
+  \label{fig:q3-moisture-max}
+\end{figure}
 
-\subsection{本问小结}
+\Needspace{5\baselineskip}
+图~\ref{fig:q3-moisture-max} 表明，\textbf{干燥后期的失水速度明显减慢}。环境温度趋稳后，含水率降低使有效扩散系数减小，内部水分向表面迁移逐渐变慢。表面虽已接近环境含水率，圆心仍需较长时间才能达标，这也说明平均含水率或表面含水率不能替代全域终止判据。
 
-本问将问题二的全过程状态转化为严格的空间最大值事件，生成 \texttt{result3.xlsx}，并为问题四提供固定半径条件下的对照烘干时长。
+\noindent\textbf{含水率的时空演化。}
+为观察失水在药材内部的分布，将全过程含水率绘为时空曲面，并单独展示 $12\,\mathrm h$ 后的等值图，如图~\ref{fig:q3-spacetime} 所示。后期等值图采用独立色标，以分辨接近阈值时的含水率差异。
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{figures/q3_spacetime.pdf}
+  \caption{含水率时空分布及后期达标分界；红线为 $C=0.15\,\mathrm{kg/kg}$ 等值线}
+  \label{fig:q3-spacetime}
+\end{figure}
+
+全程曲面由前期陡降逐渐转为后期平缓。等值图进一步显示，\textbf{达标区域由表面逐渐向中心扩展}，红线内侧仍有未达标的核心区域，直至临界时刻该区域才消失。这里的等值线用于区分含水率是否达标，其位置由保存的径向数据作分段线性重构得到。
+
+\noindent\textbf{各位置的达标次序。}
+选取代表时刻比较径向含水率，并在每个保存位置上定位首次达到阈值的时刻，得到图~\ref{fig:q3-radial-completion}。各位置临界时间由相邻 $60\,\mathrm s$ 数据作线性插值估计，圆心终点采用前述连续积分事件结果。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{figures/q3_radial_completion.pdf}
+  \caption{代表时刻的径向含水率分布及各位置首次达到阈值的时间}
+  \label{fig:q3-radial-completion}
+\end{figure}
+
+表面约在 $12.55\,\mathrm h$ 达到阈值，距中心 $1.5\,\mathrm{cm}$ 和 $1.0\,\mathrm{cm}$ 处分别约为 $36.20\,\mathrm h$ 和 $48.53\,\mathrm h$，圆心最后在 $57.47\,\mathrm h$ 达标。\textbf{圆心较表面晚约 $44.92\,\mathrm h$}，说明外层已经达标时，内部仍需较长时间继续失水。上述时长及空间差异均是在固定半径和持续稳定工况下得到的，其物理准确度还受边界假设及径向近似影响。

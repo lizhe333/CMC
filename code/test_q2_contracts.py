@@ -8,10 +8,11 @@ from __future__ import annotations
 import sys
 import tempfile
 import unittest
+from copy import copy
 from pathlib import Path
 
 import numpy as np
-from openpyxl import Workbook
+from openpyxl import Workbook, load_workbook
 
 CODE_DIR = Path(__file__).resolve().parent
 if str(CODE_DIR) not in sys.path:
@@ -21,6 +22,13 @@ import q2_solver as q2
 
 
 class Q2Contracts(unittest.TestCase):
+    def test_profile_seconds_include_all_six_paper_times(self):
+        """The radial panels must include 0.5, 1, 1.5, 2, 2.5 and 3 h."""
+        self.assertEqual(
+            q2.PROFILE_SECONDS.tolist(),
+            [1800, 3600, 5400, 7200, 9000, 10800],
+        )
+
     def test_appendix3_initial_properties(self):
         rho, cp, k, diffusivity = q2.material_properties(2.55, 28.0)
         self.assertAlmostEqual(float(rho), 976.4, places=10)
@@ -115,11 +123,16 @@ class Q2Contracts(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory)
             workbook = output / "candidate.xlsx"
+            # The official result2.xlsx is intentionally populated after the
+            # formal run.  Contract tests must always start from the preserved
+            # five-row source template rather than treating that result as a
+            # template with a fixed max_row.
+            template = q2.TEMPLATE_BACKUP if q2.TEMPLATE_BACKUP.exists() else q2.DEFAULT_TEMPLATE
             q2.write_workbook(
                 workbook,
                 result["temperature_C"],
                 result["moisture_kg_per_kg"],
-                q2.DEFAULT_TEMPLATE,
+                template,
                 end=5,
             )
             report = q2.validate_workbook(
@@ -127,7 +140,7 @@ class Q2Contracts(unittest.TestCase):
                 result["temperature_C"],
                 result["moisture_kg_per_kg"],
                 end=5,
-                template=q2.DEFAULT_TEMPLATE,
+                template=template,
             )
             self.assertTrue(report["sheets"]["温度"]["four_decimal_match"])
             self.assertEqual(report["sheets"]["水分浓度"]["rows"], 5)
@@ -148,6 +161,52 @@ class Q2Contracts(unittest.TestCase):
                 self.assertEqual(payload["moisture_final_kg_per_kg"].shape, (21,))
                 self.assertEqual(payload["radius_nodes_m"].shape, (21,))
                 self.assertEqual(payload["control_volume_weights_m2"].shape, (21,))
+
+    def test_workbook_template_style_inheritance_and_widths(self):
+        """G:V inherit the template's F style and width; A:F widths stay fixed."""
+        boundary = np.array([[0.0, 28.0, 2.55], [100.0, 28.0, 2.55]])
+        result = q2.integrate_case(boundary, n=20, end=5, chunk_seconds=5)
+        template = q2.TEMPLATE_BACKUP if q2.TEMPLATE_BACKUP.exists() else q2.DEFAULT_TEMPLATE
+        with tempfile.TemporaryDirectory() as directory:
+            workbook = Path(directory) / "styled_candidate.xlsx"
+            q2.write_workbook(
+                workbook,
+                result["temperature_C"],
+                result["moisture_kg_per_kg"],
+                template,
+                end=5,
+            )
+            style_report = q2.validate_workbook_template_styles(workbook, template, end=5)
+            for sheet_report in style_report["sheets"].values():
+                self.assertTrue(sheet_report["template_style_match"])
+                self.assertTrue(sheet_report["existing_widths_preserved"])
+            output_wb = load_workbook(workbook, data_only=False)
+            source_wb = load_workbook(template, data_only=False)
+            try:
+                for sheet_name in ("温度", "水分浓度"):
+                    output_ws = output_wb[sheet_name]
+                    source_ws = source_wb[sheet_name]
+                    for column in range(1, 7):
+                        letter = output_ws.cell(1, column).column_letter
+                        self.assertEqual(
+                            output_ws.column_dimensions[letter].width,
+                            source_ws.column_dimensions[letter].width,
+                        )
+                    self.assertEqual(
+                        output_ws.column_dimensions["G"].width,
+                        source_ws.column_dimensions["F"].width,
+                    )
+                    for column in range(7, 23):
+                        output_cell = output_ws.cell(2, column)
+                        source_cell = source_ws.cell(2, 6)
+                        self.assertEqual(copy(output_cell.font), copy(source_cell.font))
+                        self.assertEqual(copy(output_cell.alignment), copy(source_cell.alignment))
+                        self.assertEqual(copy(output_cell.fill), copy(source_cell.fill))
+                        self.assertEqual(copy(output_cell.border), copy(source_cell.border))
+                        self.assertEqual(output_cell.number_format, "0.0000")
+            finally:
+                source_wb.close()
+                output_wb.close()
 
 
 if __name__ == "__main__":

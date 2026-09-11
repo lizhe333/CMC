@@ -1,0 +1,36 @@
+{
+  "sources": [
+    "q3_fields.npz",
+    "q3_event.npz",
+    "q3_validation.json"
+  ],
+  "solver_rerun": false,
+  "smoothing": false,
+  "extrapolation": false,
+  "threshold_kg_per_kg": 0.15,
+  "late_window_start_h": 12,
+  "display_radial_points": 21,
+  "display_time_points_with_endpoint": 3450,
+  "surface_sampling": "Every minute in first hour, every ten minutes later, exact endpoint appended",
+  "time_interpolation": "Piecewise linear between saved 60 s samples; exact center solver event",
+  "spatial_reconstruction": "Piecewise linear on 21 saved radial locations; no subgrid precision claim",
+  "max_crossing_residual": 0.0,
+  "max_crossing_bracket_width_s": 60.0,
+  "center_event_time_h": 57.47224026066032,
+  "surface_crossing_time_h": 12.552110805984492,
+  "center_surface_delay_h": 44.92012945467583,
+  "representative_crossings_h": {
+    "0.0": 57.47224026066032,
+    "0.5": 55.287501958617135,
+    "1.0": 48.52503152572737,
+    "1.5": 36.19893435671278,
+    "2.0": 12.552110805984492
+  },
+  "checks": {
+    "finite_positive": true,
+    "radial_monotonicity": true,
+    "temporal_monotonicity": true,
+    "first_crossing_brackets": true,
+    "center_matches_solver_event": true
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "status": "CONVERGENCE_FAILED",
+  "convergence": {
+    "coarse_n": 20,
+    "fine_n": 40,
+    "relative_time_threshold": 0.0001,
+    "absolute_time_threshold_s": 30.0,
+    "temperature_field_threshold_C": 5e-05,
+    "moisture_field_threshold_kg_per_kg": 5e-05,
+    "spatial": {
+      "coarse_n": 20,
+      "fine_n": 40,
+      "event": {
+        "coarse_time_s": 203317.369608708,
+        "fine_time_s": 205226.29007048282,
+        "abs_difference_s": 1908.9204617748328,
+        "relative_difference": 0.009301539588905661,
+        "relative_threshold": 0.0001,
+        "absolute_threshold_s": 30.0,
+        "pass": false
+      },
+      "fields": {
+        "common_start_s": 0,
+        "common_end_s": 203280,
+        "common_rows": 3389,
+        "temperature_max_abs": 0.0012216066907484446,
+        "moisture_max_abs": 0.03591678329738501,
+        "temperature_threshold": 5e-05,
+        "moisture_threshold": 5e-05,
+        "temperature_pass": false,
+        "moisture_pass": false,
+        "pass": false
+      },
+      "monotonicity_coarse": 0.0,
+      "monotonicity_fine": 0.0,
+      "monotonicity_pass": true,
+      "pass": false
+    },
+    "temporal": {
+      "base": {
+        "rtol": 1e-07,
+        "atol": 1e-09,
+        "max_step_before_s": 5.0,
+        "max_step_after_s": 60.0
+      },
+      "tight": {
+        "rtol": 1e-08,
+        "atol": 1e-10,
+        "max_step_before_s": 2.5,
+        "max_step_after_s": 30.0
+      },
+      "event": {
+        "coarse_time_s": 205226.29007048282,
+        "fine_time_s": 205224.33228759377,
+        "abs_difference_s": 1.957782889046939,
+        "relative_difference": 9.53972108094558e-06,
+        "relative_threshold": 0.0001,
+        "absolute_threshold_s": 30.0,
+        "pass": true
+      },
+      "fields": {
+        "common_start_s": 0,
+        "common_end_s": 205200,
+        "common_rows": 3421,
+        "temperature_max_abs": 0.00021689841324246117,
+        "moisture_max_abs": 7.238537681475421e-07,
+        "temperature_threshold": 5e-05,
+        "moisture_threshold": 5e-05,
+        "temperature_pass": false,
+        "moisture_pass": true,
+        "pass": false
+      },
+      "monotonicity_base": 0.0,
+      "monotonicity_tight": 0.0,
+      "monotonicity_pass": true,
+      "pass": false
+    },
+    "status": "REVIEW_REQUIRED"
+  }
+}

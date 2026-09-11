@@ -2,6 +2,8 @@
 
 题目：药材的烘干问题。
 
+建模和求解前先读：[全局建模与数值求解注意事项](reports/GLOBAL_MODELING_NOTES.md)。该文档适用于四问，规定共同的题意口径、物理解释、数值检查和结果可信性要求。
+
 本目录按仓库的正式比赛工作流建立。论文协作文件位于 `paper/`；题面和后续附件放在 `source/`；建模报告、代码、结果和论文图片分别放在 `reports/`、`code/`、`results/` 与 `figures/`。
 
 ## 当前状态
@@ -15,4 +17,3 @@
 将项目根目录下的 `CUMCM_2026_A_Overleaf.zip` 上传到 Overleaf，主文件选择 `main.tex`，编译器选择 XeLaTeX。
 
 本地论文源文件入口：`paper/main.tex`。
-

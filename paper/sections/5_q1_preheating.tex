@@ -1,26 +1,103 @@
-\section{问题一：预热阶段的温度与含水率分布}
+% \section{问题一：预热阶段的温度与水分浓度分布}
+
+% \subsection{问题分析}
+
+% 问题一要求确定\textbf{前 $1800\,\mathrm{s}$ 内}药材的径向温度与水分浓度分布随半径和时间的变化，烘房环境随时间变化，药材内部响应滞后于表面，且水分扩散系数随水分浓度改变，因此需要建立时变边界下的非稳态传递模型。
+
+% 对于此问，我们可以直接沿用模型准备中的基础方程，以附件 1 的环境数据和附录 2 的物性参数确定本问的初边值问题；采用径向离散和 BDF 自适应积分求解，通过收敛与守恒检验后，比较表面和内部的变化规律。
+
+\section{问题一：预热阶段的温度与水分浓度分布}
 
 \subsection{问题分析}
 
-问题一要求确定前 $1800\,\mathrm{s}$ 内药材的径向温度与含水率分布，并给出规定时空位置的结果。烘房环境随时间变化，药材内部响应滞后于表面，且水分扩散系数随含水率改变，因此需要建立时变边界下的非稳态传递模型。
+问题一研究药材在\textbf{预热平衡阶段的温度和水分浓度变化}。烘干开始后，
+烘房环境不断向药材传递热量，同时药材内部的水分逐渐向表面扩散并进入烘房空气。
+由于热量和水分在药材内部的传递均需要一定时间，药材表面与内部的变化并不同步，
+会逐渐形成沿径向分布的\textbf{温度梯度}和\textbf{水分浓度梯度}。
 
-根据模型准备中的基础方程，以附件 1 的环境数据和附录 2 的物性参数确定本问的初边值问题；采用径向离散和 BDF 自适应积分求解，通过收敛与守恒检验后，比较表面和内部的变化规律。
+本问中，药材尺寸保持不变，密度、比热容及热传导系数均取附录 2 给定的常数，
+而水分扩散系数随水分浓度变化。烘房温度和水分浓度则由附件 1 给出的数据确定。
+因此，在前述传热——传质模型的基础上代入本问参数和环境条件，
+即可得到预热阶段温度场 $T(r,t)$ 和水分浓度场 $C(r,t)$ 的具体模型。
+
+由于烘房环境随时间变化，且水分扩散系数并非常数，上述方程难以直接获得解析解。
+因此本文对径向空间进行离散，并采用 BDF 方法进行时间积分，
+数值求得 $0\sim1800\,\mathrm{s}$ 内药材各径向位置的温度和水分浓度变化。
 
 \subsection{模型建立}
 
-\noindent\textbf{（1）径向近似}
+% \noindent\textbf{（1）径向近似}
 
-题目给定药材长度 $L=0.25\,\mathrm{m}$、半径 $R_0=0.02\,\mathrm{m}$，初始温度为 $28\,{}^\circ\mathrm{C}$，初始干基含水率为 $2.55\,\mathrm{kg/kg}$。在共用假设基础上，本问采用以下局部简化：
+% 题目给定\textbf{药材长度 $L_0=0.25\,\mathrm{m}$、半径 $R_0=0.02\,\mathrm{m}$，初始温度为 $28\,{}^\circ\mathrm{C}$}，初始水分浓度为 $2.55\,\mathrm{kg/kg}$。在共用假设基础上，本问采用以下局部简化：
 
-\begin{enumerate}
-  \item 预热阶段几何尺寸保持不变，热物性采用附录 2 给定的常数。
-  \item 以远离端面的主体截面为研究对象，忽略该区域的轴向变化，仅考虑径向传递。
-  \item 题目在问题 1 中未给出汽化潜热及相关相变参数，因此基础模型按照题面所给热物性参数建立，暂不显式考虑蒸发潜热反馈。
-\end{enumerate}
+% \begin{enumerate}
+%   \item 预热阶段几何尺寸保持不变，热物性采用附录 2 给定的常数。
+%   \item 以远离端面的主体截面为研究对象，忽略该区域的轴向变化，仅考虑径向传递。
+%   \item 题目在问题 1 中未给出汽化潜热及相关相变参数，因此基础模型按照题面所给热物性参数建立，暂不显式考虑蒸发潜热反馈。
+% \end{enumerate}
 
-由题目参数得到热扩散率 $\alpha=\frac{k}{\rho c_p}\approx1.689\times10^{-7}\,\mathrm{m^2/s}$。在 $1800\,\mathrm{s}$ 内，热扩散特征长度 $\sqrt{\alpha t}$ 约为 $1.74\,\mathrm{cm}$，远小于圆柱中央截面距端面的距离 $12.5\,\mathrm{cm}$；由 $D(C)\leq7\times10^{-9}\,\mathrm{m^2/s}$，水分扩散特征长度不超过 $0.36\,\mathrm{cm}$。结合均匀的侧壁环境，可将远离端面的主体截面近似为一维径向传递区域。
+% 由题目参数得到热扩散率 \textbf{$\alpha=\frac{k}{\rho c_p}\approx1.689\times10^{-7}\,\mathrm{m^2/s}$}。在 $1800\,\mathrm{s}$ 内，热扩散特征长度 $\sqrt{\alpha t}$ 约为 $1.74\,\mathrm{cm}$，远小于圆柱中央截面距端面的距离 $12.5\,\mathrm{cm}$；由 $D(C)\leq7\times10^{-9}\,\mathrm{m^2/s}$，且水分扩散特征长度不超过 $0.36\,\mathrm{cm}$。因此，结合均匀的侧壁环境，可将远离上下表面的圆柱截面近似为一维径向传递区域。
 
-由附录 2，物性与对流参数取为
+% 由附录 2，物性与对流参数取为
+% \[
+% \left\{
+% \begin{aligned}
+% \rho&=820\,\mathrm{kg/m^3},
+% &c_p&=2600\,\mathrm{J/(kg\cdot K)},\\
+% k&=0.36\,\mathrm{W/(m\cdot K)},
+% &h&=25\,\mathrm{W/(m^2\cdot K)},\\
+% h_m&=8\times10^{-7}\,\mathrm{m/s}.
+% \end{aligned}
+% \right.
+% \]
+
+% 附件 1 在本问时间范围内提供每隔 $60\,\mathrm{s}$ 的环境数据。以分段线性插值构造 $T_\infty(t)$ 和 $C_\infty(t)$，保留原始采样值，不作时间外推。在本问条件下，\textbf{热传导和水分散失分别求解}。
+
+\noindent\textbf{（1）径向一维近似}
+
+药材近似为长圆柱体，其长度为 $L_0=0.25\,\mathrm{m}$，半径为 $R_0=0.02\,\mathrm{m}$。
+实际烘干过程中，热量和水分既可以沿径向传递，也可以通过圆柱两端沿轴向传递。
+但由于药材长度远大于半径，因此本文主要考察\textbf{圆柱中部区域的径向变化}，忽略端部对该区域的影响。
+
+为进一步判断这一近似的合理性，考虑热量和水分在 $1800\,\mathrm{s}$ 内的典型扩散距离。
+由附录 2 中的参数可得热扩散率
+\[
+\alpha=\frac{k}{\rho c_p}
+\approx1.689\times10^{-7}\,\mathrm{m^2/s},
+\]
+相应的热扩散的特征长度为
+\[
+\sqrt{\alpha t}\approx1.74\,\mathrm{cm}.
+\]
+而圆柱中部距任一个顶面的距离为 $12.5\,\mathrm{cm}$，
+明显大于该时间内的热扩散距离。
+
+对于水分扩散，由
+\[
+D(C)\leq7\times10^{-9}\,\mathrm{m^2/s},
+\]
+可得 $1800\,\mathrm{s}$ 内的水分扩散特征长度不超过
+\[
+\sqrt{Dt}\approx0.36\,\mathrm{cm},
+\]
+同样远小于圆柱中部到端面的距离。
+
+因此，\textbf{在预热阶段可忽略圆柱两端的影响，将药材中部近似为仅沿径向发生
+热量和水分传递的一维区域}，即
+\[
+T=T(r,t),\qquad C=C(r,t),\qquad 0\leq r\leq R_0.
+\]
+\\
+
+\noindent\textbf{（2）参数与环境条件}
+
+问题一中药材的几何尺寸保持不变，初始温度和初始干基含水率分别为
+\[
+T_0=28\,{}^\circ\mathrm{C},\qquad
+C_0=2.55\,\mathrm{kg/kg}.
+\]
+
+根据附录 2，本问所采用的热学属性和表面对流参数为
 \[
 \left\{
 \begin{aligned}
@@ -33,12 +110,26 @@ h_m&=8\times10^{-7}\,\mathrm{m/s}.
 \right.
 \]
 
-附件 1 在本问时间范围内提供每隔 $60\,\mathrm{s}$ 的环境数据。以分段线性插值构造 $T_\infty(t)$ 和 $C_\infty(t)$，保留原始采样值，不作时间外推。在本问条件下，\textbf{热传导和水分散失分别求解}。
+其中，水分扩散系数随药材含水率变化：
+\[
+D(C)=7\times10^{-9}\,\mathrm{e}^{-0.89/C}.
+\]
+
+烘房温度和水分浓度随时间变化的数据由附件 1 给出。
+由于附件中的环境数据以 $60\,\mathrm{s}$ 为间隔记录，
+本文采用\textbf{分段线性插值}得到连续的
+$T_\infty(t)$ 和 $C_\infty(t)$，
+并\textbf{使插值曲线严格通过原始采样点}。
+
+需要指出的是，问题一给定的 $\rho$、$c_p$ 和 $k$ 均为常数，
+而 $D$ 仅随含水率 $C$ 变化，题目也未给出蒸发潜热等热湿耦合参数。
+因此在本问中，\textbf{温度场与水分场可分别进行求解}。
+\\
 
 \Needspace{13\baselineskip}
 \noindent\textbf{（2）药材热传导}
 
-将常热物性代入式~\eqref{eq:prep-heat}，结合均匀初温、圆心对称及表面对流换热条件，得到
+将药材的热学属性代入式~\eqref{eq:prep-heat}，并结合均匀初温、圆心对称及表面对流换热条件，得到
 \begin{equation}
 \left\{
 \begin{aligned}
@@ -58,23 +149,60 @@ T(r,0)&=28,\\
 \Needspace{16\baselineskip}
 \noindent\textbf{（3）水分蒸发}
 
-药材失水由\textbf{内部扩散和表面传质}共同决定。将附录 2 给出的有效扩散系数代入式~\eqref{eq:prep-moisture}，结合初始含水率和传质条件，得到
+药材失水由\textbf{内部扩散和表面传质}共同决定。将附录 2 给出的有效扩散系数代入式~\eqref{eq:prep-moisture}，结合初始水分浓度和传质条件，得到
+
 \begin{equation}
 \left\{
 \begin{aligned}
 \frac{\partial C}{\partial t}
-&=\frac{1}{r}\frac{\partial}{\partial r}
-  \left(rD(C)\frac{\partial C}{\partial r}\right),\\
-D(C)&=7\times10^{-9}\exp\left(-\frac{0.89}{C}\right),\\
-C(r,0)&=2.55,\\
-\left.\frac{\partial C}{\partial r}\right|_{r=0}&=0,\\
--D(C_s)\left.\frac{\partial C}{\partial r}\right|_{r=R_0}
-&=h_m\left[C(R_0,t)-C_\infty(t)\right].
+&=
+\frac{1}{r}\frac{\partial}{\partial r}
+\left(
+rD(C)\frac{\partial C}{\partial r}
+\right),
+\\[2pt]
+D(C)
+&=
+7\times10^{-9}\,
+\mathrm{e}^{\frac{-0.89}{C}},
+\\[2pt]
+C(r,0)
+&=
+2.55,
+\\[2pt]
+\left.\frac{\partial C}{\partial r}\right|_{r=0}
+&=
+0,
+\\[2pt]
+-D(C_s)
+\left.\frac{\partial C}{\partial r}\right|_{r=R_0}
+&=
+h_m\!\left[
+C(R_0,t)-C_\infty(t)
+\right].
 \end{aligned}
 \right.
 \label{eq:q1-moisture-model}
 \end{equation}
-其中 $C_s=C(R_0,t)$，含水率以 $\mathrm{kg/kg}$ 表示，扩散系数以 $\mathrm{m^2/s}$ 表示。两个控制方程均适用于 $0<r<R_0$、$0<t\leq1800\,\mathrm{s}$；本问不显式考虑蒸发潜热对温度场的反馈。
+
+% \begin{equation}
+% \left\{
+% \begin{aligned}
+% \frac{\partial C}{\partial t}
+% &=\frac{1}{r}\frac{\partial}{\partial r}
+%   \left(rD(C)\frac{\partial C}{\partial r}\right),\\
+% D(C)&=7\times10^{-9}\exp\left(-\frac{0.89}{C}\right),\\
+% C(r,0)&=2.55,\\
+% \left.\frac{\partial C}{\partial r}\right|_{r=0}&=0,\\
+% -D(C_s)\left.\frac{\partial C}{\partial r}\right|_{r=R_0}
+% &=h_m\left[C(R_0,t)-C_\infty(t)\right].
+% \end{aligned}
+% \right.
+% \label{eq:q1-moisture-model}
+% \end{equation}
+
+
+其中 $C_s=C(R_0,t)$，水分浓度以 $\mathrm{kg/kg}$ 表示，扩散系数以 $\mathrm{m^2/s}$ 表示。两个控制方程均适用于 $0<r<R_0$、$0<t\leq1800\,\mathrm{s}$；本问不显式考虑蒸发潜热对温度场的反馈。
 
 \input{sections/q1_numerics_text}
 

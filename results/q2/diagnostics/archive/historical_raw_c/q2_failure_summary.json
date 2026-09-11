@@ -1,5 +1,8 @@
 {
-  "status": "REFINEMENT_REQUIRED",
+  "status": "RESOLVED_AFTER_LOG_PARAMETERIZATION",
+  "historical_status": "REFINEMENT_REQUIRED",
+  "resolution": "Historical raw-C BDF failure retained below; formal run now uses reversible z=log(C), strict positive output checks, and passed q2_validation.json.",
+  "resolved_validation": "../q2_validation.json",
   "boundary_source": "D:\\mathsmatical_modeling\\compition\\2026\\附件1.xlsx",
   "template_backup": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\source\\result2_template_original.xlsx",
   "requested_end_s": 10800,

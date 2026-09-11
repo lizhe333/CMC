@@ -1,18 +1,27 @@
 \begin{table}[H]
   \centering
-  \caption{3 小时内药材的干基含水率（$\mathrm{kg/kg}$）}
+  \fontsize{10.5pt}{12.6pt}\selectfont
+  \renewcommand{\arraystretch}{1.25}
+  \captionsetup{font=small,labelfont=bf,textfont=bf}
+  \caption{3小时内药材的水分浓度}
   \label{tab:q2-moisture}
-  \begin{tabular}{rrrrrr}
-    \toprule
-    时间/h & $0\,\mathrm{cm}$ & $0.5\,\mathrm{cm}$ & $1\,\mathrm{cm}$ & $1.5\,\mathrm{cm}$ & $2\,\mathrm{cm}$ \\
-    \midrule
-    0.5 & \resultblank{--} & \resultblank{--} & \resultblank{--} & \resultblank{--} & \resultblank{--} \\
-    1.0 & \resultblank{--} & \resultblank{--} & \resultblank{--} & \resultblank{--} & \resultblank{--} \\
-    1.5 & \resultblank{--} & \resultblank{--} & \resultblank{--} & \resultblank{--} & \resultblank{--} \\
-    2.0 & \resultblank{--} & \resultblank{--} & \resultblank{--} & \resultblank{--} & \resultblank{--} \\
-    2.5 & \resultblank{--} & \resultblank{--} & \resultblank{--} & \resultblank{--} & \resultblank{--} \\
-    3.0 & \resultblank{--} & \resultblank{--} & \resultblank{--} & \resultblank{--} & \resultblank{--} \\
-    \bottomrule
-  \end{tabular}
+  \begin{tabularx}{0.92\textwidth}{|>{\centering\arraybackslash}p{0.23\textwidth}|*{5}{>{\centering\arraybackslash}X|}}
+    \hline
+    \multirow{2}{*}{时间/h} & \multicolumn{5}{|c|}{到药材中心的距离/cm} \\
+    \cline{2-6}
+     & 0 & 0.5 & 1 & 1.5 & 2 \\
+    \hline
+    0.5 & 2.5499 & 2.5489 & 2.5256 & 2.3257 & 1.6486 \\
+    \hline
+    1.0 & 2.5257 & 2.4948 & 2.3578 & 2.0230 & 1.4711 \\
+    \hline
+    1.5 & 2.3861 & 2.3256 & 2.1344 & 1.8020 & 1.3476 \\
+    \hline
+    2.0 & 2.1709 & 2.1084 & 1.9236 & 1.6259 & 1.2311 \\
+    \hline
+    2.5 & 1.9566 & 1.9006 & 1.7360 & 1.4720 & 1.1166 \\
+    \hline
+    3.0 & 1.7662 & 1.7165 & 1.5702 & 1.3333 & 1.0081 \\
+    \hline
+  \end{tabularx}
 \end{table}
-

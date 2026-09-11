@@ -1,0 +1,29 @@
+{
+  "coarse_n": 5120,
+  "fine_n": 10240,
+  "event": {
+    "coarse_time_s": 206899.43937557944,
+    "fine_time_s": 206900.07784038855,
+    "abs_difference_s": 0.6384648091043346,
+    "relative_difference": 3.085860652004555e-06,
+    "relative_threshold": 0.0001,
+    "absolute_threshold_s": 30.0,
+    "pass": true
+  },
+  "fields": {
+    "common_start_s": 0,
+    "common_end_s": 206880,
+    "common_rows": 3449,
+    "temperature_max_abs": 4.841787244913576e-06,
+    "moisture_max_abs": 1.2193720115988294e-06,
+    "temperature_threshold": 5e-05,
+    "moisture_threshold": 5e-05,
+    "temperature_pass": true,
+    "moisture_pass": true,
+    "pass": true
+  },
+  "monotonicity_coarse": 2.220446049250313e-15,
+  "monotonicity_fine": 2.220446049250313e-15,
+  "monotonicity_pass": true,
+  "pass": true
+}

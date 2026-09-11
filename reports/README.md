@@ -1,5 +1,7 @@
 # 报告目录
 
+四问共同入口：[全局建模与数值求解注意事项](GLOBAL_MODELING_NOTES.md)。各问建模、代码审计和结果发布前读取；具体执行证据写入逐问报告和验证文件。
+
 阶段产物由对应 skill 生成或覆盖：
 
 - `PROBLEM_UNDERSTANDING.md`：`1start-mathmodel` 的阶段0题意理解记录。

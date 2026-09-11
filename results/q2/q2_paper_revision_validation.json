@@ -1,0 +1,11 @@
+{
+  "scope": "Q2 user revision; no PDE rerun or official workbook modification",
+  "status": "PASS",
+  "checks": {
+    "temperature_table": "PASS: 30 values, original grid and merged headers",
+    "moisture_table": "PASS: 30 values, original grid and merged headers",
+    "spacetime_data": "PASS: exact 240 x 21 original samples for both fields",
+    "paper_figure_sources": "PASS: both embedded PDFs equal the result PDFs",
+    "exponent_notation_and_figures": "PASS"
+  }
+}

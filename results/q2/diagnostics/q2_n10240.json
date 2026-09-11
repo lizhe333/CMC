@@ -1,0 +1,37 @@
+{
+  "n_intervals": 10240,
+  "dr_m": 1.953125e-06,
+  "runtime_s": 212.89066349999848,
+  "integrator": {
+    "nfev": 16576,
+    "njev": 359,
+    "nlu": 1967
+  },
+  "difference_from_previous": {
+    "temperature": {
+      "max_all": 3.426780764925752e-06,
+      "threshold": 5e-05,
+      "all_time_s": 7920,
+      "all_radius_cm": 2.0,
+      "max_paper": 8.740685331076747e-08,
+      "paper_time_s": 5400,
+      "paper_radius_cm": 0.0,
+      "same_rounded_paper": true,
+      "pass_all": true
+    },
+    "moisture": {
+      "max_all": 3.7319183077144658e-06,
+      "threshold": 5e-05,
+      "all_time_s": 1,
+      "all_radius_cm": 2.0,
+      "max_paper": 1.1514138087420633e-08,
+      "paper_time_s": 1800,
+      "paper_radius_cm": 1.5,
+      "same_rounded_paper": true,
+      "pass_all": true
+    }
+  },
+  "temperature_threshold_pass": true,
+  "moisture_threshold_pass": true,
+  "paper_rounding_pass": true
+}

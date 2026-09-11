@@ -21,6 +21,7 @@ from typing import Any
 import numpy as np
 from openpyxl import load_workbook
 from openpyxl.styles import Alignment, Font, PatternFill
+from openpyxl.utils import get_column_letter
 from scipy.integrate import solve_ivp
 from scipy.sparse import coo_matrix, diags
 
@@ -40,6 +41,9 @@ H_BASE = 25.0
 HM_BASE = 8e-7
 PAPER_SECONDS = np.array([1800, 3600, 5400, 7200, 9000, 10800], dtype=int)
 PAPER_NODE_INDEX = np.array([0, 5, 10, 15, 20], dtype=int)
+# Radial profiles in the four-panel figure must cover the same six paper times
+# as Tables 3--4, including 9000 s (2.5 h).
+PROFILE_SECONDS = np.array([1800, 3600, 5400, 7200, 9000, 10800], dtype=int)
 OUTPUT_NODES = 21
 DEFAULT_END_S = 10800
 CONVERGENCE_THRESHOLD_T_C = 5e-5
@@ -728,6 +732,23 @@ def save_result_files(
         json.dumps(validation, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
+    (output / "q2_parameters_environment.json").write_text(
+        json.dumps(
+            {
+                "parameters": validation.get("parameters", {}),
+                "environment": validation.get("environment", {}),
+                "boundary_source": validation.get("boundary_source"),
+                "boundary_sheet": validation.get("boundary_sheet"),
+                "boundary_interpolation": validation.get("boundary_interpolation"),
+                "model": validation.get("model"),
+                "moisture_parameterization": validation.get("moisture_parameterization"),
+                "requested_end_s": validation.get("requested_end_s"),
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
 
 
 def _copy_cell_style(source, target) -> None:
@@ -763,26 +784,66 @@ def write_workbook(
         if ws.cell(1, 1).value is None:
             wb.close()
             raise ValueError("Template A1 header is missing.")
-        style_row = list(ws[2]) if ws.max_row >= 2 else []
-        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=OUTPUT_NODES + 1):
+        template_max_column = ws.max_column
+        if template_max_column < 2:
+            wb.close()
+            raise ValueError("Template must contain at least one distance column.")
+        header_style_row = list(ws[1])
+        data_style_row = list(ws[2]) if ws.max_row >= 2 else list(ws[1])
+        template_data_column = min(template_max_column, OUTPUT_NODES + 1)
+        template_data_letter = get_column_letter(template_data_column)
+        template_data_width = ws.column_dimensions[template_data_letter].width
+        template_data_hidden = ws.column_dimensions[template_data_letter].hidden
+        template_data_outline = ws.column_dimensions[template_data_letter].outlineLevel
+        template_data_collapsed = ws.column_dimensions[template_data_letter].collapsed
+
+        # Clear values only.  Styles and existing A:F widths remain those of
+        # the original template; new G:V columns are extended from its final
+        # real data column (F), not from a hard-coded width or default style.
+        for row in ws.iter_rows(min_row=2, max_row=max(ws.max_row, end + 1), min_col=1, max_col=OUTPUT_NODES + 1):
             for cell in row:
                 cell.value = None
+
+        # Preserve the template's A-column style for every newly materialized
+        # data row, including rows beyond the five-row demonstration table.
+        source_a_data = data_style_row[0]
+        source_row_height = ws.row_dimensions[2].height if ws.max_row >= 2 else None
+        for row_index in range(2, end + 2):
+            target_a = ws.cell(row_index, 1)
+            _copy_cell_style(source_a_data, target_a)
+            if source_row_height is not None:
+                ws.row_dimensions[row_index].height = source_row_height
+
         for j in range(OUTPUT_NODES):
-            cell = ws.cell(1, j + 2, j / 10.0)
-            cell.number_format = "0.0"
-        for row_index, second in enumerate(range(1, end + 1), start=2):
-            ws.cell(row_index, 1, second)
-            for j in range(OUTPUT_NODES):
-                cell = ws.cell(row_index, j + 2, float(f"{field[second, j]:.4f}"))
+            output_column = j + 2
+            # B:D are real template distance columns.  E is the template's
+            # ellipsis marker, so all actual E:V distance columns inherit the
+            # final real distance style F.
+            source_column = output_column if output_column <= 4 else template_data_column
+            source_header = header_style_row[source_column - 1]
+            source_data = data_style_row[source_column - 1]
+            header = ws.cell(1, output_column)
+            _copy_cell_style(source_header, header)
+            header.value = j / 10.0
+            for row_index, second in enumerate(range(1, end + 1), start=2):
+                cell = ws.cell(row_index, output_column)
+                _copy_cell_style(source_data, cell)
+                cell.value = float(f"{field[second, j]:.4f}")
+                # The template demonstration cells are General, while the
+                # formal result contract requires four-decimal data values.
+                # This format is applied uniformly to B:V, including G:V.
                 cell.number_format = "0.0000"
-                if j + 1 < len(style_row):
-                    _copy_cell_style(style_row[j + 1], cell)
-                    cell.value = float(f"{field[second, j]:.4f}")
-                    cell.number_format = "0.0000"
+
+            if output_column > template_max_column:
+                column_letter = get_column_letter(output_column)
+                dimension = ws.column_dimensions[column_letter]
+                dimension.width = template_data_width
+                dimension.hidden = template_data_hidden
+                dimension.outlineLevel = template_data_outline
+                dimension.collapsed = template_data_collapsed
+        for row_index, second in enumerate(range(1, end + 1), start=2):
+            ws.cell(row_index, 1).value = second
         ws.freeze_panes = "B2"
-        ws.column_dimensions["A"].width = max(float(ws.column_dimensions["A"].width or 12), 25.0)
-        for column in range(2, OUTPUT_NODES + 2):
-            ws.column_dimensions[ws.cell(1, column).column_letter].width = 12.0
     wb.save(destination)
     wb.close()
 
@@ -834,6 +895,80 @@ def validate_workbook(
         wb.close()
 
 
+def validate_workbook_template_styles(
+    path: str | Path,
+    template: str | Path,
+    end: int,
+) -> dict[str, Any]:
+    """Verify template styles and widths after extending the 21-point table.
+
+    Existing A:F column widths are required to remain byte-for-value equal to
+    the source template.  New G:V columns must inherit the final real template
+    distance column (F) width and cell style.  Header cells use the template
+    header style; data cells use the template data style plus the explicit
+    four-decimal output format required by the result contract.
+    """
+    path = Path(path)
+    template = Path(template)
+    wb = load_workbook(path, read_only=False, data_only=False)
+    source_wb = load_workbook(template, read_only=False, data_only=False)
+
+    def style_components(cell) -> tuple[Any, ...]:
+        # StyleProxy equality is workbook-local; copy the underlying style
+        # records before comparing a generated workbook with its source.
+        return tuple(copy_style(getattr(cell, name)) for name in ("font", "alignment", "fill", "border", "protection"))
+
+    try:
+        expected = {"温度", "水分浓度"}
+        if set(wb.sheetnames) != expected or set(source_wb.sheetnames) != expected:
+            raise AssertionError("Workbook/template sheet names do not match.")
+        report: dict[str, Any] = {"path": str(path.resolve()), "template": str(template.resolve()), "sheets": {}}
+        for sheet_name in ("温度", "水分浓度"):
+            ws = wb[sheet_name]
+            source = source_wb[sheet_name]
+            if ws.max_row != end + 1 or ws.max_column != OUTPUT_NODES + 1:
+                raise AssertionError(f"{sheet_name} dimensions are not the formal output dimensions.")
+            template_max_column = source.max_column
+            source_distance_column = min(template_max_column, OUTPUT_NODES + 1)
+            for col in range(1, template_max_column + 1):
+                letter = get_column_letter(col)
+                if ws.column_dimensions[letter].width != source.column_dimensions[letter].width:
+                    raise AssertionError(f"{sheet_name} existing column width changed at {letter}.")
+            source_width = source.column_dimensions[get_column_letter(source_distance_column)].width
+            for col in range(template_max_column + 1, OUTPUT_NODES + 2):
+                letter = get_column_letter(col)
+                if ws.column_dimensions[letter].width != source_width:
+                    raise AssertionError(f"{sheet_name} new column width mismatch at {letter}.")
+
+            # Check representative rows: header, first data row, and final
+            # data row.  All output columns are checked, not only G:V.
+            for output_col in range(2, OUTPUT_NODES + 2):
+                source_col = output_col if output_col <= 4 else source_distance_column
+                if style_components(ws.cell(1, output_col)) != style_components(source.cell(1, source_col)):
+                    raise AssertionError(f"{sheet_name} header style mismatch at {get_column_letter(output_col)}.")
+                if ws.cell(1, output_col).number_format != source.cell(1, source_col).number_format:
+                    raise AssertionError(f"{sheet_name} header number format mismatch at {get_column_letter(output_col)}.")
+                for row in (2, end + 1):
+                    if style_components(ws.cell(row, output_col)) != style_components(source.cell(2, source_col)):
+                        raise AssertionError(
+                            f"{sheet_name} data style mismatch at {get_column_letter(output_col)}{row}."
+                        )
+                    if ws.cell(row, output_col).number_format != "0.0000":
+                        raise AssertionError(
+                            f"{sheet_name} data number format mismatch at {get_column_letter(output_col)}{row}."
+                        )
+            report["sheets"][sheet_name] = {
+                "template_style_match": True,
+                "existing_widths_preserved": True,
+                "new_columns_width_source": get_column_letter(source_distance_column),
+                "new_columns": "G:V",
+            }
+        return report
+    finally:
+        source_wb.close()
+        wb.close()
+
+
 def plot_results(output: Path, result: dict[str, Any]) -> None:
     """Create the Q2 four-panel figure directly from the saved result arrays."""
     import matplotlib
@@ -859,7 +994,7 @@ def plot_results(output: Path, result: dict[str, Any]) -> None:
     minutes = times / 60.0
     fig, axes = plt.subplots(2, 2, figsize=(9.0, 6.4), constrained_layout=True)
     colors = ["#174A70", "#2584A6", "#77AABD", "#D88A41", "#963E3E", "#6A4C93"]
-    profile_seconds = [1800, 3600, 5400, 7200, 10800]
+    profile_seconds = PROFILE_SECONDS.tolist()
     for second, color in zip(profile_seconds, colors):
         idx = int(np.where(times == second)[0][0])
         axes[0, 0].plot(radius_cm, result["temperature_C"][idx], color=color, label=f"{second / 3600:g} h")
@@ -1119,6 +1254,11 @@ def build_validation(
             },
             "model": final["model"],
             "moisture_parameterization": final["moisture_parameterization"],
+            "historical_diagnostics": {
+                "obsolete": True,
+                "directory": "diagnostics/archive/historical_raw_c",
+                "note": "Raw-C BDF failure evidence is historical only; current status is read from q2_validation.json and q2_n*.json.",
+            },
             "boundary_interpolation": "piecewise linear, no extrapolation",
             "restart_file": "q2_restart.npz",
             "workbook_validation": workbook_report,
@@ -1196,6 +1336,11 @@ def main() -> None:
         end=args.end,
         template=template_backup,
     )
+    workbook_style_report = validate_workbook_template_styles(
+        candidate,
+        template_backup,
+        end=args.end,
+    )
     sensitivity = [] if args.skip_sensitivity else sensitivity_runs(boundary, final, output, args.end)
     validation = build_validation(
         final,
@@ -1205,6 +1350,7 @@ def main() -> None:
         workbook_report,
         sensitivity,
     )
+    validation["workbook_style_validation"] = workbook_style_report
     save_result_files(output, final, boundary, boundary_sheet, validation)
     plot_results(output, final)
     official = OFFICIAL_RESULT2.resolve()
@@ -1216,8 +1362,14 @@ def main() -> None:
         end=args.end,
         template=template_backup,
     )
+    official_style_report = validate_workbook_template_styles(
+        official,
+        template_backup,
+        end=args.end,
+    )
     validation["official_workbook"] = str(official)
     validation["official_workbook_validation"] = official_report
+    validation["official_workbook_style_validation"] = official_style_report
     (output / "q2_validation.json").write_text(
         json.dumps(_json_safe(validation), ensure_ascii=False, indent=2),
         encoding="utf-8",

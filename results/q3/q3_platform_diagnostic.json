@@ -1,0 +1,46 @@
+{
+  "interval_s": [
+    10800.0,
+    14400.0
+  ],
+  "sample_count": 61,
+  "checks": {
+    "temperature_C.std": true,
+    "temperature_C.slope": true,
+    "temperature_C.jump": true,
+    "moisture_kg_per_kg.std": true,
+    "moisture_kg_per_kg.slope": true,
+    "moisture_kg_per_kg.jump": true
+  },
+  "pass": true,
+  "temperature_C": {
+    "sample_count": 61,
+    "mean": 49.998934426229496,
+    "sample_std": 0.15435336826607313,
+    "linear_slope_per_hour": 0.0028239026969783076,
+    "last_value": 50.165,
+    "last_minus_mean": 0.1660655737705028,
+    "std_limit": 0.5,
+    "slope_limit_abs": 0.15435336826607313,
+    "jump_limit_abs": 0.30870673653214625,
+    "pass_std": true,
+    "pass_slope": true,
+    "pass_jump": true
+  },
+  "moisture_kg_per_kg": {
+    "sample_count": 61,
+    "mean": 0.049987540983606554,
+    "sample_std": 0.00015012945233702923,
+    "linear_slope_per_hour": -1.2882072977259796e-05,
+    "last_value": 0.04986,
+    "last_minus_mean": -0.00012754098360655275,
+    "std_limit": 0.001,
+    "slope_limit_abs": 0.00015012945233702923,
+    "jump_limit_abs": 0.00030025890467405846,
+    "pass_std": true,
+    "pass_slope": true,
+    "pass_jump": true
+  },
+  "decision": "platform supports the stated nominal post-14400 s boundary; final-hour means are retained for sensitivity",
+  "interpretation": "Engineering screening only; not a proof of future multi-day stationarity."
+}

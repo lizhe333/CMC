@@ -113,9 +113,9 @@
 
 针对问题一，本文根据附件~1 的烘房温湿度边界与附录~2 的材料参数，建立\resultblank{模型名称}，得到 $0$--$1800\,\mathrm{s}$ 内药材径向温度和干基含水率分布。数值结果表明\resultblank{填写最重要的定量结论及验证结果}。
 
-针对问题二，本文进一步引入温度、含水率相关的密度、比热容、导热系数和扩散系数，建立\resultblank{全过程热湿耦合模型与阶段衔接方式}，获得前 $3\,\mathrm{h}$ 的完整时空结果，并发现\resultblank{填写机制性结论}。
+针对问题二，本文从 $t=0$ 重新计算，采用附录~3 的状态相关物性建立固定半径下的热湿耦合模型，并用守恒有限体积与联立 BDF 求解；积分器内部以 $z=\log C$ 保持含水率正性。$3\,\mathrm{h}$ 时中心和表面温度分别为 $49.8495$ 和 $49.9664\,{}^\circ\mathrm{C}$，含水率分别为 $1.7662$ 和 $1.0081\,\mathrm{kg/kg}$；网格与时间加密检验显示表中数值的四位小数稳定。
 
-针对问题三，本文以药材内部最大含水率低于 $0.15\,\mathrm{kg/kg}$ 为终止条件，通过\resultblank{事件定位方法}确定烘干时长为\resultblank{结果及单位}，同时完成规定间隔的结果导出与一致性校验。
+针对问题三，本文以药材内部最大含水率达到 $0.15\,\mathrm{kg/kg}$ 的临界时刻作为终点，通过 BDF 连续插值上的事件求根得到烘干时长 $57.4722\,\mathrm h$；全过程径向单调性检验表明圆心为控制位置。
 
 针对问题四，本文将实测半径变化引入归一化空间坐标，在移动边界上重建水分输运模型，并通过\resultblank{固定半径/变化半径等控制变量比较}区分尺寸收缩与物性公式变化的作用，得到烘干时长为\resultblank{结果及单位}。
 
@@ -136,7 +136,10 @@
 \input{sections/model_preparation}
 \input{sections/5_q1_preheating}
 \endgroup
+\begingroup
+\linespread{1.20}\selectfont
 \input{sections/6_q2_full_drying}
+\endgroup
 \input{sections/7_q3_end_time}
 \input{sections/8_q4_shrinkage}
 \input{sections/9_verification_sensitivity}
