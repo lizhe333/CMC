@@ -1,0 +1,115 @@
+{
+  "run_id": null,
+  "run_config": null,
+  "segment_records": [
+    {
+      "run_id": "q4_run",
+      "segment": "segment",
+      "block_index": 0,
+      "start_s": 0.0,
+      "requested_end_s": 1.0,
+      "actual_end_s": 1.0,
+      "accepted_states": 17,
+      "midpoint_states": 16,
+      "max_step_used_s": 0.5,
+      "accepted_g_min": 0.00019999920451360675,
+      "accepted_g_max": 0.0012000000000000066,
+      "midpoint_g_min": 0.00025613032386331835,
+      "midpoint_g_max": 0.0011999681372432125,
+      "output_monitor_states": 1,
+      "output_monitor_g_min": 0.00019999920451366227,
+      "output_monitor_g_max": 0.00019999920451366227,
+      "monitor_sequence_states": 33,
+      "monitor_sequence_audit": {
+        "status": "CHECKED",
+        "sample_count": 33,
+        "time_start_s": 0.0,
+        "time_end_s": 1.0,
+        "min_prior_g_N": 0.00025613032386331835,
+        "max_prior_g_N": 0.0012000000000000066,
+        "min_root_or_later_g_N": 0.00019999920451360675,
+        "downward_sign_changes": 0,
+        "upward_sign_changes": 0,
+        "prior_positive": true,
+        "no_upward_recrossing": true
+      },
+      "monitor_recovery_audit": {
+        "status": "CHECKED",
+        "sample_count": 33,
+        "time_start_s": 0.0,
+        "time_end_s": 1.0,
+        "prior_positive": true,
+        "nonpositive_before_event": false,
+        "any_nonpositive": false,
+        "positive_negative_positive": false,
+        "first_downward_bracket_s": null,
+        "needs_recovery": false
+      },
+      "monitor_recovery_attempts": 0,
+      "monitor_recovery_history": [],
+      "event_detected": false,
+      "evidence_file": null
+    },
+    {
+      "run_id": "q4_run",
+      "segment": "segment",
+      "block_index": 1,
+      "start_s": 1.0,
+      "requested_end_s": 2.0,
+      "actual_end_s": 1.1999988624395692,
+      "accepted_states": 13,
+      "midpoint_states": 12,
+      "max_step_used_s": 0.5,
+      "accepted_g_min": 0.0,
+      "accepted_g_max": 0.00019999920451360675,
+      "midpoint_g_min": 1.7325263943213098e-06,
+      "midpoint_g_max": 0.00019996739186564638,
+      "output_monitor_states": 1,
+      "output_monitor_g_min": 0.00019999920451360675,
+      "output_monitor_g_max": 0.00019999920451360675,
+      "monitor_sequence_states": 25,
+      "monitor_sequence_audit": {
+        "status": "CHECKED",
+        "sample_count": 25,
+        "time_start_s": 1.0,
+        "time_end_s": 1.1999988624395692,
+        "min_prior_g_N": 1.7325263943213098e-06,
+        "max_prior_g_N": 0.00019999920451360675,
+        "min_root_or_later_g_N": 0.0,
+        "downward_sign_changes": 1,
+        "upward_sign_changes": 0,
+        "prior_positive": true,
+        "no_upward_recrossing": true
+      },
+      "monitor_recovery_audit": {
+        "status": "CHECKED",
+        "sample_count": 25,
+        "time_start_s": 1.0,
+        "time_end_s": 1.1999988624395692,
+        "prior_positive": true,
+        "nonpositive_before_event": false,
+        "any_nonpositive": true,
+        "positive_negative_positive": false,
+        "first_downward_bracket_s": [
+          1.198266336150983,
+          1.1999988624395692
+        ],
+        "needs_recovery": false
+      },
+      "monitor_recovery_attempts": 0,
+      "monitor_recovery_history": [],
+      "event_detected": true,
+      "evidence_file": null
+    }
+  ],
+  "g_evidence_summary": {
+    "full_run_sequence_audit": {
+      "status": "CHECKED",
+      "prior_positive": true,
+      "downward_sign_changes": 1,
+      "upward_sign_changes": 1,
+      "no_upward_recrossing": false
+    }
+  },
+  "block_evidence_required": true
+}

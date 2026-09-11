@@ -1,0 +1,31 @@
+{
+  "source_fields": "results/q3/q3_fields.npz",
+  "source_event": "results/q3/q3_event.npz",
+  "radii_cm": [
+    0.0,
+    1.0,
+    2.0
+  ],
+  "formula_source": "q2_solver.material_properties q2 branch",
+  "series": {
+    "center": {
+      "peak_time_s": 8880.0,
+      "peak_time_h": 2.466666666666667,
+      "peak_D_m2_s": 1.2521792095556744e-08,
+      "endpoint_D_m2_s": 8.001208146652626e-10
+    },
+    "half_radius": {
+      "peak_time_s": 8700.0,
+      "peak_time_h": 2.4166666666666665,
+      "peak_D_m2_s": 1.2193061399342109e-08,
+      "endpoint_D_m2_s": 6.488887864723386e-10
+    },
+    "surface": {
+      "peak_time_s": 7260.0,
+      "peak_time_h": 2.0166666666666666,
+      "peak_D_m2_s": 1.0750747388096999e-08,
+      "endpoint_D_m2_s": 3.1245666880117715e-12
+    }
+  },
+  "endpoint_center_surface_ratio": 256.0741678950679
+}

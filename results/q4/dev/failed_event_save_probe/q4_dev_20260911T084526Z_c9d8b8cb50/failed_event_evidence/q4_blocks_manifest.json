@@ -1,0 +1,42 @@
+{
+  "run_id": null,
+  "run_config": null,
+  "segment_records": [
+    {
+      "run_id": "q4_run",
+      "segment": "segment",
+      "block_index": 0,
+      "start_s": 0.0,
+      "requested_end_s": 1.0,
+      "actual_end_s": 1.0,
+      "accepted_states": 17,
+      "midpoint_states": 16,
+      "max_step_used_s": 0.5,
+      "accepted_g_min": 0.00019999920451360675,
+      "accepted_g_max": 0.0012000000000000066,
+      "midpoint_g_min": 0.00025613032386331835,
+      "midpoint_g_max": 0.0011999681372432125,
+      "event_detected": false,
+      "evidence_file": null
+    },
+    {
+      "run_id": "q4_run",
+      "segment": "segment",
+      "block_index": 1,
+      "start_s": 1.0,
+      "requested_end_s": 2.0,
+      "actual_end_s": 1.1999988624395692,
+      "accepted_states": 13,
+      "midpoint_states": 12,
+      "max_step_used_s": 0.5,
+      "accepted_g_min": 0.0,
+      "accepted_g_max": 0.00019999920451360675,
+      "midpoint_g_min": 1.7325263943213098e-06,
+      "midpoint_g_max": 0.00019996739186564638,
+      "event_detected": true,
+      "evidence_file": null
+    }
+  ],
+  "g_evidence_summary": null,
+  "block_evidence_required": true
+}

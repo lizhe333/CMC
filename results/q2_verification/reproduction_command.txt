@@ -1,0 +1,4 @@
+& 'C:/Users/32898/anaconda3/python.exe' ./code/q2_supplementary_validation.py degradation
+& 'C:/Users/32898/anaconda3/python.exe' ./code/q2_supplementary_validation.py balance
+& 'C:/Users/32898/anaconda3/python.exe' ./code/q2_supplementary_validation.py all
+& 'C:/Users/32898/anaconda3/python.exe' ./code/plot_q2_supplementary_validation.py all

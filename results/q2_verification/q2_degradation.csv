@@ -1,0 +1,5 @@
+﻿case,n_intervals,temperature_max_abs_C,temperature_time_s,temperature_radius_cm,moisture_max_abs_kg_per_kg,moisture_time_s,moisture_radius_cm,all_output_rounded_equal,paper_rounded_equal,q1_runtime_s,q2_runtime_s,q1_temperature_max_abs_C,q1_moisture_max_abs_kg_per_kg,q1_pass,q2_temperature_max_abs_C,q2_moisture_max_abs_kg_per_kg,q2_pass,all_output_rounded_equal_q1,all_output_rounded_equal_q2
+N=320,320,1.938226553477307e-06,660,2.0,1.186906350980621e-09,780,2.0,False,True,1.7415935000026366,5.427489400004561,,,,,,,,
+N=640,640,4.815332808050243e-07,659,2.0,1.4959564698102668e-09,420,2.0,False,True,3.362612699995225,7.116153299997677,,,,,,,,
+N=1280,1280,1.3190326697554156e-07,660,2.0,1.815060324261708e-09,480,2.0,False,True,4.088352500002657,9.969312799999898,,,,,,,,
+time_refinement,1280,,,,,,,,,nan,19.712897500001418,2.7158790771864005e-08,1.9558030750488342e-09,True,3.1687285684256494e-08,4.6441561707410983e-10,True,True,False

@@ -607,6 +607,97 @@ $$
 `q2_validation.json` 与 `diagnostics/q2_n*.json`。本阶段不修改 `paper/`。
 
 
+### 10.5 补充退化与有效含水率模型积分平衡验证（2026-09-11）
+
+本轮补充实验与正式结果目录隔离，只读取同一附件 1 边界并保留
+results/q2_verification/source_snapshot/q2_solver.py 快照；没有修改
+results/q2、正式工作簿或 paper/。退化实验用于核对 Q1 物性分支和
+Q2 退化分支的实现一致性，积分实验用于核对**有效含水率模型的离散积分平衡**，
+不把有效干基变量的代数闭合检查表述为湿物料总质量的严格守恒。
+退化对照中 Q1 和 Q2 保留各自原始空间、边界和热表面离散；Q1 检查项中的
+“same spatial discretization”只描述 Q1 内部热方程与水分方程的共同网格口径，
+不表示两个程序跨边界或热表面离散相同。
+
+复现命令为（均在项目根目录执行）：
+
+    Set-Location D:/mathsmatical_modeling/compition/2026/CUMCM_2026_A
+    & 'C:/Users/32898/anaconda3/python.exe' ./code/q2_supplementary_validation.py degradation
+    & 'C:/Users/32898/anaconda3/python.exe' ./code/q2_supplementary_validation.py balance
+    & 'C:/Users/32898/anaconda3/python.exe' ./code/plot_q2_supplementary_validation.py degradation
+    & 'C:/Users/32898/anaconda3/python.exe' ./code/plot_q2_supplementary_validation.py balance
+    Set-Location D:/mathsmatical_modeling/compition/2026/CUMCM_2026_A/code
+    & 'C:/Users/32898/anaconda3/python.exe' -m unittest test_q2_supplementary_contracts test_q2_contracts test_q3_contracts -v
+    Set-Location ..
+
+退化实验的候选网格记录如下。每个最大值都在 $0\leq t\leq1800$ s、
+21 个规定径向点上取最大，最终网格不需要扩展到 $N=2560$。
+
+| 网格 $N$ | 最大温度差（°C） | 发生位置 | 最大含水率差（kg/kg） | 发生位置 |
+|---:|---:|---|---:|---|
+| 320 | $1.938227\times10^{-6}$ | $t=660$ s，$r=2.0$ cm | $1.186906\times10^{-9}$ | $t=780$ s，$r=2.0$ cm |
+| 640 | $4.815333\times10^{-7}$ | $t=659$ s，$r=2.0$ cm | $1.495956\times10^{-9}$ | $t=420$ s，$r=2.0$ cm |
+| 1280 | $1.319033\times10^{-7}$ | $t=660$ s，$r=2.0$ cm | $1.815060\times10^{-9}$ | $t=480$ s，$r=2.0$ cm |
+
+最终退化状态为 PASS，运行时间约 $59.265$ s。$N=1280$ 的 Q1 时间精化差
+为 $2.715879\times10^{-8}\,^\circ\mathrm C$ 和
+$1.955803\times10^{-9}$ kg/kg，分别发生在 $(420\ {\rm s},2.0\ {\rm cm})$
+和 $(60\ {\rm s},2.0\ {\rm cm})$；Q2 时间精化差为
+$3.168729\times10^{-8}\,^\circ\mathrm C$ 和
+$4.644156\times10^{-10}$ kg/kg，分别发生在
+$(1380\ {\rm s},2.0\ {\rm cm})$ 和 $(1\ {\rm s},2.0\ {\rm cm})$。论文规定时刻和半径
+的四位小数子集保持一致；全时空数组的四位小数并不强制逐点相同，未作为门禁。
+
+积分平衡实验使用正式 Q2 设置 $\mathrm{rtol}=10^{-10}$、
+$\mathrm{atol}=10^{-12}$、最大步长 $2.5$ s，并用
+$\mathrm{rtol}=10^{-11}$、$\mathrm{atol}=10^{-13}$、最大步长 $1.25$ s
+做时间精化；两者均为 $N=10240$、18 个 600 s 分段。Gauss--Legendre 候选阶为
+4、8、16、32，基准和精化均选择 GL4--GL8，最终报告阶为 GL8。
+
+| 指标 | 基准设置 | 时间精化设置 |
+|---|---:|---:|
+| 逐秒节点最大 $|B|$ 及发生时刻 | $1.088507\times10^{-11}$，10560 s | $1.403766\times10^{-12}$，7560 s |
+| accepted-node 最大 $|B|$ 及发生时刻 | $1.117773\times10^{-11}$，10560.0356 s | $1.490363\times10^{-12}$，5760.0190 s |
+| selected GL 求积 floor | $8.881784\times10^{-16}$ | $8.881784\times10^{-16}$ |
+
+积分门限为 $10^{-7}$ kg/kg，四组整数节点和 accepted-node 最大残差均通过。
+时间门禁的平台阈值为 $10^{-9}$；基准和精化的联合最大残差分别为
+$1.117773\times10^{-11}$ 和 $1.490363\times10^{-12}$，因此平台判据通过。
+即使按非平台公式计算，联合残差下降量
+$9.687362\times10^{-12}$ 也大于两次求积 floor 之和
+$1.776357\times10^{-15}$。逐秒梯形基准的最大 $|B|$ 为
+$5.037692\times10^{-7}$ kg/kg，作为原方法的对照保留，不替代 accepted-node
+与边界节点并集上的 GL 检查。
+
+四个检查时刻的基准 GL8 结果如下；$B$ 带符号，表中同时列出其绝对值。
+
+| 时刻 | 平均含水率（kg/kg） | $B_{\rm GL8}$（kg/kg） | $|B_{\rm GL8}|$（kg/kg） | 逐秒梯形 $B$（kg/kg） |
+|---:|---:|---:|---:|---:|
+| 0.5 h | 2.2826406262 | $-2.311928\times10^{-12}$ | $2.311928\times10^{-12}$ | $5.032109\times10^{-7}$ |
+| 1 h | 2.0649642254 | $-2.948308\times10^{-12}$ | $2.948308\times10^{-12}$ | $5.036658\times10^{-7}$ |
+| 2 h | 1.6900860834 | $-5.765166\times10^{-12}$ | $5.765166\times10^{-12}$ | $5.037271\times10^{-7}$ |
+| 3 h | 1.38252705498 | $-1.049516\times10^{-11}$ | $1.049516\times10^{-11}$ | $5.037661\times10^{-7}$ |
+
+独立 dense 轨迹重新计算的平均含水率与积分器输出最大差为
+$8.881784\times10^{-15}$（阈值 $10^{-10}$）。补充脚本还记录了基准与精化场的
+原始数组对照：全网格最大温度差为 $4.198599\times10^{-7}\,^\circ\mathrm C$，
+最大含水率差为 $2.609429\times10^{-9}$ kg/kg；论文时刻和五个半径的最大差分别为
+$6.473975\times10^{-9}\,^\circ\mathrm C$ 与 $4.703904\times10^{-11}$ kg/kg，
+四位小数子集一致。
+
+补充结果索引如下：
+
+| 内容 | 文件 |
+|---|---|
+| 退化 JSON、CSV 和三个网格 NPZ | results/q2_verification/q2_degradation.json、q2_degradation.csv、q2_degradation_N320/640/1280.npz |
+| 积分 JSON、CSV、accepted 节点与分段记录 | q2_balance.json、q2_balance.csv、q2_balance_accepted_nodes.csv、q2_balance_segments.json |
+| 基准和时间精化原始数组 | q2_balance.npz、q2_balance_time_refined.npz |
+| 候选图 | q2_degradation_comparison.png/pdf、q2_balance_residuals.png/pdf |
+| 环境、命令与源快照 | environment.json、reproduction_command.txt、source_snapshot/q2_solver.py |
+
+候选平衡图使用对数纵轴显示 $E_{\rm bal}=|B|$，保留全 3 h 和初始 60 s
+局部视图；$t=0$ 的零残差不人为替换，只从正时间节点绘制。图形脚本只读上述
+NPZ/JSON，不调用求解器。27 项补充、Q2 与 Q3 合同测试全部通过。
+
 ## 本轮论文表达修订（2026-09-11）
 
 按用户已汇总意见，使用 5writing 原位修改问题二。正文仍按问题分析、模型建立、模型求解、结果分析组织；求解详略参照第一问，保留守恒通量、联立 BDF、正值变量及简短收敛证据。逐控制体公式、Jacobian、状态排列与工作簿存储细节保留在本报告和代码中，正文不再展开。题目物性、初边值关系和既有数值不变。

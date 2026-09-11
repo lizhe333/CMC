@@ -1,0 +1,413 @@
+{
+  "experiment": "q2_degradation_reproduction",
+  "status": "PASS",
+  "boundary": "D:\\mathsmatical_modeling\\compition\\2026\\附件1.xlsx",
+  "grids": [
+    320,
+    640,
+    1280
+  ],
+  "end_s": 1800,
+  "records": [
+    {
+      "n_intervals": 320,
+      "dr_m": 6.25e-05,
+      "end_s": 1800,
+      "q1_settings": {
+        "solver": "q1.solve_bdf",
+        "rtol": 1e-11,
+        "atol": 9.999999999999999e-14,
+        "max_step_s": 5.0,
+        "sheet": "Sheet1"
+      },
+      "q2_degraded_settings": {
+        "solver": "q2.integrate_case(property_model='q1')",
+        "rtol": 1e-11,
+        "atol": 1e-13,
+        "max_step_s": 2.5,
+        "property_model": "q1",
+        "sheet": "Sheet1"
+      },
+      "q1_runtime_s": 1.7415935000026366,
+      "q2_runtime_s": 5.427489400004561,
+      "q1_checks": {
+        "method": "BDF with analytic sparse Jacobian, same spatial discretization",
+        "n_intervals": 320,
+        "dr_m": 6.25e-05,
+        "rtol": 1e-11,
+        "atol": 9.999999999999999e-14,
+        "max_step_s": 5.0,
+        "runtime_s": 1.7413741999989725,
+        "heat_nfev": 6711,
+        "moisture_nfev": 2872,
+        "temperature_range_C": [
+          27.99999999999974,
+          36.78556019951613
+        ],
+        "moisture_range_kg_per_kg": [
+          1.5102413552396243,
+          2.5500000000000003
+        ],
+        "max_mass_balance_residual": 3.1086244689504383e-15,
+        "method_scope": "The same-spatial-discretization phrase describes only Q1's internal heat/moisture grid; it does not assert cross-program boundary or thermal-surface discretization identity.",
+        "cross_program_discretization_scope": "Q1 and Q2 retain their original spatial and boundary discretizations; their thermal surface treatments differ."
+      },
+      "q2_integrator": {
+        "nfev": 6825,
+        "njev": 85,
+        "nlu": 688,
+        "positivity_retries": 0
+      },
+      "comparison": {
+        "temperature": {
+          "max_abs": 1.938226553477307e-06,
+          "time_s": 660,
+          "radius_cm": 2.0,
+          "time_index": 660,
+          "radius_index": 20
+        },
+        "moisture": {
+          "max_abs": 1.186906350980621e-09,
+          "time_s": 780,
+          "radius_cm": 2.0,
+          "time_index": 780,
+          "radius_index": 20
+        },
+        "temperature_mean_abs": 1.1152505743143998e-06,
+        "moisture_mean_abs": 1.4400723987776269e-11,
+        "all_output_rounded_equal": false,
+        "paper_times_s": [
+          1800
+        ],
+        "paper_radius_cm": [
+          0.0,
+          2.0
+        ],
+        "paper_temperature_max_abs_C": 1.2625329190996126e-06,
+        "paper_moisture_max_abs_kg_per_kg": 9.588152494188762e-11,
+        "paper_rounded_equal": true,
+        "temperature_threshold_C": 5e-05,
+        "moisture_threshold_kg_per_kg": 5e-05,
+        "temperature_threshold_pass": true,
+        "moisture_threshold_pass": true,
+        "pass": true
+      },
+      "finest_attempted_grid": false
+    },
+    {
+      "n_intervals": 640,
+      "dr_m": 3.125e-05,
+      "end_s": 1800,
+      "q1_settings": {
+        "solver": "q1.solve_bdf",
+        "rtol": 1e-11,
+        "atol": 9.999999999999999e-14,
+        "max_step_s": 5.0,
+        "sheet": "Sheet1"
+      },
+      "q2_degraded_settings": {
+        "solver": "q2.integrate_case(property_model='q1')",
+        "rtol": 1e-11,
+        "atol": 1e-13,
+        "max_step_s": 2.5,
+        "property_model": "q1",
+        "sheet": "Sheet1"
+      },
+      "q1_runtime_s": 3.362612699995225,
+      "q2_runtime_s": 7.116153299997677,
+      "q1_checks": {
+        "method": "BDF with analytic sparse Jacobian, same spatial discretization",
+        "n_intervals": 640,
+        "dr_m": 3.125e-05,
+        "rtol": 1e-11,
+        "atol": 9.999999999999999e-14,
+        "max_step_s": 5.0,
+        "runtime_s": 3.3624199999976554,
+        "heat_nfev": 6678,
+        "moisture_nfev": 2928,
+        "temperature_range_C": [
+          27.999999999998977,
+          36.785560310138244
+        ],
+        "moisture_range_kg_per_kg": [
+          1.5102362911926455,
+          2.5500000000000007
+        ],
+        "max_mass_balance_residual": 1.3322676295501878e-15,
+        "method_scope": "The same-spatial-discretization phrase describes only Q1's internal heat/moisture grid; it does not assert cross-program boundary or thermal-surface discretization identity.",
+        "cross_program_discretization_scope": "Q1 and Q2 retain their original spatial and boundary discretizations; their thermal surface treatments differ."
+      },
+      "q2_integrator": {
+        "nfev": 6861,
+        "njev": 113,
+        "nlu": 724,
+        "positivity_retries": 0
+      },
+      "comparison": {
+        "temperature": {
+          "max_abs": 4.815332808050243e-07,
+          "time_s": 659,
+          "radius_cm": 2.0,
+          "time_index": 659,
+          "radius_index": 20
+        },
+        "moisture": {
+          "max_abs": 1.4959564698102668e-09,
+          "time_s": 420,
+          "radius_cm": 2.0,
+          "time_index": 420,
+          "radius_index": 20
+        },
+        "temperature_mean_abs": 2.7881161371659476e-07,
+        "moisture_mean_abs": 1.4006822547574567e-11,
+        "all_output_rounded_equal": false,
+        "paper_times_s": [
+          1800
+        ],
+        "paper_radius_cm": [
+          0.0,
+          2.0
+        ],
+        "paper_temperature_max_abs_C": 3.1563327951289466e-07,
+        "paper_moisture_max_abs_kg_per_kg": 9.393019695380644e-11,
+        "paper_rounded_equal": true,
+        "temperature_threshold_C": 5e-05,
+        "moisture_threshold_kg_per_kg": 5e-05,
+        "temperature_threshold_pass": true,
+        "moisture_threshold_pass": true,
+        "pass": true
+      },
+      "finest_attempted_grid": false
+    },
+    {
+      "n_intervals": 1280,
+      "dr_m": 1.5625e-05,
+      "end_s": 1800,
+      "q1_settings": {
+        "solver": "q1.solve_bdf",
+        "rtol": 1e-11,
+        "atol": 9.999999999999999e-14,
+        "max_step_s": 5.0,
+        "sheet": "Sheet1"
+      },
+      "q2_degraded_settings": {
+        "solver": "q2.integrate_case(property_model='q1')",
+        "rtol": 1e-11,
+        "atol": 1e-13,
+        "max_step_s": 2.5,
+        "property_model": "q1",
+        "sheet": "Sheet1"
+      },
+      "q1_runtime_s": 4.088352500002657,
+      "q2_runtime_s": 9.969312799999898,
+      "q1_checks": {
+        "method": "BDF with analytic sparse Jacobian, same spatial discretization",
+        "n_intervals": 1280,
+        "dr_m": 1.5625e-05,
+        "rtol": 1e-11,
+        "atol": 9.999999999999999e-14,
+        "max_step_s": 5.0,
+        "runtime_s": 4.088197000004584,
+        "heat_nfev": 6724,
+        "moisture_nfev": 2960,
+        "temperature_range_C": [
+          27.999999999998366,
+          36.78556033774068
+        ],
+        "moisture_range_kg_per_kg": [
+          1.5102350253867944,
+          2.5500000000000007
+        ],
+        "max_mass_balance_residual": 1.3322676295501878e-15,
+        "method_scope": "The same-spatial-discretization phrase describes only Q1's internal heat/moisture grid; it does not assert cross-program boundary or thermal-surface discretization identity.",
+        "cross_program_discretization_scope": "Q1 and Q2 retain their original spatial and boundary discretizations; their thermal surface treatments differ."
+      },
+      "q2_integrator": {
+        "nfev": 6797,
+        "njev": 94,
+        "nlu": 705,
+        "positivity_retries": 0
+      },
+      "comparison": {
+        "temperature": {
+          "max_abs": 1.3190326697554156e-07,
+          "time_s": 660,
+          "radius_cm": 2.0,
+          "time_index": 660,
+          "radius_index": 20
+        },
+        "moisture": {
+          "max_abs": 1.815060324261708e-09,
+          "time_s": 480,
+          "radius_cm": 2.0,
+          "time_index": 480,
+          "radius_index": 20
+        },
+        "temperature_mean_abs": 6.965339700727765e-08,
+        "moisture_mean_abs": 1.959201216222259e-11,
+        "all_output_rounded_equal": false,
+        "paper_times_s": [
+          1800
+        ],
+        "paper_radius_cm": [
+          0.0,
+          2.0
+        ],
+        "paper_temperature_max_abs_C": 7.897921250332729e-08,
+        "paper_moisture_max_abs_kg_per_kg": 1.6824897031142427e-10,
+        "paper_rounded_equal": true,
+        "temperature_threshold_C": 5e-05,
+        "moisture_threshold_kg_per_kg": 5e-05,
+        "temperature_threshold_pass": true,
+        "moisture_threshold_pass": true,
+        "pass": true
+      },
+      "finest_attempted_grid": true
+    },
+    {
+      "case": "time_refinement",
+      "n_intervals": 1280,
+      "q1": {
+        "baseline_settings": {
+          "solver": "q1.solve_bdf",
+          "rtol": 1e-11,
+          "atol": 9.999999999999999e-14,
+          "max_step_s": 5.0,
+          "property_model": "q1"
+        },
+        "refined_settings": {
+          "solver": "q1.solve_bdf",
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "max_step_s": 5.0,
+          "property_model": "q1"
+        },
+        "comparison": {
+          "temperature": {
+            "max_abs": 2.7158790771864005e-08,
+            "time_s": 420,
+            "radius_cm": 2.0,
+            "time_index": 420,
+            "radius_index": 20
+          },
+          "moisture": {
+            "max_abs": 1.9558030750488342e-09,
+            "time_s": 60,
+            "radius_cm": 2.0,
+            "time_index": 60,
+            "radius_index": 20
+          },
+          "temperature_mean_abs": 1.4032488640071648e-10,
+          "moisture_mean_abs": 1.9394467605927e-11,
+          "all_output_rounded_equal": true,
+          "paper_times_s": [
+            1800
+          ],
+          "paper_radius_cm": [
+            0.0,
+            2.0
+          ],
+          "paper_temperature_max_abs_C": 5.573141947934346e-10,
+          "paper_moisture_max_abs_kg_per_kg": 1.7059709200850648e-10,
+          "paper_rounded_equal": true,
+          "temperature_threshold_C": 1e-07,
+          "moisture_threshold_kg_per_kg": 1e-08,
+          "temperature_threshold_pass": true,
+          "moisture_threshold_pass": true,
+          "pass": true
+        },
+        "refined_checks": {
+          "method": "BDF with analytic sparse Jacobian, same spatial discretization",
+          "n_intervals": 1280,
+          "dr_m": 1.5625e-05,
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "max_step_s": 5.0,
+          "runtime_s": 7.128941599999962,
+          "heat_nfev": 9425,
+          "moisture_nfev": 4558,
+          "temperature_range_C": [
+            27.999999999998593,
+            36.78556033829799
+          ],
+          "moisture_range_kg_per_kg": [
+            1.5102350252161973,
+            2.550000000000001
+          ],
+          "max_mass_balance_residual": 1.3322676295501878e-15,
+          "method_scope": "The same-spatial-discretization phrase describes only Q1's internal heat/moisture grid; it does not assert cross-program boundary or thermal-surface discretization identity.",
+          "cross_program_discretization_scope": "Q1 and Q2 retain their original spatial and boundary discretizations; their thermal surface treatments differ."
+        }
+      },
+      "q2": {
+        "baseline_settings": {
+          "rtol": 1e-11,
+          "atol": 1e-13,
+          "max_step_s": 2.5,
+          "property_model": "q1"
+        },
+        "refined_settings": {
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "max_step_s": 1.25,
+          "property_model": "q1"
+        },
+        "comparison": {
+          "temperature": {
+            "max_abs": 3.1687285684256494e-08,
+            "time_s": 1380,
+            "radius_cm": 2.0,
+            "time_index": 1380,
+            "radius_index": 20
+          },
+          "moisture": {
+            "max_abs": 4.6441561707410983e-10,
+            "time_s": 1,
+            "radius_cm": 2.0,
+            "time_index": 1,
+            "radius_index": 20
+          },
+          "temperature_mean_abs": 2.0337449946503733e-10,
+          "moisture_mean_abs": 2.8574162681153766e-12,
+          "all_output_rounded_equal": false,
+          "paper_times_s": [
+            1800
+          ],
+          "paper_radius_cm": [
+            0.0,
+            2.0
+          ],
+          "paper_temperature_max_abs_C": 9.757030738910544e-10,
+          "paper_moisture_max_abs_kg_per_kg": 4.410027898416047e-12,
+          "paper_rounded_equal": true,
+          "temperature_threshold_C": 1e-07,
+          "moisture_threshold_kg_per_kg": 1e-08,
+          "temperature_threshold_pass": true,
+          "moisture_threshold_pass": true,
+          "pass": true
+        }
+      }
+    }
+  ],
+  "runtime_s": 59.264920800000255,
+  "gate_thresholds": {
+    "temperature_C": 5e-05,
+    "moisture_kg_per_kg": 5e-05,
+    "time_temperature_C": 1e-07,
+    "time_moisture_kg_per_kg": 1e-08,
+    "paper_times": [
+      1800
+    ],
+    "paper_radius_cm": [
+      0.0,
+      2.0
+    ]
+  },
+  "source_snapshot": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q2_verification\\source_snapshot\\q2_solver.py",
+  "comparison_scope": {
+    "q1_method_label": "BDF with analytic sparse Jacobian, same spatial discretization",
+    "q1_method_scope": "The same-spatial-discretization phrase describes only Q1's internal heat/moisture grid and does not assert cross-program boundary or surface discretization identity.",
+    "cross_program_scope": "Q1 and Q2 retain their original spatial and boundary discretizations; their thermal surface treatments differ."
+  },
+  "interpretation": "Q1 solve_bdf and q2.integrate_case(property_model='q1') are compared as a constitutive degradation/reproduction audit; this is not a model accuracy claim."
+}

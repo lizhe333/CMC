@@ -1,0 +1,13 @@
+{
+  "created_by": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\code\\q2_supplementary_validation.py",
+  "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+  "executable": "C:\\Users\\32898\\anaconda3\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "numpy": "2.1.3",
+  "scipy": "1.15.3",
+  "boundary": "D:\\mathsmatical_modeling\\compition\\2026\\附件1.xlsx",
+  "output": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q2_verification",
+  "source_snapshot": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q2_verification\\source_snapshot\\q2_solver.py",
+  "formal_results_untouched": true,
+  "paper_untouched": true
+}

@@ -1,0 +1,19 @@
+\begin{table}[H]
+  \centering
+  \fontsize{10.5pt}{12.6pt}\selectfont
+  \renewcommand{\arraystretch}{1.25}
+  \captionsetup{font=small,labelfont=bf,textfont=bf}
+  \caption{临界烘干时间的网格收敛}
+  \label{tab:q3-convergence}
+  \begin{tabularx}{0.82\textwidth}{|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
+    \hline
+    网格等级 & 区间数 $N$ & 达标时间/h & 相邻差异/s \\
+    \hline
+    粗 & 2560  & 57.471395 & --- \\
+    \hline
+    中 & 5120  & 57.472066 & 2.42 \\
+    \hline
+    细 & 10240 & 57.472244 & 0.64 \\
+    \hline
+  \end{tabularx}
+\end{table}

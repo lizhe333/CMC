@@ -1,0 +1,1338 @@
+{
+  "degradation": {
+    "experiment": "q2_degradation_reproduction",
+    "status": "PASS",
+    "boundary": "D:\\mathsmatical_modeling\\compition\\2026\\附件1.xlsx",
+    "grids": [
+      320,
+      640,
+      1280
+    ],
+    "end_s": 1800,
+    "records": [
+      {
+        "n_intervals": 320,
+        "dr_m": 6.25e-05,
+        "end_s": 1800,
+        "q1_settings": {
+          "solver": "q1.solve_bdf",
+          "rtol": 1e-11,
+          "atol": 9.999999999999999e-14,
+          "max_step_s": 5.0,
+          "sheet": "Sheet1"
+        },
+        "q2_degraded_settings": {
+          "solver": "q2.integrate_case(property_model='q1')",
+          "rtol": 1e-11,
+          "atol": 1e-13,
+          "max_step_s": 2.5,
+          "property_model": "q1",
+          "sheet": "Sheet1"
+        },
+        "q1_runtime_s": 1.7415935000026366,
+        "q2_runtime_s": 5.427489400004561,
+        "q1_checks": {
+          "method": "BDF with analytic sparse Jacobian, same spatial discretization",
+          "n_intervals": 320,
+          "dr_m": 6.25e-05,
+          "rtol": 1e-11,
+          "atol": 9.999999999999999e-14,
+          "max_step_s": 5.0,
+          "runtime_s": 1.7413741999989725,
+          "heat_nfev": 6711,
+          "moisture_nfev": 2872,
+          "temperature_range_C": [
+            27.99999999999974,
+            36.78556019951613
+          ],
+          "moisture_range_kg_per_kg": [
+            1.5102413552396243,
+            2.5500000000000003
+          ],
+          "max_mass_balance_residual": 3.1086244689504383e-15,
+          "method_scope": "The same-spatial-discretization phrase describes only Q1's internal heat/moisture grid; it does not assert cross-program boundary or thermal-surface discretization identity.",
+          "cross_program_discretization_scope": "Q1 and Q2 retain their original spatial and boundary discretizations; their thermal surface treatments differ."
+        },
+        "q2_integrator": {
+          "nfev": 6825,
+          "njev": 85,
+          "nlu": 688,
+          "positivity_retries": 0
+        },
+        "comparison": {
+          "temperature": {
+            "max_abs": 1.938226553477307e-06,
+            "time_s": 660,
+            "radius_cm": 2.0,
+            "time_index": 660,
+            "radius_index": 20
+          },
+          "moisture": {
+            "max_abs": 1.186906350980621e-09,
+            "time_s": 780,
+            "radius_cm": 2.0,
+            "time_index": 780,
+            "radius_index": 20
+          },
+          "temperature_mean_abs": 1.1152505743143998e-06,
+          "moisture_mean_abs": 1.4400723987776269e-11,
+          "all_output_rounded_equal": false,
+          "paper_times_s": [
+            1800
+          ],
+          "paper_radius_cm": [
+            0.0,
+            2.0
+          ],
+          "paper_temperature_max_abs_C": 1.2625329190996126e-06,
+          "paper_moisture_max_abs_kg_per_kg": 9.588152494188762e-11,
+          "paper_rounded_equal": true,
+          "temperature_threshold_C": 5e-05,
+          "moisture_threshold_kg_per_kg": 5e-05,
+          "temperature_threshold_pass": true,
+          "moisture_threshold_pass": true,
+          "pass": true
+        },
+        "finest_attempted_grid": false
+      },
+      {
+        "n_intervals": 640,
+        "dr_m": 3.125e-05,
+        "end_s": 1800,
+        "q1_settings": {
+          "solver": "q1.solve_bdf",
+          "rtol": 1e-11,
+          "atol": 9.999999999999999e-14,
+          "max_step_s": 5.0,
+          "sheet": "Sheet1"
+        },
+        "q2_degraded_settings": {
+          "solver": "q2.integrate_case(property_model='q1')",
+          "rtol": 1e-11,
+          "atol": 1e-13,
+          "max_step_s": 2.5,
+          "property_model": "q1",
+          "sheet": "Sheet1"
+        },
+        "q1_runtime_s": 3.362612699995225,
+        "q2_runtime_s": 7.116153299997677,
+        "q1_checks": {
+          "method": "BDF with analytic sparse Jacobian, same spatial discretization",
+          "n_intervals": 640,
+          "dr_m": 3.125e-05,
+          "rtol": 1e-11,
+          "atol": 9.999999999999999e-14,
+          "max_step_s": 5.0,
+          "runtime_s": 3.3624199999976554,
+          "heat_nfev": 6678,
+          "moisture_nfev": 2928,
+          "temperature_range_C": [
+            27.999999999998977,
+            36.785560310138244
+          ],
+          "moisture_range_kg_per_kg": [
+            1.5102362911926455,
+            2.5500000000000007
+          ],
+          "max_mass_balance_residual": 1.3322676295501878e-15,
+          "method_scope": "The same-spatial-discretization phrase describes only Q1's internal heat/moisture grid; it does not assert cross-program boundary or thermal-surface discretization identity.",
+          "cross_program_discretization_scope": "Q1 and Q2 retain their original spatial and boundary discretizations; their thermal surface treatments differ."
+        },
+        "q2_integrator": {
+          "nfev": 6861,
+          "njev": 113,
+          "nlu": 724,
+          "positivity_retries": 0
+        },
+        "comparison": {
+          "temperature": {
+            "max_abs": 4.815332808050243e-07,
+            "time_s": 659,
+            "radius_cm": 2.0,
+            "time_index": 659,
+            "radius_index": 20
+          },
+          "moisture": {
+            "max_abs": 1.4959564698102668e-09,
+            "time_s": 420,
+            "radius_cm": 2.0,
+            "time_index": 420,
+            "radius_index": 20
+          },
+          "temperature_mean_abs": 2.7881161371659476e-07,
+          "moisture_mean_abs": 1.4006822547574567e-11,
+          "all_output_rounded_equal": false,
+          "paper_times_s": [
+            1800
+          ],
+          "paper_radius_cm": [
+            0.0,
+            2.0
+          ],
+          "paper_temperature_max_abs_C": 3.1563327951289466e-07,
+          "paper_moisture_max_abs_kg_per_kg": 9.393019695380644e-11,
+          "paper_rounded_equal": true,
+          "temperature_threshold_C": 5e-05,
+          "moisture_threshold_kg_per_kg": 5e-05,
+          "temperature_threshold_pass": true,
+          "moisture_threshold_pass": true,
+          "pass": true
+        },
+        "finest_attempted_grid": false
+      },
+      {
+        "n_intervals": 1280,
+        "dr_m": 1.5625e-05,
+        "end_s": 1800,
+        "q1_settings": {
+          "solver": "q1.solve_bdf",
+          "rtol": 1e-11,
+          "atol": 9.999999999999999e-14,
+          "max_step_s": 5.0,
+          "sheet": "Sheet1"
+        },
+        "q2_degraded_settings": {
+          "solver": "q2.integrate_case(property_model='q1')",
+          "rtol": 1e-11,
+          "atol": 1e-13,
+          "max_step_s": 2.5,
+          "property_model": "q1",
+          "sheet": "Sheet1"
+        },
+        "q1_runtime_s": 4.088352500002657,
+        "q2_runtime_s": 9.969312799999898,
+        "q1_checks": {
+          "method": "BDF with analytic sparse Jacobian, same spatial discretization",
+          "n_intervals": 1280,
+          "dr_m": 1.5625e-05,
+          "rtol": 1e-11,
+          "atol": 9.999999999999999e-14,
+          "max_step_s": 5.0,
+          "runtime_s": 4.088197000004584,
+          "heat_nfev": 6724,
+          "moisture_nfev": 2960,
+          "temperature_range_C": [
+            27.999999999998366,
+            36.78556033774068
+          ],
+          "moisture_range_kg_per_kg": [
+            1.5102350253867944,
+            2.5500000000000007
+          ],
+          "max_mass_balance_residual": 1.3322676295501878e-15,
+          "method_scope": "The same-spatial-discretization phrase describes only Q1's internal heat/moisture grid; it does not assert cross-program boundary or thermal-surface discretization identity.",
+          "cross_program_discretization_scope": "Q1 and Q2 retain their original spatial and boundary discretizations; their thermal surface treatments differ."
+        },
+        "q2_integrator": {
+          "nfev": 6797,
+          "njev": 94,
+          "nlu": 705,
+          "positivity_retries": 0
+        },
+        "comparison": {
+          "temperature": {
+            "max_abs": 1.3190326697554156e-07,
+            "time_s": 660,
+            "radius_cm": 2.0,
+            "time_index": 660,
+            "radius_index": 20
+          },
+          "moisture": {
+            "max_abs": 1.815060324261708e-09,
+            "time_s": 480,
+            "radius_cm": 2.0,
+            "time_index": 480,
+            "radius_index": 20
+          },
+          "temperature_mean_abs": 6.965339700727765e-08,
+          "moisture_mean_abs": 1.959201216222259e-11,
+          "all_output_rounded_equal": false,
+          "paper_times_s": [
+            1800
+          ],
+          "paper_radius_cm": [
+            0.0,
+            2.0
+          ],
+          "paper_temperature_max_abs_C": 7.897921250332729e-08,
+          "paper_moisture_max_abs_kg_per_kg": 1.6824897031142427e-10,
+          "paper_rounded_equal": true,
+          "temperature_threshold_C": 5e-05,
+          "moisture_threshold_kg_per_kg": 5e-05,
+          "temperature_threshold_pass": true,
+          "moisture_threshold_pass": true,
+          "pass": true
+        },
+        "finest_attempted_grid": true
+      },
+      {
+        "case": "time_refinement",
+        "n_intervals": 1280,
+        "q1": {
+          "baseline_settings": {
+            "solver": "q1.solve_bdf",
+            "rtol": 1e-11,
+            "atol": 9.999999999999999e-14,
+            "max_step_s": 5.0,
+            "property_model": "q1"
+          },
+          "refined_settings": {
+            "solver": "q1.solve_bdf",
+            "rtol": 1e-12,
+            "atol": 1e-14,
+            "max_step_s": 5.0,
+            "property_model": "q1"
+          },
+          "comparison": {
+            "temperature": {
+              "max_abs": 2.7158790771864005e-08,
+              "time_s": 420,
+              "radius_cm": 2.0,
+              "time_index": 420,
+              "radius_index": 20
+            },
+            "moisture": {
+              "max_abs": 1.9558030750488342e-09,
+              "time_s": 60,
+              "radius_cm": 2.0,
+              "time_index": 60,
+              "radius_index": 20
+            },
+            "temperature_mean_abs": 1.4032488640071648e-10,
+            "moisture_mean_abs": 1.9394467605927e-11,
+            "all_output_rounded_equal": true,
+            "paper_times_s": [
+              1800
+            ],
+            "paper_radius_cm": [
+              0.0,
+              2.0
+            ],
+            "paper_temperature_max_abs_C": 5.573141947934346e-10,
+            "paper_moisture_max_abs_kg_per_kg": 1.7059709200850648e-10,
+            "paper_rounded_equal": true,
+            "temperature_threshold_C": 1e-07,
+            "moisture_threshold_kg_per_kg": 1e-08,
+            "temperature_threshold_pass": true,
+            "moisture_threshold_pass": true,
+            "pass": true
+          },
+          "refined_checks": {
+            "method": "BDF with analytic sparse Jacobian, same spatial discretization",
+            "n_intervals": 1280,
+            "dr_m": 1.5625e-05,
+            "rtol": 1e-12,
+            "atol": 1e-14,
+            "max_step_s": 5.0,
+            "runtime_s": 7.128941599999962,
+            "heat_nfev": 9425,
+            "moisture_nfev": 4558,
+            "temperature_range_C": [
+              27.999999999998593,
+              36.78556033829799
+            ],
+            "moisture_range_kg_per_kg": [
+              1.5102350252161973,
+              2.550000000000001
+            ],
+            "max_mass_balance_residual": 1.3322676295501878e-15,
+            "method_scope": "The same-spatial-discretization phrase describes only Q1's internal heat/moisture grid; it does not assert cross-program boundary or thermal-surface discretization identity.",
+            "cross_program_discretization_scope": "Q1 and Q2 retain their original spatial and boundary discretizations; their thermal surface treatments differ."
+          }
+        },
+        "q2": {
+          "baseline_settings": {
+            "rtol": 1e-11,
+            "atol": 1e-13,
+            "max_step_s": 2.5,
+            "property_model": "q1"
+          },
+          "refined_settings": {
+            "rtol": 1e-12,
+            "atol": 1e-14,
+            "max_step_s": 1.25,
+            "property_model": "q1"
+          },
+          "comparison": {
+            "temperature": {
+              "max_abs": 3.1687285684256494e-08,
+              "time_s": 1380,
+              "radius_cm": 2.0,
+              "time_index": 1380,
+              "radius_index": 20
+            },
+            "moisture": {
+              "max_abs": 4.6441561707410983e-10,
+              "time_s": 1,
+              "radius_cm": 2.0,
+              "time_index": 1,
+              "radius_index": 20
+            },
+            "temperature_mean_abs": 2.0337449946503733e-10,
+            "moisture_mean_abs": 2.8574162681153766e-12,
+            "all_output_rounded_equal": false,
+            "paper_times_s": [
+              1800
+            ],
+            "paper_radius_cm": [
+              0.0,
+              2.0
+            ],
+            "paper_temperature_max_abs_C": 9.757030738910544e-10,
+            "paper_moisture_max_abs_kg_per_kg": 4.410027898416047e-12,
+            "paper_rounded_equal": true,
+            "temperature_threshold_C": 1e-07,
+            "moisture_threshold_kg_per_kg": 1e-08,
+            "temperature_threshold_pass": true,
+            "moisture_threshold_pass": true,
+            "pass": true
+          }
+        }
+      }
+    ],
+    "runtime_s": 59.264920800000255,
+    "gate_thresholds": {
+      "temperature_C": 5e-05,
+      "moisture_kg_per_kg": 5e-05,
+      "time_temperature_C": 1e-07,
+      "time_moisture_kg_per_kg": 1e-08,
+      "paper_times": [
+        1800
+      ],
+      "paper_radius_cm": [
+        0.0,
+        2.0
+      ]
+    },
+    "source_snapshot": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q2_verification\\source_snapshot\\q2_solver.py",
+    "comparison_scope": {
+      "q1_method_label": "BDF with analytic sparse Jacobian, same spatial discretization",
+      "q1_method_scope": "The same-spatial-discretization phrase describes only Q1's internal heat/moisture grid and does not assert cross-program boundary or surface discretization identity.",
+      "cross_program_scope": "Q1 and Q2 retain their original spatial and boundary discretizations; their thermal surface treatments differ."
+    },
+    "interpretation": "Q1 solve_bdf and q2.integrate_case(property_model='q1') are compared as a constitutive degradation/reproduction audit; this is not a model accuracy claim."
+  },
+  "balance": {
+    "experiment": "q2_integral_balance",
+    "status": "PASS",
+    "boundary": "D:\\mathsmatical_modeling\\compition\\2026\\附件1.xlsx",
+    "boundary_sheet": "Sheet1",
+    "n_intervals": 10240,
+    "end_s": 10800,
+    "settings": {
+      "formal": {
+        "rtol": 1e-10,
+        "atol": 1e-12,
+        "max_step_s": 2.5,
+        "property_model": "q2"
+      },
+      "time_refined": {
+        "rtol": 1e-11,
+        "atol": 1e-13,
+        "max_step_s": 1.25,
+        "property_model": "q2"
+      },
+      "gauss_legendre_candidate_orders": [
+        4,
+        8,
+        16,
+        32
+      ],
+      "gauss_legendre_selected_orders": [
+        4,
+        8
+      ],
+      "node_union": [
+        "accepted_step_nodes",
+        "original_boundary_nodes",
+        "integer_seconds"
+      ]
+    },
+    "observer_segments": 18,
+    "refined_observer_segments": 18,
+    "segment_records": [
+      {
+        "start_s": 0.0,
+        "end_s": 600.0,
+        "accepted_step_count": 862,
+        "boundary_node_count": 11,
+        "union_node_count": 1461,
+        "union_interval_count": 1460,
+        "local_integral_by_order": {
+          "4": 2.0110179258921958e-05,
+          "8": 2.0110179258921958e-05,
+          "16": 2.011017925892196e-05,
+          "32": 2.011017925892196e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 600.0,
+        "end_s": 1200.0,
+        "accepted_step_count": 652,
+        "boundary_node_count": 11,
+        "union_node_count": 1251,
+        "union_interval_count": 1250,
+        "local_integral_by_order": {
+          "4": 1.735794566199661e-05,
+          "8": 1.735794566199661e-05,
+          "16": 1.7357945661996616e-05,
+          "32": 1.7357945661996616e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 1200.0,
+        "end_s": 1800.0,
+        "accepted_step_count": 651,
+        "boundary_node_count": 11,
+        "union_node_count": 1250,
+        "union_interval_count": 1249,
+        "local_integral_by_order": {
+          "4": 1.6003749830847955e-05,
+          "8": 1.6003749830847955e-05,
+          "16": 1.6003749830847955e-05,
+          "32": 1.6003749830847958e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 1800.0,
+        "end_s": 2400.0,
+        "accepted_step_count": 624,
+        "boundary_node_count": 11,
+        "union_node_count": 1223,
+        "union_interval_count": 1222,
+        "local_integral_by_order": {
+          "4": 1.5118750378086134e-05,
+          "8": 1.5118750378086132e-05,
+          "16": 1.5118750378086136e-05,
+          "32": 1.5118750378086136e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 2400.0,
+        "end_s": 3000.0,
+        "accepted_step_count": 655,
+        "boundary_node_count": 11,
+        "union_node_count": 1254,
+        "union_interval_count": 1253,
+        "local_integral_by_order": {
+          "4": 1.4470600677354287e-05,
+          "8": 1.4470600677354287e-05,
+          "16": 1.4470600677354289e-05,
+          "32": 1.447060067735429e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 3000.0,
+        "end_s": 3600.0,
+        "accepted_step_count": 622,
+        "boundary_node_count": 11,
+        "union_node_count": 1221,
+        "union_interval_count": 1220,
+        "local_integral_by_order": {
+          "4": 1.3945929106673909e-05,
+          "8": 1.3945929106673909e-05,
+          "16": 1.3945929106673909e-05,
+          "32": 1.3945929106673909e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 3600.0,
+        "end_s": 4200.0,
+        "accepted_step_count": 566,
+        "boundary_node_count": 11,
+        "union_node_count": 1165,
+        "union_interval_count": 1164,
+        "local_integral_by_order": {
+          "4": 1.3492670647806397e-05,
+          "8": 1.3492670647806399e-05,
+          "16": 1.3492670647806399e-05,
+          "32": 1.3492670647806399e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 4200.0,
+        "end_s": 4800.0,
+        "accepted_step_count": 626,
+        "boundary_node_count": 11,
+        "union_node_count": 1225,
+        "union_interval_count": 1224,
+        "local_integral_by_order": {
+          "4": 1.307399925876067e-05,
+          "8": 1.3073999258760669e-05,
+          "16": 1.307399925876067e-05,
+          "32": 1.3073999258760672e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 4800.0,
+        "end_s": 5400.0,
+        "accepted_step_count": 633,
+        "boundary_node_count": 11,
+        "union_node_count": 1232,
+        "union_interval_count": 1231,
+        "local_integral_by_order": {
+          "4": 1.2676565586199987e-05,
+          "8": 1.2676565586199987e-05,
+          "16": 1.2676565586199989e-05,
+          "32": 1.2676565586199992e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 5400.0,
+        "end_s": 6000.0,
+        "accepted_step_count": 601,
+        "boundary_node_count": 11,
+        "union_node_count": 1200,
+        "union_interval_count": 1199,
+        "local_integral_by_order": {
+          "4": 1.2289400586201404e-05,
+          "8": 1.2289400586201404e-05,
+          "16": 1.2289400586201404e-05,
+          "32": 1.2289400586201406e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 6000.0,
+        "end_s": 6600.0,
+        "accepted_step_count": 596,
+        "boundary_node_count": 11,
+        "union_node_count": 1195,
+        "union_interval_count": 1194,
+        "local_integral_by_order": {
+          "4": 1.1909854943342352e-05,
+          "8": 1.1909854943342349e-05,
+          "16": 1.1909854943342352e-05,
+          "32": 1.1909854943342352e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 6600.0,
+        "end_s": 7200.0,
+        "accepted_step_count": 609,
+        "boundary_node_count": 11,
+        "union_node_count": 1208,
+        "union_interval_count": 1207,
+        "local_integral_by_order": {
+          "4": 1.1533137387443208e-05,
+          "8": 1.1533137387443208e-05,
+          "16": 1.1533137387443208e-05,
+          "32": 1.153313738744321e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 7200.0,
+        "end_s": 7800.0,
+        "accepted_step_count": 626,
+        "boundary_node_count": 11,
+        "union_node_count": 1225,
+        "union_interval_count": 1224,
+        "local_integral_by_order": {
+          "4": 1.1159564884000659e-05,
+          "8": 1.1159564884000657e-05,
+          "16": 1.1159564884000659e-05,
+          "32": 1.115956488400066e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 7800.0,
+        "end_s": 8400.0,
+        "accepted_step_count": 696,
+        "boundary_node_count": 11,
+        "union_node_count": 1295,
+        "union_interval_count": 1294,
+        "local_integral_by_order": {
+          "4": 1.0789093683348539e-05,
+          "8": 1.0789093683348539e-05,
+          "16": 1.078909368334854e-05,
+          "32": 1.078909368334854e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 8400.0,
+        "end_s": 9000.0,
+        "accepted_step_count": 618,
+        "boundary_node_count": 11,
+        "union_node_count": 1217,
+        "union_interval_count": 1216,
+        "local_integral_by_order": {
+          "4": 1.0423082276703305e-05,
+          "8": 1.0423082276703303e-05,
+          "16": 1.0423082276703307e-05,
+          "32": 1.0423082276703307e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 9000.0,
+        "end_s": 9600.0,
+        "accepted_step_count": 674,
+        "boundary_node_count": 11,
+        "union_node_count": 1273,
+        "union_interval_count": 1272,
+        "local_integral_by_order": {
+          "4": 1.0062693220609474e-05,
+          "8": 1.0062693220609474e-05,
+          "16": 1.0062693220609474e-05,
+          "32": 1.0062693220609476e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 9600.0,
+        "end_s": 10200.0,
+        "accepted_step_count": 702,
+        "boundary_node_count": 11,
+        "union_node_count": 1301,
+        "union_interval_count": 1300,
+        "local_integral_by_order": {
+          "4": 9.710373961447729e-06,
+          "8": 9.710373961447727e-06,
+          "16": 9.710373961447729e-06,
+          "32": 9.710373961447729e-06
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 10200.0,
+        "end_s": 10800.0,
+        "accepted_step_count": 663,
+        "boundary_node_count": 11,
+        "union_node_count": 1262,
+        "union_interval_count": 1261,
+        "local_integral_by_order": {
+          "4": 9.366997652753071e-06,
+          "8": 9.366997652753071e-06,
+          "16": 9.366997652753071e-06,
+          "32": 9.366997652753073e-06
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      }
+    ],
+    "refined_segment_records": [
+      {
+        "start_s": 0.0,
+        "end_s": 600.0,
+        "accepted_step_count": 1269,
+        "boundary_node_count": 11,
+        "union_node_count": 1868,
+        "union_interval_count": 1867,
+        "local_integral_by_order": {
+          "4": 2.0110179258015192e-05,
+          "8": 2.011017925801519e-05,
+          "16": 2.0110179258015192e-05,
+          "32": 2.0110179258015192e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 600.0,
+        "end_s": 1200.0,
+        "accepted_step_count": 1007,
+        "boundary_node_count": 11,
+        "union_node_count": 1606,
+        "union_interval_count": 1605,
+        "local_integral_by_order": {
+          "4": 1.735794566184191e-05,
+          "8": 1.735794566184191e-05,
+          "16": 1.7357945661841914e-05,
+          "32": 1.7357945661841914e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 1200.0,
+        "end_s": 1800.0,
+        "accepted_step_count": 1001,
+        "boundary_node_count": 11,
+        "union_node_count": 1600,
+        "union_interval_count": 1599,
+        "local_integral_by_order": {
+          "4": 1.6003749830609668e-05,
+          "8": 1.6003749830609664e-05,
+          "16": 1.6003749830609668e-05,
+          "32": 1.6003749830609668e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 1800.0,
+        "end_s": 2400.0,
+        "accepted_step_count": 969,
+        "boundary_node_count": 11,
+        "union_node_count": 1568,
+        "union_interval_count": 1567,
+        "local_integral_by_order": {
+          "4": 1.5118750377912841e-05,
+          "8": 1.511875037791284e-05,
+          "16": 1.5118750377912843e-05,
+          "32": 1.5118750377912843e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 2400.0,
+        "end_s": 3000.0,
+        "accepted_step_count": 1013,
+        "boundary_node_count": 11,
+        "union_node_count": 1612,
+        "union_interval_count": 1611,
+        "local_integral_by_order": {
+          "4": 1.4470600677276238e-05,
+          "8": 1.4470600677276238e-05,
+          "16": 1.447060067727624e-05,
+          "32": 1.447060067727624e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 3000.0,
+        "end_s": 3600.0,
+        "accepted_step_count": 975,
+        "boundary_node_count": 11,
+        "union_node_count": 1574,
+        "union_interval_count": 1573,
+        "local_integral_by_order": {
+          "4": 1.3945929106548265e-05,
+          "8": 1.3945929106548265e-05,
+          "16": 1.3945929106548265e-05,
+          "32": 1.3945929106548267e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 3600.0,
+        "end_s": 4200.0,
+        "accepted_step_count": 906,
+        "boundary_node_count": 11,
+        "union_node_count": 1505,
+        "union_interval_count": 1504,
+        "local_integral_by_order": {
+          "4": 1.3492670647923525e-05,
+          "8": 1.3492670647923525e-05,
+          "16": 1.3492670647923525e-05,
+          "32": 1.3492670647923525e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 4200.0,
+        "end_s": 4800.0,
+        "accepted_step_count": 974,
+        "boundary_node_count": 11,
+        "union_node_count": 1573,
+        "union_interval_count": 1572,
+        "local_integral_by_order": {
+          "4": 1.3073999259405003e-05,
+          "8": 1.3073999259405002e-05,
+          "16": 1.3073999259405005e-05,
+          "32": 1.3073999259405005e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 4800.0,
+        "end_s": 5400.0,
+        "accepted_step_count": 980,
+        "boundary_node_count": 11,
+        "union_node_count": 1579,
+        "union_interval_count": 1578,
+        "local_integral_by_order": {
+          "4": 1.267656558672545e-05,
+          "8": 1.267656558672545e-05,
+          "16": 1.267656558672545e-05,
+          "32": 1.267656558672545e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 5400.0,
+        "end_s": 6000.0,
+        "accepted_step_count": 954,
+        "boundary_node_count": 11,
+        "union_node_count": 1553,
+        "union_interval_count": 1552,
+        "local_integral_by_order": {
+          "4": 1.2289400586475998e-05,
+          "8": 1.2289400586475998e-05,
+          "16": 1.2289400586475998e-05,
+          "32": 1.2289400586476e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 6000.0,
+        "end_s": 6600.0,
+        "accepted_step_count": 947,
+        "boundary_node_count": 11,
+        "union_node_count": 1546,
+        "union_interval_count": 1545,
+        "local_integral_by_order": {
+          "4": 1.1909854943552314e-05,
+          "8": 1.1909854943552314e-05,
+          "16": 1.1909854943552318e-05,
+          "32": 1.1909854943552318e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 6600.0,
+        "end_s": 7200.0,
+        "accepted_step_count": 956,
+        "boundary_node_count": 11,
+        "union_node_count": 1555,
+        "union_interval_count": 1554,
+        "local_integral_by_order": {
+          "4": 1.1533137387628934e-05,
+          "8": 1.1533137387628934e-05,
+          "16": 1.1533137387628934e-05,
+          "32": 1.1533137387628937e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 7200.0,
+        "end_s": 7800.0,
+        "accepted_step_count": 978,
+        "boundary_node_count": 11,
+        "union_node_count": 1577,
+        "union_interval_count": 1576,
+        "local_integral_by_order": {
+          "4": 1.1159564884254596e-05,
+          "8": 1.1159564884254596e-05,
+          "16": 1.1159564884254598e-05,
+          "32": 1.11595648842546e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 7800.0,
+        "end_s": 8400.0,
+        "accepted_step_count": 1061,
+        "boundary_node_count": 11,
+        "union_node_count": 1660,
+        "union_interval_count": 1659,
+        "local_integral_by_order": {
+          "4": 1.0789093683456098e-05,
+          "8": 1.0789093683456098e-05,
+          "16": 1.0789093683456098e-05,
+          "32": 1.0789093683456098e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 8400.0,
+        "end_s": 9000.0,
+        "accepted_step_count": 966,
+        "boundary_node_count": 11,
+        "union_node_count": 1565,
+        "union_interval_count": 1564,
+        "local_integral_by_order": {
+          "4": 1.0423082276701055e-05,
+          "8": 1.0423082276701053e-05,
+          "16": 1.0423082276701055e-05,
+          "32": 1.0423082276701059e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 9000.0,
+        "end_s": 9600.0,
+        "accepted_step_count": 1029,
+        "boundary_node_count": 11,
+        "union_node_count": 1628,
+        "union_interval_count": 1627,
+        "local_integral_by_order": {
+          "4": 1.0062693220612574e-05,
+          "8": 1.0062693220612574e-05,
+          "16": 1.0062693220612574e-05,
+          "32": 1.0062693220612574e-05
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 9600.0,
+        "end_s": 10200.0,
+        "accepted_step_count": 1069,
+        "boundary_node_count": 11,
+        "union_node_count": 1668,
+        "union_interval_count": 1667,
+        "local_integral_by_order": {
+          "4": 9.710373961503986e-06,
+          "8": 9.710373961503984e-06,
+          "16": 9.710373961503984e-06,
+          "32": 9.710373961503987e-06
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      },
+      {
+        "start_s": 10200.0,
+        "end_s": 10800.0,
+        "accepted_step_count": 1023,
+        "boundary_node_count": 11,
+        "union_node_count": 1622,
+        "union_interval_count": 1621,
+        "local_integral_by_order": {
+          "4": 9.366997652770068e-06,
+          "8": 9.366997652770066e-06,
+          "16": 9.36699765277007e-06,
+          "32": 9.36699765277007e-06
+        },
+        "accepted_step_trapezoid_weight_sum_s": 600.0
+      }
+    ],
+    "quadrature_selection": {
+      "comparisons": [
+        {
+          "lower_order": 4,
+          "higher_order": 8,
+          "integer_max_abs_signed_B_difference": 8.881784197001252e-16,
+          "accepted_max_abs_signed_B_difference": 8.881784197001252e-16,
+          "joint_max_abs_signed_B_difference": 8.881784197001252e-16,
+          "max_abs_signed_B_difference": 8.881784197001252e-16,
+          "threshold": 1e-09,
+          "pass": true
+        },
+        {
+          "lower_order": 8,
+          "higher_order": 16,
+          "integer_max_abs_signed_B_difference": 8.881784197001252e-16,
+          "accepted_max_abs_signed_B_difference": 8.881784197001252e-16,
+          "joint_max_abs_signed_B_difference": 8.881784197001252e-16,
+          "max_abs_signed_B_difference": 8.881784197001252e-16,
+          "threshold": 1e-09,
+          "pass": true
+        },
+        {
+          "lower_order": 16,
+          "higher_order": 32,
+          "integer_max_abs_signed_B_difference": 4.440892098500626e-16,
+          "accepted_max_abs_signed_B_difference": 4.440892098500626e-16,
+          "joint_max_abs_signed_B_difference": 4.440892098500626e-16,
+          "max_abs_signed_B_difference": 4.440892098500626e-16,
+          "threshold": 1e-09,
+          "pass": true
+        }
+      ],
+      "selected_orders": [
+        4,
+        8
+      ],
+      "pass": true
+    },
+    "refined_quadrature_selection": {
+      "comparisons": [
+        {
+          "lower_order": 4,
+          "higher_order": 8,
+          "integer_max_abs_signed_B_difference": 8.881784197001252e-16,
+          "accepted_max_abs_signed_B_difference": 8.881784197001252e-16,
+          "joint_max_abs_signed_B_difference": 8.881784197001252e-16,
+          "max_abs_signed_B_difference": 8.881784197001252e-16,
+          "threshold": 1e-09,
+          "pass": true
+        },
+        {
+          "lower_order": 8,
+          "higher_order": 16,
+          "integer_max_abs_signed_B_difference": 8.881784197001252e-16,
+          "accepted_max_abs_signed_B_difference": 8.881784197001252e-16,
+          "joint_max_abs_signed_B_difference": 8.881784197001252e-16,
+          "max_abs_signed_B_difference": 8.881784197001252e-16,
+          "threshold": 1e-09,
+          "pass": true
+        },
+        {
+          "lower_order": 16,
+          "higher_order": 32,
+          "integer_max_abs_signed_B_difference": 8.881784197001252e-16,
+          "accepted_max_abs_signed_B_difference": 8.881784197001252e-16,
+          "joint_max_abs_signed_B_difference": 8.881784197001252e-16,
+          "max_abs_signed_B_difference": 8.881784197001252e-16,
+          "threshold": 1e-09,
+          "pass": true
+        }
+      ],
+      "selected_orders": [
+        4,
+        8
+      ],
+      "pass": true
+    },
+    "balance_summary": {
+      "initial_mean_moisture": 2.5500000000000003,
+      "max_abs_B_integer_seconds": {
+        "gl4": 1.0885070622634885e-11,
+        "gl8": 1.0885070622634885e-11,
+        "gl16": 1.0885070622634885e-11,
+        "gl32": 1.0885070622634885e-11
+      },
+      "accepted_nodes": {
+        "accepted_node_count": 11659,
+        "gl4": {
+          "max_abs_B": 1.1177281322716226e-11,
+          "time_s": 10560.035608658072,
+          "mean_moisture": 1.4010532274298722
+        },
+        "gl8": {
+          "max_abs_B": 1.1177725411926076e-11,
+          "time_s": 10560.035608658072,
+          "mean_moisture": 1.4010532274298722
+        },
+        "gl16": {
+          "max_abs_B": 1.1177281322716226e-11,
+          "time_s": 10560.035608658072,
+          "mean_moisture": 1.4010532274298722
+        },
+        "gl32": {
+          "max_abs_B": 1.1177281322716226e-11,
+          "time_s": 10560.035608658072,
+          "mean_moisture": 1.4010532274298722
+        }
+      },
+      "selected_order": 8,
+      "selected_order_residuals": {
+        "selected_order": 8,
+        "quadrature_floor_max_abs_B": 8.881784197001252e-16,
+        "integer_seconds": {
+          "max_abs_B": 1.0885070622634885e-11,
+          "time_s": 10560,
+          "threshold": 1e-07,
+          "pass": true
+        },
+        "accepted_nodes": {
+          "max_abs_B": 1.1177725411926076e-11,
+          "time_s": 10560.035608658072,
+          "threshold": 1e-07,
+          "pass": true
+        }
+      },
+      "refined_selected_order_residuals": {
+        "selected_order": 8,
+        "quadrature_floor_max_abs_B": 8.881784197001252e-16,
+        "integer_seconds": {
+          "max_abs_B": 1.403765992336048e-12,
+          "time_s": 7560,
+          "threshold": 1e-07,
+          "pass": true
+        },
+        "accepted_nodes": {
+          "max_abs_B": 1.4903633882568101e-12,
+          "time_s": 5760.019017022578,
+          "threshold": 1e-07,
+          "pass": true
+        }
+      },
+      "refined_accepted_nodes": {
+        "accepted_node_count": 18060,
+        "gl4": {
+          "max_abs_B": 1.4903633882568101e-12,
+          "time_s": 5760.019017022578,
+          "mean_moisture": 1.83164754442663
+        },
+        "gl8": {
+          "max_abs_B": 1.4903633882568101e-12,
+          "time_s": 5760.019017022578,
+          "mean_moisture": 1.83164754442663
+        },
+        "gl16": {
+          "max_abs_B": 1.48991929904696e-12,
+          "time_s": 5760.019017022578,
+          "mean_moisture": 1.83164754442663
+        },
+        "gl32": {
+          "max_abs_B": 1.48991929904696e-12,
+          "time_s": 5760.019017022578,
+          "mean_moisture": 1.83164754442663
+        }
+      },
+      "max_abs_B_trapezoid": 5.037692329956656e-07,
+      "max_abs_q2_original_residual": 5.037692329956656e-07,
+      "gl_vs_original_trapezoid": {
+        "gl4_vs_trapezoid_max_abs_B": 5.037795141049628e-07,
+        "gl8_vs_trapezoid_max_abs_B": 5.037795141049628e-07,
+        "gl16_vs_trapezoid_max_abs_B": 5.037795136608736e-07,
+        "gl32_vs_trapezoid_max_abs_B": 5.037795136608736e-07
+      },
+      "mean_crosscheck": {
+        "max_abs": 8.881784197001252e-15,
+        "time_s": 0,
+        "threshold": 1e-10,
+        "pass": true
+      },
+      "checkpoints": [
+        {
+          "time_h": 0.5,
+          "time_s": 1800,
+          "mean_moisture": 2.2826406262388557,
+          "B_gl_selected_signed": -2.311928426479426e-12,
+          "B_gl_selected_abs": 2.311928426479426e-12,
+          "B_trapezoid_signed": 5.032109000602247e-07
+        },
+        {
+          "time_h": 1.0,
+          "time_s": 3600,
+          "mean_moisture": 2.064964225427648,
+          "B_gl_selected_signed": -2.9483082641945657e-12,
+          "B_gl_selected_abs": 2.9483082641945657e-12,
+          "B_trapezoid_signed": 5.036657810819634e-07
+        },
+        {
+          "time_h": 2.0,
+          "time_s": 7200,
+          "mean_moisture": 1.690086083376061,
+          "B_gl_selected_signed": -5.765166122273513e-12,
+          "B_gl_selected_abs": 5.765166122273513e-12,
+          "B_trapezoid_signed": 5.03727108469576e-07
+        },
+        {
+          "time_h": 3.0,
+          "time_s": 10800,
+          "mean_moisture": 1.382527054977017,
+          "B_gl_selected_signed": -1.049516029638653e-11,
+          "B_gl_selected_abs": 1.049516029638653e-11,
+          "B_trapezoid_signed": 5.037660981699332e-07
+        }
+      ]
+    },
+    "time_refinement": {
+      "field_comparison": {
+        "temperature": {
+          "max_abs": 4.198598659854724e-07,
+          "time_s": 4140,
+          "radius_cm": 2.0,
+          "time_index": 4140,
+          "radius_index": 20
+        },
+        "moisture": {
+          "max_abs": 2.609429117228501e-09,
+          "time_s": 3,
+          "radius_cm": 2.0,
+          "time_index": 3,
+          "radius_index": 20
+        },
+        "temperature_mean_abs": 3.0196413381359786e-09,
+        "moisture_mean_abs": 1.2273621240452174e-11,
+        "all_output_rounded_equal": false,
+        "paper_times_s": [
+          1800,
+          3600,
+          5400,
+          7200,
+          9000,
+          10800
+        ],
+        "paper_radius_cm": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "paper_temperature_max_abs_C": 6.4739751337583584e-09,
+        "paper_moisture_max_abs_kg_per_kg": 4.703903933034326e-11,
+        "paper_rounded_equal": true,
+        "temperature_threshold_C": 5e-05,
+        "moisture_threshold_kg_per_kg": 5e-05,
+        "temperature_threshold_pass": true,
+        "moisture_threshold_pass": true,
+        "pass": true
+      },
+      "balance_comparison": {
+        "selected_order": 8,
+        "refined_selected_order": 8,
+        "criterion": {
+          "platform_threshold": 1e-09,
+          "baseline_integer_max_abs_B": 1.0885070622634885e-11,
+          "baseline_accepted_max_abs_B": 1.1177725411926076e-11,
+          "baseline_joint_max_abs_B": 1.1177725411926076e-11,
+          "refined_integer_max_abs_B": 1.403765992336048e-12,
+          "refined_accepted_max_abs_B": 1.4903633882568101e-12,
+          "refined_joint_max_abs_B": 1.4903633882568101e-12,
+          "baseline_quadrature_floor_max_abs_B": 8.881784197001252e-16,
+          "refined_quadrature_floor_max_abs_B": 8.881784197001252e-16,
+          "floor_uncertainty_sum": 1.7763568394002505e-15,
+          "strict_drop": 9.687362023669266e-12,
+          "strict_drop_required": 1.7763568394002505e-15,
+          "platform_pass": true,
+          "strict_reduction_pass": true,
+          "pass": true,
+          "formula": "platform: max(B_base_integer,B_base_accepted,B_ref_integer,B_ref_accepted) <=1e-9; otherwise require B_base_joint-B_ref_joint > floor_base+floor_ref"
+        },
+        "refined_quadrature_selection": {
+          "comparisons": [
+            {
+              "lower_order": 4,
+              "higher_order": 8,
+              "integer_max_abs_signed_B_difference": 8.881784197001252e-16,
+              "accepted_max_abs_signed_B_difference": 8.881784197001252e-16,
+              "joint_max_abs_signed_B_difference": 8.881784197001252e-16,
+              "max_abs_signed_B_difference": 8.881784197001252e-16,
+              "threshold": 1e-09,
+              "pass": true
+            },
+            {
+              "lower_order": 8,
+              "higher_order": 16,
+              "integer_max_abs_signed_B_difference": 8.881784197001252e-16,
+              "accepted_max_abs_signed_B_difference": 8.881784197001252e-16,
+              "joint_max_abs_signed_B_difference": 8.881784197001252e-16,
+              "max_abs_signed_B_difference": 8.881784197001252e-16,
+              "threshold": 1e-09,
+              "pass": true
+            },
+            {
+              "lower_order": 16,
+              "higher_order": 32,
+              "integer_max_abs_signed_B_difference": 8.881784197001252e-16,
+              "accepted_max_abs_signed_B_difference": 8.881784197001252e-16,
+              "joint_max_abs_signed_B_difference": 8.881784197001252e-16,
+              "max_abs_signed_B_difference": 8.881784197001252e-16,
+              "threshold": 1e-09,
+              "pass": true
+            }
+          ],
+          "selected_orders": [
+            4,
+            8
+          ],
+          "pass": true
+        }
+      },
+      "criterion": {
+        "platform_threshold": 1e-09,
+        "baseline_integer_max_abs_B": 1.0885070622634885e-11,
+        "baseline_accepted_max_abs_B": 1.1177725411926076e-11,
+        "baseline_joint_max_abs_B": 1.1177725411926076e-11,
+        "refined_integer_max_abs_B": 1.403765992336048e-12,
+        "refined_accepted_max_abs_B": 1.4903633882568101e-12,
+        "refined_joint_max_abs_B": 1.4903633882568101e-12,
+        "baseline_quadrature_floor_max_abs_B": 8.881784197001252e-16,
+        "refined_quadrature_floor_max_abs_B": 8.881784197001252e-16,
+        "floor_uncertainty_sum": 1.7763568394002505e-15,
+        "strict_drop": 9.687362023669266e-12,
+        "strict_drop_required": 1.7763568394002505e-15,
+        "platform_pass": true,
+        "strict_reduction_pass": true,
+        "pass": true,
+        "formula": "platform: max(B_base_integer,B_base_accepted,B_ref_integer,B_ref_accepted) <=1e-9; otherwise require B_base_joint-B_ref_joint > floor_base+floor_ref"
+      }
+    },
+    "runtime_s": 1382.3544862999988,
+    "source_snapshot": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q2_verification\\source_snapshot\\q2_solver.py",
+    "interpretation": "B is a signed moisture balance residual: mean(C) plus integrated outward surface loss divided by the cylindrical volume minus the initial mean. Gauss--Legendre uses the accepted-segment dense log trajectory and independently restores C=exp(z); no clipping is used."
+  }
+}

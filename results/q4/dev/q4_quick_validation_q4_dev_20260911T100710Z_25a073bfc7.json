@@ -1,0 +1,719 @@
+{
+  "script": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\code\\test_q4_contracts.py",
+  "started_at": "2026-09-11T18:07:10+0800",
+  "contracts": {
+    "input_radius_and_environment": {
+      "pass": true,
+      "radius_record_count": 145,
+      "radius_start_m": 0.02,
+      "radius_end_m": 0.01198,
+      "radius_monotone": true,
+      "derivative_finite": true,
+      "boundary_rows": 241,
+      "boundary_end_s": 14400.0
+    },
+    "input_radius_contract": {
+      "pass": true,
+      "record_count": 145,
+      "start_radius_m": 0.02,
+      "end_radius_m": 0.01198
+    },
+    "radius_no_extrapolation_and_plateau": {
+      "pass": true,
+      "post_radius_m": 0.01198
+    },
+    "radius_preinterval_guard": {
+      "pass": true
+    },
+    "radius_slow1pct_scenario": {
+      "pass": true,
+      "slow_radius_m": 0.011860205438911585,
+      "slow_derivative_m_s": -6.295036557344544e-14
+    },
+    "environment_measured_range_guard": {
+      "pass": true
+    },
+    "pure_shrink_uniform_moisture": {
+      "pass": true,
+      "solver_success": true,
+      "max_initial_rhs_C": 0.0,
+      "max_C_change": 0.0
+    },
+    "internal_flux_telescoping": {
+      "pass": true,
+      "moisture_weighted_sum": -4.534005300661447e-23,
+      "heat_capacity_weighted_sum": 0.0
+    },
+    "analytic_log_jacobian_central_difference": {
+      "pass": true,
+      "times_s": [
+        7200.0,
+        10800.0,
+        14400.0,
+        18000.0
+      ],
+      "max_relative_error": 3.310888087948736e-11,
+      "block_relative_error": [
+        {
+          "TT": 2.776534233968611e-11,
+          "TC": 1.3830777034257372e-11,
+          "CT": 5.339205786372344e-15,
+          "CC": 1.9521092643588385e-13
+        },
+        {
+          "TT": 2.978068272622111e-11,
+          "TC": 5.627568663235031e-12,
+          "CT": 3.5454303586819697e-15,
+          "CC": 2.953740487500085e-13
+        },
+        {
+          "TT": 3.1019444655108074e-11,
+          "TC": 9.808669158196376e-12,
+          "CT": 1.270239956589442e-15,
+          "CC": 3.8420377012648284e-13
+        },
+        {
+          "TT": 3.310888087948736e-11,
+          "TC": 7.080412206993256e-12,
+          "CT": 5.187799673587267e-15,
+          "CC": 3.239072814998668e-13
+        }
+      ],
+      "cross_block_max_abs": [
+        0.02640872321759661,
+        0.02831341234899945,
+        0.027948082032360523,
+        0.0272865555640006
+      ]
+    },
+    "manufactured_solution_quick_precheck": {
+      "pass": true,
+      "contract_kind": "quick_precheck",
+      "grids": [
+        40,
+        80,
+        160
+      ],
+      "sample_times_s": [
+        300.0,
+        600.0,
+        900.0,
+        1200.0
+      ],
+      "duration_s": 1200.0,
+      "max_error_T_C": [
+        0.0001093223179253755,
+        2.7330345012899215e-05,
+        6.832172779525081e-06
+      ],
+      "max_error_C": [
+        9.148826333182924e-06,
+        2.259089334044617e-06,
+        5.632800705313024e-07
+      ],
+      "max_error_2_T_C": [
+        5.7109476344944864e-05,
+        1.4262953514189035e-05,
+        3.564868942947945e-06
+      ],
+      "max_error_2_C": [
+        1.9032518073428366e-06,
+        4.663068659559889e-07,
+        1.1622075567755149e-07
+      ],
+      "observed_order_T": [
+        2.000012376902348,
+        2.0000873072777763
+      ],
+      "observed_order_C": [
+        2.0178453554299534,
+        2.0038169887300463
+      ],
+      "observed_order_2_T": [
+        2.0014573960052116,
+        2.000351815876871
+      ],
+      "observed_order_2_C": [
+        2.029114870842574,
+        2.0044119319068976
+      ],
+      "formal_specification": {
+        "grids": [
+          640,
+          1280,
+          2560
+        ],
+        "sample_times_s": [
+          3600.0,
+          7200.0,
+          10800.0,
+          14400.0
+        ],
+        "expected_order": 2.0,
+        "last_two_order_threshold": 1.5
+      }
+    },
+    "manufactured_solution_quick_precheck_omit_R_squared_injection": {
+      "pass": true,
+      "fault": "omit_R_squared_scale",
+      "wrong_error_T_C": [
+        2.0793148457217328,
+        2.079314817110671,
+        2.079314809164039
+      ],
+      "wrong_error_C": [
+        0.003893383352909119,
+        0.0038933832262676438,
+        0.003893383199657263
+      ],
+      "correct_fine_error_T_C": 6.832172779525081e-06,
+      "correct_fine_error_C": 5.632800705313024e-07
+    },
+    "manufactured_solution_quick_precheck_omit_R_boundary_injection": {
+      "pass": true,
+      "fault": "omit_R_boundary_scale",
+      "wrong_error_T_C": [
+        1.282957522991591,
+        1.282947141282758,
+        1.2829447034414905
+      ],
+      "wrong_error_C": [
+        0.025938682754904685,
+        0.02588818396174175,
+        0.02587735862857876
+      ],
+      "correct_fine_error_T_C": 6.832172779525081e-06,
+      "correct_fine_error_C": 5.632800705313024e-07
+    },
+    "event_root_bracket_and_strict_sign": {
+      "pass": true,
+      "root_time_s": 1000.0,
+      "bracket_s": [
+        1000.0,
+        1000.9765625
+      ],
+      "bracket_width_s": 0.9765625,
+      "residual": 2.7755575615628914e-17,
+      "strict_before_C": 0.15002500000000002,
+      "strict_after_C": 0.14997500000000002
+    },
+    "fixed_position_domain_mask_and_surface_column": {
+      "pass": true,
+      "mapped_row": [
+        0.4,
+        0.4,
+        NaN
+      ],
+      "surface": 0.4
+    },
+    "formal_time_schema": {
+      "pass": true,
+      "rows": [
+        60.0,
+        120.0,
+        123.4
+      ]
+    },
+    "arbitrary_grid_temperature_moisture_mapping": {
+      "pass": true,
+      "grids": [
+        {
+          "n": 4,
+          "T_shape": [
+            1,
+            5
+          ],
+          "C_shape": [
+            1,
+            5
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "surface_C": 0.5,
+          "surface_T": 38.0
+        },
+        {
+          "n": 20,
+          "T_shape": [
+            1,
+            5
+          ],
+          "C_shape": [
+            1,
+            5
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "surface_C": 0.5,
+          "surface_T": 38.0
+        },
+        {
+          "n": 40,
+          "T_shape": [
+            1,
+            5
+          ],
+          "C_shape": [
+            1,
+            5
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "surface_C": 0.5,
+          "surface_T": 38.0
+        }
+      ],
+      "contract": "same physical position interpolation and synchronized mask for T/C"
+    },
+    "max_minus_center_audit_sign": {
+      "pass": true,
+      "max_minus_center_kg_per_kg": 0.4000000000000001
+    },
+    "event_cross_block_strict_witness": {
+      "pass": true,
+      "event": {
+        "time_s": 1.1999988624395692,
+        "before_state_error": null,
+        "certification_status": "PASS"
+      }
+    },
+    "event_root_appended_to_unified_output": {
+      "pass": true,
+      "root_time_s": 1.1999988624395692,
+      "root_row_count": 1,
+      "output_times_s": [
+        1.0,
+        1.1999988624395692
+      ]
+    },
+    "event_post_root_failure_blocks_certificate": {
+      "pass": true,
+      "certification_status": "FAIL",
+      "after_state_error": "RuntimeError('intentional post-root witness failure')"
+    },
+    "failed_event_save_redirects_and_blocks": {
+      "pass": true,
+      "redirected_path": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q4\\dev\\failed_event_save_probe\\q4_dev_20260911T100710Z_25a073bfc7\\failed_event_evidence",
+      "exception": "Event certificate failed; evidence was redirected to D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q4\\dev\\failed_event_save_probe\\q4_dev_20260911T100710Z_25a073bfc7\\failed_event_evidence"
+    },
+    "full_sequence_failure_redirects_and_blocks": {
+      "pass": true,
+      "redirected_path": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q4\\dev\\failed_full_audit_save_probe\\q4_dev_20260911T100710Z_25a073bfc7\\failed_event_evidence",
+      "exception": "Event certificate failed; evidence was redirected to D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q4\\dev\\failed_full_audit_save_probe\\q4_dev_20260911T100710Z_25a073bfc7\\failed_event_evidence"
+    },
+    "event_multicross_sample_guard": {
+      "pass": true,
+      "sequence": {
+        "status": "CHECKED",
+        "sample_count": 3,
+        "time_start_s": 0.0,
+        "time_end_s": 2.0,
+        "min_prior_g_N": 0.1,
+        "max_prior_g_N": 0.1,
+        "min_root_or_later_g_N": -0.1,
+        "downward_sign_changes": 1,
+        "upward_sign_changes": 1,
+        "prior_positive": true,
+        "no_upward_recrossing": false
+      }
+    },
+    "production_missed_callback_recovery": {
+      "pass": true,
+      "event": {
+        "time_s": 0.7000683156228283,
+        "certification_status": "PASS",
+        "monitor_recovery_attempts": 1,
+        "sequence_audit": {
+          "status": "CHECKED",
+          "sample_count": 29,
+          "time_start_s": 0.0,
+          "time_end_s": 0.7000683156228283,
+          "min_prior_g_N": 0.0001324367349554989,
+          "max_prior_g_N": 0.0011899999999999689,
+          "min_root_or_later_g_N": 0.0,
+          "downward_sign_changes": 1,
+          "upward_sign_changes": 0,
+          "prior_positive": true,
+          "no_upward_recrossing": true
+        }
+      }
+    },
+    "integral_level_multicross_step_refinement_guard": {
+      "pass": true,
+      "coarse_sequence": {
+        "status": "CHECKED",
+        "sample_count": 39,
+        "time_start_s": 0.0,
+        "time_end_s": 2.0,
+        "min_prior_g_N": -0.0002470391468211153,
+        "max_prior_g_N": 0.0011899999999999689,
+        "min_root_or_later_g_N": 0.00038990554068979444,
+        "downward_sign_changes": 1,
+        "upward_sign_changes": 1,
+        "prior_positive": false,
+        "no_upward_recrossing": false
+      },
+      "coarse_event_time_s": 0.7000683156228283,
+      "fine_event_time_s": 0.7000683156228283,
+      "expected_first_crossing_s": 0.7,
+      "coarse_evidence_rejected": true
+    },
+    "floating_positive_event_endpoint_recovery": {
+      "pass": true,
+      "root_time_s": 1.0,
+      "bracket_width_s": 1.0,
+      "raw_endpoint_g": 4.996003610813204e-16,
+      "normalized_endpoint_g": 0.0,
+      "downward_sign_changes": 1,
+      "large_positive_g": 2e-09,
+      "large_positive_rejected": true
+    },
+    "unified_fields_and_block_manifest": {
+      "pass": true,
+      "output_directory": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q4\\dev\\artifact_contract_probe\\artifact_dc5b2e7a",
+      "output_schema": {
+        "expected_time_count": 250,
+        "actual_time_count": 250,
+        "expected_last_time_s": 15000.0,
+        "actual_last_time_s": 15000.0,
+        "time_set_pass": true,
+        "field_first_dimension_pass": true,
+        "unique_time_pass": true,
+        "monotonic_time_pass": true,
+        "pass": true
+      },
+      "field_shape": [
+        250,
+        21
+      ],
+      "block_count": 25,
+      "block_schema_pass": true,
+      "block_continuity_pass": true,
+      "block_state_max_difference": 0.0,
+      "block_time_max_gap_s": 0.0,
+      "switch_state_difference": 0.0,
+      "switch_radius_difference_m": 0.0,
+      "g_evidence_summary": {
+        "threshold_kg_per_kg": 0.15,
+        "accepted_count": 2761,
+        "midpoint_count": 2736,
+        "output_count": 274,
+        "time_start_s": 0.0,
+        "time_end_s": 15000.0,
+        "g_min_N": 2.02007044902975,
+        "g_max_N": 2.4,
+        "full_run_sequence_audit": {
+          "status": "CHECKED",
+          "sample_count": 5698,
+          "time_start_s": 0.0,
+          "time_end_s": 15000.0,
+          "min_prior_g_N": 2.0204318639692396,
+          "max_prior_g_N": 2.4,
+          "min_root_or_later_g_N": 2.02007044902975,
+          "downward_sign_changes": 0,
+          "upward_sign_changes": 0,
+          "prior_positive": true,
+          "no_upward_recrossing": true
+        },
+        "segments": {
+          "measured": {
+            "accepted_count": 2732,
+            "midpoint_count": 2708,
+            "output_count": 263,
+            "time_start_s": 0.0,
+            "time_end_s": 14400.0,
+            "g_min_N": 2.0598274512316315,
+            "g_max_N": 2.4,
+            "block_count": 24
+          },
+          "plateau": {
+            "accepted_count": 29,
+            "midpoint_count": 28,
+            "output_count": 11,
+            "time_start_s": 14400.0,
+            "time_end_s": 15000.0,
+            "g_min_N": 2.02007044902975,
+            "g_max_N": 2.0598274512316315,
+            "block_count": 1
+          }
+        }
+      },
+      "unique_run_guard": true,
+      "unique_run_guard_message": "Evidence run directory already exists: D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q4\\dev\\evidence_runs\\artifact_dc5b2e7a",
+      "run_config_segments": {
+        "measured": {
+          "start_s": 0.0,
+          "end_s": 14400.0,
+          "rtol": 1e-07,
+          "atol": 1e-09,
+          "max_step_s": 20.0,
+          "chunk_s": 600.0
+        },
+        "plateau": {
+          "start_s": 14400.0,
+          "end_s": 15000.0,
+          "rtol": 1e-07,
+          "atol": 1e-09,
+          "max_step_s": 120.0,
+          "chunk_s": 600.0
+        }
+      }
+    },
+    "explicit_evidence_directory_records_files": {
+      "pass": true,
+      "evidence_directory": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q4\\dev\\evidence_runs\\artifact_dc5b2e7a",
+      "record_evidence_files": [
+        "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q4\\dev\\evidence_runs\\artifact_dc5b2e7a\\blocks\\artifact_dc5b2e7a_measured_block_0000.npz",
+        "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\results\\q4\\dev\\evidence_runs\\artifact_dc5b2e7a\\blocks\\artifact_dc5b2e7a_measured_block_0001.npz"
+      ]
+    },
+    "independent_surface_and_internal_flux": {
+      "pass": true,
+      "sample_times_s": [
+        10800.0,
+        11100.0,
+        11400.0,
+        11700.0,
+        12000.0,
+        12300.0,
+        12600.0
+      ],
+      "max_temperature_abs_error": [
+        5.421010862427522e-20,
+        2.710505431213761e-20,
+        2.168404344971009e-19,
+        5.421010862427522e-20,
+        1.0842021724855044e-19,
+        5.421010862427522e-20,
+        5.421010862427522e-20
+      ],
+      "max_moisture_abs_error": [
+        1.3552527156068805e-20,
+        1.3552527156068805e-20,
+        1.3552527156068805e-20,
+        1.3552527156068805e-20,
+        1.3552527156068805e-20,
+        1.3552527156068805e-20,
+        6.776263578034403e-21
+      ],
+      "implementation": "separate control-face loop on main-solution states",
+      "contract_interval_s": [
+        10800.0,
+        12600.0
+      ]
+    },
+    "q3_fixed_radius_native_rhs_equivalence": {
+      "pass": true,
+      "max_absolute_difference": 2.2898349882893854e-16,
+      "threshold": 1e-12,
+      "purpose": "independent Q4 native finite-volume RHS remains equivalent to Q2 before compatibility integration"
+    },
+    "q3_fixed_radius_appendix3_regression": {
+      "pass": true,
+      "comparison_config": {
+        "rtol": 1e-10,
+        "atol": 1e-12,
+        "max_step_before_s": 2.5,
+        "max_step_after_s": 30.0
+      },
+      "tight_comparison": {
+        "common_rows": 3388,
+        "common_end_s": 203280.0,
+        "max_temperature_abs_difference_C": 1.194455094832847e-07,
+        "max_moisture_abs_difference": 4.4194292669885726e-10,
+        "q3_event_time_s": 203315.18142301193,
+        "q4_event_time_s": 203315.18142313132,
+        "event_time_difference_s": 1.1938391253352165e-07,
+        "endpoint_full_state_temperature_abs_difference_C": 0.0,
+        "endpoint_full_state_moisture_abs_difference": 4.579669976578771e-16,
+        "endpoint_mapped_temperature_abs_difference_C": 0.0,
+        "endpoint_mapped_moisture_abs_difference": 4.3021142204224816e-16,
+        "q4_event_certification": "PASS",
+        "q4_full_run_sequence_audit": {
+          "status": "CHECKED",
+          "sample_count": 53097,
+          "time_start_s": 0.0,
+          "time_end_s": 203315.18142313132,
+          "min_prior_g_N": 8.987579794839107e-07,
+          "max_prior_g_N": 2.4,
+          "min_root_or_later_g_N": 0.0,
+          "downward_sign_changes": 1,
+          "upward_sign_changes": 0,
+          "prior_positive": true,
+          "no_upward_recrossing": true
+        },
+        "q4_full_prior_positive": true,
+        "q4_full_downward_sign_changes": 1,
+        "q4_full_upward_sign_changes": 0,
+        "q4_full_no_upward_recrossing": true,
+        "output_schema_pass": true
+      },
+      "tight_event_relative_difference": 5.871864151901908e-13,
+      "base_diagnostic": {
+        "common_rows": 3388,
+        "common_end_s": 203280.0,
+        "max_temperature_abs_difference_C": 2.147756738679618e-06,
+        "max_moisture_abs_difference": 5.945036019028294e-09,
+        "q3_event_time_s": 203315.19368934838,
+        "q4_event_time_s": 203315.19370077617,
+        "event_time_difference_s": 1.1427793651819229e-05,
+        "endpoint_full_state_temperature_abs_difference_C": 0.0,
+        "endpoint_full_state_moisture_abs_difference": 1.5265566588595902e-15,
+        "endpoint_mapped_temperature_abs_difference_C": 0.0,
+        "endpoint_mapped_moisture_abs_difference": 1.5265566588595902e-15,
+        "q4_event_certification": "PASS",
+        "q4_full_run_sequence_audit": {
+          "status": "CHECKED",
+          "sample_count": 35599,
+          "time_start_s": 0.0,
+          "time_end_s": 203315.19370077617,
+          "min_prior_g_N": 4.235059840318467e-07,
+          "max_prior_g_N": 2.4,
+          "min_root_or_later_g_N": 0.0,
+          "downward_sign_changes": 1,
+          "upward_sign_changes": 0,
+          "prior_positive": true,
+          "no_upward_recrossing": true
+        },
+        "q4_full_prior_positive": true,
+        "q4_full_downward_sign_changes": 1,
+        "q4_full_upward_sign_changes": 0,
+        "q4_full_no_upward_recrossing": true,
+        "output_schema_pass": true
+      },
+      "hard_thresholds": {
+        "T_C": 1e-06,
+        "C": 1e-07,
+        "event_s": 1.0,
+        "event_relative": 1e-06
+      }
+    },
+    "no_implicit_evidence_without_directory": {
+      "pass": true,
+      "evidence_directory": null,
+      "record_evidence_files": [
+        null,
+        null
+      ]
+    },
+    "four_hour_one_sided_flux_split": {
+      "pass": true,
+      "max_abs_residual": 0.0,
+      "split_flux_one_sided": {
+        "left_rate_mean_per_s": 1e-05,
+        "right_rate_mean_per_s": 2e-05,
+        "jump_mean_per_s": 1e-05
+      },
+      "segment_checks": [
+        {
+          "segment": "measured",
+          "start_s": 0.0,
+          "end_s": 14400.0,
+          "max_abs_residual": 0.0
+        },
+        {
+          "segment": "plateau",
+          "start_s": 14400.0,
+          "end_s": 18000.0,
+          "max_abs_residual": 0.0
+        }
+      ]
+    },
+    "bdf_radau_representative_interval": {
+      "pass": true,
+      "interval_s": [
+        14400.0,
+        18000.0
+      ],
+      "bdf_success": true,
+      "radau_success": true,
+      "max_temperature_difference_C": 3.6310439099906944e-08,
+      "max_moisture_difference": 7.428265780262677e-10,
+      "thresholds": {
+        "T_C": 5e-07,
+        "C": 5e-08
+      }
+    }
+  },
+  "run_id": "q4_dev_20260911T100710Z_25a073bfc7",
+  "source_path": "D:\\mathsmatical_modeling\\compition\\2026\\CUMCM_2026_A\\code\\q4_solver.py",
+  "source_mtime_utc": "2026-09-11T10:06:13.373175+00:00",
+  "test_source_mtime_utc": "2026-09-11T10:06:55.278233+00:00",
+  "run_mode": "repair_probe_with_quick_precheck",
+  "formal_contracts_not_run": [
+    {
+      "name": "manufactured_solution",
+      "required_grids": [
+        640,
+        1280,
+        2560
+      ],
+      "required_times_s": [
+        3600.0,
+        7200.0,
+        10800.0,
+        14400.0
+      ],
+      "reason": "development run intentionally limited to quick precheck"
+    }
+  ],
+  "inputs": {
+    "boundary": {
+      "path": "D:\\mathsmatical_modeling\\compition\\2026\\附件1.xlsx",
+      "sheet": "Sheet1",
+      "record_count": 241,
+      "start_s": 0.0,
+      "end_s": 14400.0,
+      "interpolation": "piecewise linear on measured interval; no extrapolation",
+      "post_switch": {
+        "temperature_C": 50.0,
+        "moisture_kg_per_kg": 0.05
+      }
+    },
+    "radius": {
+      "path": "D:\\mathsmatical_modeling\\compition\\2026\\附件2.xlsx",
+      "sheet": "Sheet1",
+      "record_count": 145,
+      "start_s": 0.0,
+      "end_s": 259200.0,
+      "start_radius_m": 0.02,
+      "end_radius_m": 0.01198,
+      "interpolation": "pchip",
+      "post_mode": "plateau",
+      "dense_min_radius_m": 0.01198,
+      "dense_max_radius_m": 0.02,
+      "dense_min_derivative_m_s": -8.388888888888892e-07,
+      "dense_max_derivative_m_s": 0.0,
+      "outside_evaluation": "explicit post_mode; no interpolator extrapolation"
+    }
+  },
+  "finished_at": "2026-09-11T18:09:28+0800",
+  "pass": true,
+  "failures": [],
+  "artifacts": [
+    "manufactured_error_2_C",
+    "manufactured_error_2_T_C",
+    "manufactured_error_C",
+    "manufactured_error_T_C",
+    "manufactured_grid_N",
+    "manufactured_wrong_r1_error_C",
+    "manufactured_wrong_r1_error_T_C",
+    "manufactured_wrong_r2_error_C",
+    "manufactured_wrong_r2_error_T_C"
+  ]
+}

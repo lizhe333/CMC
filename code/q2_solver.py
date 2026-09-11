@@ -60,6 +60,47 @@ class Q2DomainError(ValueError):
     """The state is outside the domain of the empirical properties."""
 
 
+SUPPORTED_PROPERTY_MODELS = ("q2", "q1")
+
+
+def _validate_property_model(property_model: str) -> str:
+    """Validate and normalize the constitutive model selector.
+
+    ``q2`` is the historical/default model.  ``q1`` is deliberately exposed
+    only as a constitutive degradation path for independent reproducibility
+    checks; it does not alter the published Q2 default.
+    """
+    if not isinstance(property_model, str) or property_model not in SUPPORTED_PROPERTY_MODELS:
+        raise ValueError(
+            f"property_model must be one of {SUPPORTED_PROPERTY_MODELS}, got {property_model!r}."
+        )
+    return property_model
+
+
+class SegmentObserver:
+    """Read-only BDF segment observer used by supplementary diagnostics.
+
+    The observer is opt-in.  A callback can consume each segment immediately,
+    which avoids retaining large dense-output arrays on fine grids.  With
+    ``retain=True`` the compact metadata and dense callables are retained for
+    small-grid contract tests.  Nothing returned here is fed back to the
+    integrator or used to modify an accepted state.
+    """
+
+    def __init__(self, *, retain: bool = True, callback: Any | None = None) -> None:
+        self.retain = bool(retain)
+        self.callback = callback
+        self.segments: list[dict[str, Any]] = []
+        self.total_segments = 0
+
+    def record(self, payload: dict[str, Any]) -> None:
+        self.total_segments += 1
+        if self.callback is not None:
+            self.callback(payload)
+        if self.retain:
+            self.segments.append(payload)
+
+
 def radial_geometry(n: int) -> tuple[float, np.ndarray, np.ndarray, np.ndarray]:
     """Return dr, node radii, face radii, and truncated radial volumes."""
     if int(n) != n or n < 20 or n % 20 != 0:
@@ -78,9 +119,17 @@ def radial_geometry(n: int) -> tuple[float, np.ndarray, np.ndarray, np.ndarray]:
 
 
 def material_properties(
-    C: np.ndarray | float, T_C: np.ndarray | float
+    C: np.ndarray | float,
+    T_C: np.ndarray | float,
+    property_model: str = "q2",
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    """Evaluate Appendix 3 properties with strict physical-domain checks."""
+    """Evaluate one of the two constitutive models with strict domain checks.
+
+    The default ``q2`` branch is unchanged from the formal solver.  ``q1``
+    reproduces Q1's constant thermal properties and concentration-dependent
+    diffusivity, allowing a solver-level degradation/reproduction audit.
+    """
+    property_model = _validate_property_model(property_model)
     c = np.asarray(C, dtype=float)
     t = np.asarray(T_C, dtype=float)
     if not np.isfinite(c).all() or not np.isfinite(t).all():
@@ -90,27 +139,43 @@ def material_properties(
     T_K = t + 273.15
     if np.any(T_K <= 0.0):
         raise Q2DomainError("Temperature must satisfy T + 273.15 > 0 K.")
-    rho = 650.0 + 128.0 * c
-    cp = 1450.0 + 2736.0 * c / (c + 1.0)
-    k = 0.21 + 0.38 * c / (c + 1.0)
-    D = 2.4e-3 * np.exp(-0.45 / c) * np.exp(-3850.0 / T_K)
+    if property_model == "q1":
+        rho = np.full_like(c, 820.0, dtype=float)
+        cp = np.full_like(c, 2600.0, dtype=float)
+        k = np.full_like(c, 0.36, dtype=float)
+        D = 7.0e-9 * np.exp(-0.89 / c)
+    else:
+        rho = 650.0 + 128.0 * c
+        cp = 1450.0 + 2736.0 * c / (c + 1.0)
+        k = 0.21 + 0.38 * c / (c + 1.0)
+        D = 2.4e-3 * np.exp(-0.45 / c) * np.exp(-3850.0 / T_K)
     if not all(np.isfinite(v).all() for v in (rho, cp, k, D)):
         raise Q2DomainError("Appendix 3 produced a nonfinite property.")
     return rho, cp, k, D
 
 
 def property_derivatives(
-    C: np.ndarray | float, T_C: np.ndarray | float
+    C: np.ndarray | float,
+    T_C: np.ndarray | float,
+    property_model: str = "q2",
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Return local derivatives used by audits and optional analytic Jacobians."""
-    rho, cp, k, D = material_properties(C, T_C)
+    property_model = _validate_property_model(property_model)
+    rho, cp, k, D = material_properties(C, T_C, property_model=property_model)
     c = np.asarray(C, dtype=float)
     t_k = np.asarray(T_C, dtype=float) + 273.15
-    rho_c = np.full_like(c, 128.0, dtype=float)
-    cp_c = 2736.0 / (c + 1.0) ** 2
-    k_c = 0.38 / (c + 1.0) ** 2
-    D_c = D * 0.45 / c**2
-    D_t = D * 3850.0 / t_k**2
+    if property_model == "q1":
+        rho_c = np.zeros_like(c, dtype=float)
+        cp_c = np.zeros_like(c, dtype=float)
+        k_c = np.zeros_like(c, dtype=float)
+        D_c = D * 0.89 / c**2
+        D_t = np.zeros_like(c, dtype=float)
+    else:
+        rho_c = np.full_like(c, 128.0, dtype=float)
+        cp_c = 2736.0 / (c + 1.0) ** 2
+        k_c = 0.38 / (c + 1.0) ** 2
+        D_c = D * 0.45 / c**2
+        D_t = D * 3850.0 / t_k**2
     return rho_c, cp_c, k_c, D_c, D_t
 
 
@@ -190,11 +255,19 @@ def jacobian_sparsity(n: int):
     return diags(diagonals, offsets=offsets, shape=(size, size), format="csc")
 
 
-def initial_state(n: int, temperature_C: float = INITIAL_T_C, moisture: float = INITIAL_C) -> np.ndarray:
+def initial_state(
+    n: int,
+    temperature_C: float = INITIAL_T_C,
+    moisture: float = INITIAL_C,
+    property_model: str = "q2",
+) -> np.ndarray:
     """Create an interleaved uniform state."""
+    property_model = _validate_property_model(property_model)
     if moisture <= 0.0:
         raise Q2DomainError("Initial moisture must be positive.")
-    _, _, _, _ = material_properties(np.array([moisture]), np.array([temperature_C]))
+    _, _, _, _ = material_properties(
+        np.array([moisture]), np.array([temperature_C]), property_model=property_model
+    )
     y = np.empty(2 * (n + 1), dtype=float)
     y[0::2] = temperature_C
     y[1::2] = moisture
@@ -207,8 +280,11 @@ def _fluxes(
     n: int,
     dr: float,
     faces: np.ndarray,
+    property_model: str = "q2",
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    rho, cp, k, D = material_properties(moisture, temperature_C)
+    rho, cp, k, D = material_properties(
+        moisture, temperature_C, property_model=property_model
+    )
     k_face = 0.5 * (k[:-1] + k[1:])
     D_face = 0.5 * (D[:-1] + D[1:])
     heat_flux = faces * k_face * np.diff(temperature_C) / dr
@@ -221,8 +297,10 @@ def make_rhs(
     n: int,
     h: float = H_BASE,
     hm: float = HM_BASE,
+    property_model: str = "q2",
 ):
     """Build the coupled finite-volume right-hand side and geometry."""
+    property_model = _validate_property_model(property_model)
     if h <= 0.0 or hm <= 0.0:
         raise ValueError("h and hm must be positive.")
     dr, nodes, faces, volumes = radial_geometry(n)
@@ -234,7 +312,7 @@ def make_rhs(
         moisture = np.asarray(y[1::2], dtype=float)
         T_environment, C_environment = environment_at(float(t), boundary)
         rho, cp, heat_flux, moisture_flux, _ = _fluxes(
-            temperature_C, moisture, n, dr, faces
+            temperature_C, moisture, n, dr, faces, property_model=property_model
         )
         heat_divergence = np.empty(n + 1, dtype=float)
         moisture_divergence = np.empty(n + 1, dtype=float)
@@ -266,9 +344,10 @@ def assemble_rhs(
     n: int,
     h: float = H_BASE,
     hm: float = HM_BASE,
+    property_model: str = "q2",
 ) -> np.ndarray:
     """Evaluate one RHS value, mainly for targeted contract tests."""
-    rhs, _ = make_rhs(boundary, n, h=h, hm=hm)
+    rhs, _ = make_rhs(boundary, n, h=h, hm=hm, property_model=property_model)
     return rhs(t, y)
 
 
@@ -277,6 +356,7 @@ def make_log_rhs(
     n: int,
     h: float = H_BASE,
     hm: float = HM_BASE,
+    property_model: str = "q2",
 ):
     """Build the RHS used by BDF in ``(T, z=log(C))`` coordinates.
 
@@ -289,7 +369,10 @@ def make_log_rhs(
     its two neighbours; in particular the D(C,T) cross-dependencies are
     preserved.
     """
-    physical_rhs, geometry = make_rhs(boundary, n, h=h, hm=hm)
+    property_model = _validate_property_model(property_model)
+    physical_rhs, geometry = make_rhs(
+        boundary, n, h=h, hm=hm, property_model=property_model
+    )
     dr, nodes, faces, volumes = geometry
 
     def _physical_from_log(z_state: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
@@ -325,8 +408,12 @@ def make_log_rhs(
         """Analytic sparse Jacobian of ``rhs_log`` in interleaved z coordinates."""
         physical_state, moisture = _physical_from_log(z_state)
         temperature_C = physical_state[0::2]
-        rho, cp, k, D = material_properties(moisture, temperature_C)
-        rho_c, cp_c, k_c, D_c, D_t = property_derivatives(moisture, temperature_C)
+        rho, cp, k, D = material_properties(
+            moisture, temperature_C, property_model=property_model
+        )
+        rho_c, cp_c, k_c, D_c, D_t = property_derivatives(
+            moisture, temperature_C, property_model=property_model
+        )
         T_environment, C_environment = environment_at(float(t), boundary)
         delta_T = np.diff(temperature_C)
         delta_C = np.diff(moisture)
@@ -439,6 +526,82 @@ def make_log_rhs(
     return rhs_log, jac_log, geometry
 
 
+def _trapezoid_node_weights(nodes: np.ndarray) -> np.ndarray:
+    """Return diagnostic trapezoid weights for an increasing node sequence."""
+    nodes = np.asarray(nodes, dtype=float)
+    if nodes.ndim != 1 or nodes.size == 0 or not np.isfinite(nodes).all():
+        raise ValueError("Observer nodes must be a nonempty finite 1-D array.")
+    if nodes.size == 1:
+        return np.zeros(1, dtype=float)
+    if np.any(np.diff(nodes) <= 0.0):
+        raise ValueError("Observer nodes must be strictly increasing.")
+    weights = np.empty_like(nodes)
+    weights[0] = 0.5 * (nodes[1] - nodes[0])
+    weights[-1] = 0.5 * (nodes[-1] - nodes[-2])
+    weights[1:-1] = 0.5 * (nodes[2:] - nodes[:-2])
+    return weights
+
+
+def _make_dense_component_solution(dense_solution: Any, component: int):
+    """Build a scalar dense evaluator without materialising all state rows.
+
+    SciPy's BDF dense interpolants expose the polynomial coefficient table
+    ``D``.  Using one row is important for the N=10240 balance diagnostic:
+    surface flux quadrature needs only the surface concentration, not a large
+    state matrix at every Gauss point.  A conservative full-state fallback is
+    kept for alternative SciPy dense-output implementations.
+    """
+    try:
+        ts = np.asarray(dense_solution.ts, dtype=float)
+        interpolants = tuple(dense_solution.interpolants)
+        ascending = bool(ts[-1] >= ts[0])
+        ts_sorted = ts if ascending else ts[::-1]
+        side = "left" if ascending else "right"
+    except AttributeError:
+        ts = ts_sorted = None
+        interpolants = ()
+        ascending = True
+        side = "left"
+
+    def one(value: float) -> float:
+        value = float(value)
+        if not interpolants:
+            state = np.asarray(dense_solution(value), dtype=float)
+            return float(state[component])
+        index = int(np.searchsorted(ts_sorted, value, side=side))
+        segment = min(max(index - 1, 0), len(interpolants) - 1)
+        if not ascending:
+            segment = len(interpolants) - 1 - segment
+        interpolant = interpolants[segment]
+        if all(hasattr(interpolant, name) for name in ("D", "t_shift", "denom")):
+            x = (value - interpolant.t_shift) / interpolant.denom
+            p = np.cumprod(x)
+            return float(np.dot(interpolant.D[1:, component], p) + interpolant.D[0, component])
+        state = np.asarray(interpolant(value), dtype=float)
+        return float(state[component])
+
+    def evaluate(query: float | np.ndarray) -> float | np.ndarray:
+        values = np.asarray(query, dtype=float)
+        if values.ndim == 0:
+            return one(float(values))
+        result = np.fromiter((one(value) for value in values.ravel()), dtype=float, count=values.size)
+        return result.reshape(values.shape)
+
+    return evaluate
+
+
+def _notify_segment_observer(observer: Any, payload: dict[str, Any]) -> None:
+    """Send a read-only segment payload to an opt-in observer/callback."""
+    if observer is None:
+        return
+    if hasattr(observer, "record"):
+        observer.record(payload)
+    elif callable(observer):
+        observer(payload)
+    else:
+        raise TypeError("segment_observer must provide record(payload) or be callable.")
+
+
 def integrate_case(
     boundary: np.ndarray,
     n: int,
@@ -451,8 +614,16 @@ def integrate_case(
     initial: np.ndarray | None = None,
     start_time: int = 0,
     chunk_seconds: int = DEFAULT_CHUNK_S,
+    property_model: str = "q2",
+    segment_observer: Any | None = None,
 ) -> dict[str, Any]:
-    """Integrate in chunks, retaining only 21-point history and the final full state."""
+    """Integrate in chunks, retaining only 21-point history and final state.
+
+    ``property_model`` and ``segment_observer`` are appended keyword
+    arguments, preserving all historical positional calls.  The observer is
+    strictly read-only and is invoked only after a segment succeeds.
+    """
+    property_model = _validate_property_model(property_model)
     if end < start_time or int(end) != end or int(start_time) != start_time:
         raise ValueError("end and start_time must be ordered integer seconds.")
     if end > boundary[-1, 0] or start_time < boundary[0, 0]:
@@ -464,12 +635,18 @@ def integrate_case(
     # moisture component in its reversible log coordinate.  A finite
     # difference/Newton trial in raw C can otherwise cross C=0 at fine grids
     # even when every accepted physical state is valid.
-    rhs_log, jac_log, geometry = make_log_rhs(boundary, n, h=h, hm=hm)
+    rhs_log, jac_log, geometry = make_log_rhs(
+        boundary, n, h=h, hm=hm, property_model=property_model
+    )
     dr, nodes, faces, volumes = geometry
-    state = initial_state(n) if initial is None else np.asarray(initial, dtype=float).copy()
+    state = (
+        initial_state(n, property_model=property_model)
+        if initial is None
+        else np.asarray(initial, dtype=float).copy()
+    )
     if state.size != 2 * (n + 1):
         raise ValueError("Initial state has the wrong size for this grid.")
-    material_properties(state[1::2], state[0::2])
+    material_properties(state[1::2], state[0::2], property_model=property_model)
     with np.errstate(divide="raise", invalid="raise"):
         try:
             transformed_state = state.copy()
@@ -556,6 +733,94 @@ def integrate_case(
                 raise Q2DomainError("BDF log(C) final state overflowed; no clipping was applied.") from exc
         if not np.isfinite(state).all() or np.any(state[1::2] <= 0.0):
             raise Q2DomainError("BDF log(C) final state was not strictly positive.")
+        if segment_observer is not None:
+            accepted_nodes = np.asarray(solution.t, dtype=float).copy()
+            accepted_nodes.setflags(write=False)
+            accepted_step_trapezoid_weights = _trapezoid_node_weights(accepted_nodes)
+            accepted_step_trapezoid_weights.setflags(write=False)
+            boundary_mask = (
+                (boundary[:, 0] >= cursor - 1e-10)
+                & (boundary[:, 0] <= segment_end + 1e-10)
+            )
+            boundary_nodes = np.asarray(boundary[boundary_mask, 0], dtype=float)
+            boundary_nodes = np.unique(
+                np.concatenate(([float(cursor), float(segment_end)], boundary_nodes))
+            )
+            boundary_nodes.setflags(write=False)
+            control_volume_weights = np.asarray(volumes, dtype=float).copy()
+            control_volume_weights.setflags(write=False)
+            radius_nodes = np.asarray(nodes, dtype=float).copy()
+            radius_nodes.setflags(write=False)
+            dense_solution = solution.sol
+
+            def dense_log_solution(
+                query: float | np.ndarray,
+                dense_solution: Any = dense_solution,
+            ) -> np.ndarray:
+                """Expose the accepted segment's unmodified (T, log C) path."""
+                values = np.asarray(dense_solution(query), dtype=float)
+                if not np.isfinite(values).all():
+                    raise Q2DomainError("Observer dense log state is nonfinite.")
+                return values
+
+            def physical_dense_solution(
+                query: float | np.ndarray,
+                dense_solution: Any = dense_solution,
+            ) -> np.ndarray:
+                transformed = np.asarray(dense_solution(query), dtype=float)
+                with np.errstate(over="raise", invalid="raise", under="ignore"):
+                    try:
+                        physical = transformed.copy()
+                        if physical.ndim == 1:
+                            physical[1::2] = np.exp(transformed[1::2])
+                        else:
+                            physical[1::2, ...] = np.exp(transformed[1::2, ...])
+                    except FloatingPointError as exc:
+                        raise Q2DomainError(
+                            "Observer dense log(C) output overflowed; no clipping was applied."
+                        ) from exc
+                if not np.isfinite(physical).all() or np.any(physical[1::2, ...] <= 0.0):
+                    raise Q2DomainError(
+                        "Observer dense output was not strictly positive; no clipping was applied."
+                    )
+                return physical
+
+            moisture_surface_log_solution = _make_dense_component_solution(
+                dense_solution, 2 * n + 1
+            )
+            def moisture_surface_solution(
+                query: float | np.ndarray,
+                component_solution: Any = moisture_surface_log_solution,
+            ) -> np.ndarray:
+                with np.errstate(over="raise", invalid="raise", under="ignore"):
+                    values = np.exp(component_solution(query))
+                if not np.isfinite(values).all() or np.any(values <= 0.0):
+                    raise Q2DomainError(
+                        "Observer surface moisture was not strictly positive; no clipping was applied."
+                    )
+                return values
+
+            payload = {
+                "start_s": float(cursor),
+                "end_s": float(segment_end),
+                "accepted_step_nodes": accepted_nodes,
+                "accepted_step_trapezoid_weights": accepted_step_trapezoid_weights,
+                "boundary_nodes": boundary_nodes,
+                "radius_nodes_m": radius_nodes,
+                "control_volume_weights_m2": control_volume_weights,
+                "h_W_m2K": float(h),
+                "hm_m_s": float(hm),
+                "property_model": property_model,
+                "dense_log_solution": dense_log_solution,
+                "dense_solution": physical_dense_solution,
+                "temperature_solution": _make_dense_component_solution(dense_solution, 0),
+                "moisture_surface_log_solution": moisture_surface_log_solution,
+                "moisture_surface_solution": moisture_surface_solution,
+                "nfev": int(solution.nfev),
+                "njev": int(solution.njev or 0),
+                "nlu": int(solution.nlu or 0),
+            }
+            _notify_segment_observer(segment_observer, payload)
         cursor = segment_end
         out_index = last
     if output_count and not np.isfinite(mean_moisture).all():
@@ -603,8 +868,13 @@ def integrate_case(
         "boundary_start_s": float(boundary[0, 0]),
         "boundary_end_s": float(boundary[-1, 0]),
         "boundary_interpolation": "piecewise linear, no extrapolation",
-        "model": "Q2 fixed-radius axisymmetric variable-property coupled FV+BDF",
+        "model": (
+            "Q2 fixed-radius axisymmetric variable-property coupled FV+BDF"
+            if property_model == "q2"
+            else "Q1 constitutive degradation in fixed-radius coupled FV+BDF"
+        ),
         "moisture_parameterization": MOISTURE_PARAMETERIZATION,
+        "property_model": property_model,
     }
     return result
 

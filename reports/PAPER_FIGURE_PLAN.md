@@ -23,3 +23,10 @@
 本轮 XeLaTeX 自动多轮编译通过，24 页 PDF 中无未解析引用，最终日志无溢出或缺字告警。已查看流程图、薄壳示意图、两组方程及原结果表图所在页。两张结果表共 70 个值与原 CSV 的四位小数表示一致。
 
 交付覆盖 `output/pdf/CUMCM_2026_A_q1_results.pdf`。不另存版本，不生成压缩包。全稿未完成的小问与原有占位内容不在本轮定稿范围内。
+
+
+## 附件一环境曲线（2026-09-11）
+
+按确认方案在“2.2 数据预处理”中新增“烘房温度及水分浓度随时间的变化”，标签 `fig:ambient-boundary`。上下子图分别为温度、水分浓度，共用小时横轴，展示附件一全部 241 个采样点及逐秒分段线性插值。灰色区域标出第一问的前 30 分钟，不将其解释为已经达到热平衡。
+
+图由 `code/plot_ambient_boundary.py` 直接读取原附件一生成，矢量版位于 `paper/figures/ambient_boundary.pdf`，预览位于 `figures/ambient_boundary.png`，数据口径记录在 `reports/AMBIENT_FIGURE_DATA.json`。无平滑、无区间外延拓，不写入既有求解结果。前 1800 秒与保存的 `results/q1/boundary_used.csv` 最大绝对差为 0。插图自动编号为图 1，其余图号顺延。

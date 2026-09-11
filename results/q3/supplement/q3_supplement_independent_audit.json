@@ -1,0 +1,172 @@
+{
+  "status": "PASSED",
+  "protected_files": [
+    {
+      "path": "code\\q3_solver.py",
+      "byte_identical": true
+    },
+    {
+      "path": "paper\\sections\\6_q2_full_drying.tex",
+      "byte_identical": true
+    },
+    {
+      "path": "paper\\tables\\q2_temperature.tex",
+      "byte_identical": true
+    },
+    {
+      "path": "paper\\tables\\q2_moisture.tex",
+      "byte_identical": true
+    },
+    {
+      "path": "paper\\tables\\q3_moisture.tex",
+      "byte_identical": true
+    },
+    {
+      "path": "results\\q3\\q3_fields.npz",
+      "byte_identical": true
+    },
+    {
+      "path": "results\\q3\\q3_event.npz",
+      "byte_identical": true
+    },
+    {
+      "path": "results\\q3\\q3_validation.json",
+      "byte_identical": true
+    },
+    {
+      "path": "results\\q3\\q3_convergence.json",
+      "byte_identical": true
+    },
+    {
+      "path": "results\\q3\\q3_sensitivity.json",
+      "byte_identical": true
+    },
+    {
+      "path": "paper\\main.pdf",
+      "byte_identical": true
+    },
+    {
+      "path": "output\\pdf\\CUMCM_2026_A_q1_results.pdf",
+      "byte_identical": true
+    }
+  ],
+  "case_count": 12,
+  "max_mass_balance_relative": 5.319360784530066e-07,
+  "max_monotonicity_positive_jump": 2.220446049250313e-15,
+  "min_moisture": 0.04766116789891281,
+  "grid_times_s": [
+    206897.02282643443,
+    206899.43937557944,
+    206900.07784038855
+  ],
+  "grid_comparisons": [
+    {
+      "abs_s": 2.4165491450112313,
+      "relative": 1.1679824519120757e-05
+    },
+    {
+      "abs_s": 0.6384648091043346,
+      "relative": 3.085860652004555e-06
+    }
+  ],
+  "sensitivity": [
+    {
+      "n": 2560,
+      "case": "nominal",
+      "time_h": 57.47139522956512,
+      "delta_h": 0.0,
+      "delta_percent": 0.0
+    },
+    {
+      "n": 2560,
+      "case": "temperature_49",
+      "time_h": 59.338496388859575,
+      "delta_h": 1.8671011592944544,
+      "delta_percent": 3.2487486197898288
+    },
+    {
+      "n": 2560,
+      "case": "temperature_51",
+      "time_h": 55.685922528453254,
+      "delta_h": -1.7854727011118667,
+      "delta_percent": -3.106715425960918
+    },
+    {
+      "n": 2560,
+      "case": "moisture_0045",
+      "time_h": 57.37902128887862,
+      "delta_h": -0.09237394068650448,
+      "delta_percent": -0.1607302908125404
+    },
+    {
+      "n": 2560,
+      "case": "moisture_0055",
+      "time_h": 57.582056239910486,
+      "delta_h": 0.11066101034536485,
+      "delta_percent": 0.1925497195662953
+    },
+    {
+      "n": 5120,
+      "case": "nominal",
+      "time_h": 57.47206649321651,
+      "delta_h": 0.0,
+      "delta_percent": 0.0
+    },
+    {
+      "n": 5120,
+      "case": "temperature_49",
+      "time_h": 59.33923023227182,
+      "delta_h": 1.8671637390553062,
+      "delta_percent": 3.2488195622401874
+    },
+    {
+      "n": 5120,
+      "case": "temperature_51",
+      "time_h": 55.68653613551817,
+      "delta_h": -1.7855303576983472,
+      "delta_percent": -3.1067794611302086
+    },
+    {
+      "n": 5120,
+      "case": "moisture_0045",
+      "time_h": 57.38044166149523,
+      "delta_h": -0.09162483172128204,
+      "delta_percent": -0.15942498210343037
+    },
+    {
+      "n": 5120,
+      "case": "moisture_0055",
+      "time_h": 57.582370397250706,
+      "delta_h": 0.1103039040341941,
+      "delta_percent": 0.19192611431018125
+    }
+  ],
+  "largest_effect_case": "temperature_49",
+  "temporal": [
+    {
+      "case": "nominal",
+      "base_s": 206899.43937557944,
+      "tight_s": 206899.42647048624,
+      "abs_s": 0.012905093200970441,
+      "relative": 6.237375047925194e-08
+    },
+    {
+      "case": "temperature_49",
+      "base_s": 213621.22883617855,
+      "tight_s": 213621.2142090086,
+      "abs_s": 0.014627169934101403,
+      "relative": 6.84724594804993e-08
+    }
+  ],
+  "sensitivity_delta_change_after_refinement_s": -0.0017220767331309617,
+  "diffusivity_recompute_max_abs_difference": 0.0,
+  "endpoint_center_surface_D_ratio": 256.0741678950679,
+  "continuity_evidence": "code-path audit: second segment receives an exact copy of first[state_final]; stored case summaries do not independently preserve second-segment initial state",
+  "case_records_rechecked_after_provenance_cleanup": 12,
+  "case_event_state_provenance": "scalar event evidence embedded; no per-case full state file persisted",
+  "stale_supplement_artifacts_absent": [
+    "nominal__base_n2560.json",
+    "nominal__base_n2560.npz",
+    "nominal__base_n5120.running.json"
+  ]
+}

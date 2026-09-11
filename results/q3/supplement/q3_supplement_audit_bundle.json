@@ -1,0 +1,322 @@
+{
+  "status": "READY_FOR_INDEPENDENT_AUDIT",
+  "created_by": "q3_supplement_experiments.py",
+  "formal_results_modified": false,
+  "paper_modified": false,
+  "grid_convergence": {
+    "settings_name": "base",
+    "settings": {
+      "rtol": 1e-09,
+      "atol": 1e-11,
+      "max_step_before_s": 5.0,
+      "max_step_after_s": 60.0
+    },
+    "rows": [
+      {
+        "n_intervals": 2560,
+        "dr_m": 7.8125e-06,
+        "time_s": 206897.02282643443,
+        "source": "new_full_audit",
+        "time_h": 57.47139522956512
+      },
+      {
+        "n_intervals": 5120,
+        "dr_m": 3.90625e-06,
+        "time_s": 206899.43937557944,
+        "source": "new_full_audit",
+        "archived_time_s": 206899.43937557944,
+        "time_h": 57.47206649321651
+      },
+      {
+        "n_intervals": 10240,
+        "dr_m": 1.953125e-06,
+        "time_s": 206900.07784038855,
+        "source": "accepted_q3_convergence_base",
+        "time_h": 57.472243844552374
+      }
+    ],
+    "comparisons": [
+      {
+        "coarse_n": 2560,
+        "fine_n": 5120,
+        "signed_difference_s": 2.4165491450112313,
+        "absolute_difference_s": 2.4165491450112313,
+        "relative_difference": 1.1679824519120757e-05,
+        "pass": true
+      },
+      {
+        "coarse_n": 5120,
+        "fine_n": 10240,
+        "signed_difference_s": 0.6384648091043346,
+        "absolute_difference_s": 0.6384648091043346,
+        "relative_difference": 3.085860652004555e-06,
+        "pass": true
+      }
+    ],
+    "trend": {
+      "both_pairs_pass": true,
+      "same_signed_direction": true,
+      "later_increment_smaller": true,
+      "new_5120_matches_archive": true
+    },
+    "new_5120_archive_absolute_difference_s": 0.0,
+    "pass": true
+  },
+  "boundary_sensitivity": {
+    "settings_name": "base",
+    "settings": {
+      "rtol": 1e-09,
+      "atol": 1e-11,
+      "max_step_before_s": 5.0,
+      "max_step_after_s": 60.0
+    },
+    "rows": [
+      {
+        "case": "nominal",
+        "n_intervals": 2560,
+        "plateau_temperature_C": 50.0,
+        "plateau_moisture_kg_per_kg": 0.05,
+        "time_s": 206897.02282643443,
+        "time_h": 57.47139522956512,
+        "delta_time_s_vs_nominal_same_n": 0.0,
+        "delta_percent_vs_nominal_same_n": 0.0,
+        "status": "PASSED",
+        "mass_balance_max_relative": 3.8522946262136756e-07,
+        "event_bracket_width_s": 0.6681898901879322,
+        "monotonicity_max_positive_neighbor_jump": 2.220446049250313e-15
+      },
+      {
+        "case": "temperature_49",
+        "n_intervals": 2560,
+        "plateau_temperature_C": 49.0,
+        "plateau_moisture_kg_per_kg": 0.05,
+        "time_s": 213618.58699989447,
+        "time_h": 59.338496388859575,
+        "delta_time_s_vs_nominal_same_n": 6721.564173460036,
+        "delta_percent_vs_nominal_same_n": 3.2487486197898288,
+        "status": "PASSED",
+        "mass_balance_max_relative": 4.924117516350519e-07,
+        "event_bracket_width_s": 0.5994006757391617,
+        "monotonicity_max_positive_neighbor_jump": 2.220446049250313e-15
+      },
+      {
+        "case": "temperature_51",
+        "n_intervals": 2560,
+        "plateau_temperature_C": 51.0,
+        "plateau_moisture_kg_per_kg": 0.05,
+        "time_s": 200469.3211024317,
+        "time_h": 55.685922528453254,
+        "delta_time_s_vs_nominal_same_n": -6427.70172400272,
+        "delta_percent_vs_nominal_same_n": -3.106715425960918,
+        "status": "PASSED",
+        "mass_balance_max_relative": 4.1400060042471845e-07,
+        "event_bracket_width_s": 0.6583109067578334,
+        "monotonicity_max_positive_neighbor_jump": 2.220446049250313e-15
+      },
+      {
+        "case": "moisture_0045",
+        "n_intervals": 2560,
+        "plateau_temperature_C": 50.0,
+        "plateau_moisture_kg_per_kg": 0.045,
+        "time_s": 206564.47663996302,
+        "time_h": 57.37902128887862,
+        "delta_time_s_vs_nominal_same_n": -332.54618647141615,
+        "delta_percent_vs_nominal_same_n": -0.1607302908125404,
+        "status": "PASSED",
+        "mass_balance_max_relative": 5.125517265515988e-07,
+        "event_bracket_width_s": 0.6288663220766466,
+        "monotonicity_max_positive_neighbor_jump": 2.220446049250313e-15
+      },
+      {
+        "case": "moisture_0055",
+        "n_intervals": 2560,
+        "plateau_temperature_C": 50.0,
+        "plateau_moisture_kg_per_kg": 0.055,
+        "time_s": 207295.40246367775,
+        "time_h": 57.582056239910486,
+        "delta_time_s_vs_nominal_same_n": 398.3796372433135,
+        "delta_percent_vs_nominal_same_n": 0.1925497195662953,
+        "status": "PASSED",
+        "mass_balance_max_relative": 5.315319187843119e-07,
+        "event_bracket_width_s": 0.6557849271048326,
+        "monotonicity_max_positive_neighbor_jump": 2.220446049250313e-15
+      },
+      {
+        "case": "nominal",
+        "n_intervals": 5120,
+        "plateau_temperature_C": 50.0,
+        "plateau_moisture_kg_per_kg": 0.05,
+        "time_s": 206899.43937557944,
+        "time_h": 57.47206649321651,
+        "delta_time_s_vs_nominal_same_n": 0.0,
+        "delta_percent_vs_nominal_same_n": 0.0,
+        "status": "PASSED",
+        "mass_balance_max_relative": 3.848228484454865e-07,
+        "event_bracket_width_s": 0.7059630957373884,
+        "monotonicity_max_positive_neighbor_jump": 2.220446049250313e-15
+      },
+      {
+        "case": "temperature_49",
+        "n_intervals": 5120,
+        "plateau_temperature_C": 49.0,
+        "plateau_moisture_kg_per_kg": 0.05,
+        "time_s": 213621.22883617855,
+        "time_h": 59.33923023227182,
+        "delta_time_s_vs_nominal_same_n": 6721.789460599102,
+        "delta_percent_vs_nominal_same_n": 3.2488195622401874,
+        "status": "PASSED",
+        "mass_balance_max_relative": 4.928727775366022e-07,
+        "event_bracket_width_s": 0.764527136401739,
+        "monotonicity_max_positive_neighbor_jump": 2.220446049250313e-15
+      },
+      {
+        "case": "temperature_51",
+        "n_intervals": 5120,
+        "plateau_temperature_C": 51.0,
+        "plateau_moisture_kg_per_kg": 0.05,
+        "time_s": 200471.5300878654,
+        "time_h": 55.68653613551817,
+        "delta_time_s_vs_nominal_same_n": -6427.90928771405,
+        "delta_percent_vs_nominal_same_n": -3.1067794611302086,
+        "status": "PASSED",
+        "mass_balance_max_relative": 4.144325336067499e-07,
+        "event_bracket_width_s": 0.9345132834569085,
+        "monotonicity_max_positive_neighbor_jump": 2.220446049250313e-15
+      },
+      {
+        "case": "moisture_0045",
+        "n_intervals": 5120,
+        "plateau_temperature_C": 50.0,
+        "plateau_moisture_kg_per_kg": 0.045,
+        "time_s": 206569.58998138283,
+        "time_h": 57.38044166149523,
+        "delta_time_s_vs_nominal_same_n": -329.8493941966153,
+        "delta_percent_vs_nominal_same_n": -0.15942498210343037,
+        "status": "PASSED",
+        "mass_balance_max_relative": 5.131315217612629e-07,
+        "event_bracket_width_s": 0.9484468239243142,
+        "monotonicity_max_positive_neighbor_jump": 2.220446049250313e-15
+      },
+      {
+        "case": "moisture_0055",
+        "n_intervals": 5120,
+        "plateau_temperature_C": 50.0,
+        "plateau_moisture_kg_per_kg": 0.055,
+        "time_s": 207296.53343010254,
+        "time_h": 57.582370397250706,
+        "delta_time_s_vs_nominal_same_n": 397.09405452309875,
+        "delta_percent_vs_nominal_same_n": 0.19192611431018125,
+        "status": "PASSED",
+        "mass_balance_max_relative": 5.319360784530066e-07,
+        "event_bracket_width_s": 0.6911689797707368,
+        "monotonicity_max_positive_neighbor_jump": 2.220446049250313e-15
+      }
+    ],
+    "grid_checks": [
+      {
+        "case": "nominal",
+        "absolute_difference_s": 2.4165491450112313,
+        "relative_difference": 1.1679824519120757e-05,
+        "pass": true
+      },
+      {
+        "case": "temperature_49",
+        "absolute_difference_s": 2.6418362840777263,
+        "relative_difference": 1.2366918299602578e-05,
+        "pass": true
+      },
+      {
+        "case": "temperature_51",
+        "absolute_difference_s": 2.2089854336809367,
+        "relative_difference": 1.1018948340009938e-05,
+        "pass": true
+      },
+      {
+        "case": "moisture_0045",
+        "absolute_difference_s": 5.113341419812059,
+        "relative_difference": 2.475360201989509e-05,
+        "pass": true
+      },
+      {
+        "case": "moisture_0055",
+        "absolute_difference_s": 1.1309664247964974,
+        "relative_difference": 5.455790340931308e-06,
+        "pass": true
+      }
+    ],
+    "all_grid_checks_pass": true,
+    "largest_effect_case_n5120": "temperature_49"
+  },
+  "temporal_refinement": {
+    "largest_effect_case": "temperature_49",
+    "base_settings": {
+      "rtol": 1e-09,
+      "atol": 1e-11,
+      "max_step_before_s": 5.0,
+      "max_step_after_s": 60.0
+    },
+    "tight_settings": {
+      "rtol": 1e-10,
+      "atol": 1e-12,
+      "max_step_before_s": 2.5,
+      "max_step_after_s": 30.0
+    },
+    "comparisons": {
+      "nominal": {
+        "base_time_s": 206899.43937557944,
+        "tight_time_s": 206899.42647048624,
+        "absolute_difference_s": 0.012905093200970441,
+        "relative_difference": 6.237375047925194e-08,
+        "pass": true
+      },
+      "temperature_49": {
+        "base_time_s": 213621.22883617855,
+        "tight_time_s": 213621.2142090086,
+        "absolute_difference_s": 0.014627169934101403,
+        "relative_difference": 6.84724594804993e-08,
+        "pass": true
+      }
+    },
+    "delta_base_s": 6721.789460599102,
+    "delta_tight_s": 6721.787738522369,
+    "delta_change_after_refinement_s": -0.0017220767331309617,
+    "pass": true
+  },
+  "diffusivity": {
+    "source_fields": "results/q3/q3_fields.npz",
+    "source_event": "results/q3/q3_event.npz",
+    "radii_cm": [
+      0.0,
+      1.0,
+      2.0
+    ],
+    "formula_source": "q2_solver.material_properties q2 branch",
+    "series": {
+      "center": {
+        "peak_time_s": 8880.0,
+        "peak_time_h": 2.466666666666667,
+        "peak_D_m2_s": 1.2521792095556744e-08,
+        "endpoint_D_m2_s": 8.001208146652626e-10
+      },
+      "half_radius": {
+        "peak_time_s": 8700.0,
+        "peak_time_h": 2.4166666666666665,
+        "peak_D_m2_s": 1.2193061399342109e-08,
+        "endpoint_D_m2_s": 6.488887864723386e-10
+      },
+      "surface": {
+        "peak_time_s": 7260.0,
+        "peak_time_h": 2.0166666666666666,
+        "peak_D_m2_s": 1.0750747388096999e-08,
+        "endpoint_D_m2_s": 3.1245666880117715e-12
+      }
+    },
+    "endpoint_center_surface_ratio": 256.0741678950679
+  },
+  "limitations": [
+    "Long-term boundary changes are specified engineering scenarios, not confidence intervals.",
+    "The endpoint remains a conditional prediction under a constant post-4-hour environment.",
+    "Local diffusivity curves support but do not uniquely prove a controlling resistance mechanism.",
+    "Mass balance is closure of the effective moisture equation, not total physical mass validation."
+  ]
+}
