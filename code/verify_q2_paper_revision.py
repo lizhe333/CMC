@@ -1,4 +1,4 @@
-"""Check the concrete table and space-time-data contracts of the Q2 revision."""
+"""Check the concrete table and unified-figure contracts of the Q2 revision."""
 from pathlib import Path
 import csv
 import json
@@ -32,24 +32,29 @@ def main():
                 assert token in tex, (name, token)
             assert tex.count(r'\hline') == 8
             checks[name + '_table'] = 'PASS: 30 values, original grid and merged headers'
-        metadata = json.loads((result / 'q2_spacetime_metadata.json').read_text(encoding='utf-8'))
-        indices = np.array(metadata['time_indices'])
+        metadata = json.loads((result / 'q2_combined_fields_metadata.json').read_text(encoding='utf-8'))
+        with np.load(result / 'q2_combined_fields_data.npz') as combined:
+            indices = combined['surface_indices']
+            assert np.array_equal(combined['time_s'], original['time_s'])
+            assert np.array_equal(combined['radius_cm'], original['radius_cm'])
+            assert np.array_equal(combined['temperature_C'], original['temperature_C'])
+            assert np.array_equal(combined['moisture_kg_per_kg'], original['moisture_kg_per_kg'])
         assert np.array_equal(indices, np.unique(np.r_[np.arange(61), np.arange(60, 10801, 60)]))
-        with np.load(result / 'q2_spacetime_data.npz') as sampled:
-            assert np.array_equal(sampled['time_s'], original['time_s'][indices])
-            assert np.array_equal(sampled['radius_cm'], original['radius_cm'])
-            for key in ['temperature_C', 'moisture_kg_per_kg']:
-                assert sampled[key].shape == (240, 21)
-                assert np.array_equal(sampled[key], original[key][indices])
-        checks['spacetime_data'] = 'PASS: exact 240 x 21 original samples for both fields'
-    for name in ['q2_fields.pdf', 'q2_spacetime.pdf']:
-        assert (paper / 'figures' / name).read_bytes() == (result / name).read_bytes()
-    checks['paper_figure_sources'] = 'PASS: both embedded PDFs equal the result PDFs'
+        assert metadata['source'] == 'q2_fields.npz'
+        assert metadata['smoothing'] is False and metadata['extrapolation'] is False
+        checks['combined_figure_data'] = 'PASS: all 10801 x 21 states preserved; surface uses exact source samples'
+    name = 'q2_combined_fields.pdf'
+    assert (paper / 'figures' / name).read_bytes() == (result / name).read_bytes()
+    checks['paper_figure_source'] = 'PASS: embedded combined PDF equals the result PDF'
     source = (paper / 'sections/6_q2_full_drying.tex').read_text(encoding='utf-8')
     assert r'\exp' not in source
     assert r'\farc' not in source
-    assert 'fig:q2-spacetime' in source
-    assert 'fig:q2-fields' in source
+    assert 'fig:q2-combined-fields' in source
+    assert 'fig:q2-spacetime' not in source
+    assert 'fig:q2-fields' not in source
+    assert 'q2_combined_fields.pdf' in source
+    assert 'q2_fields.pdf' not in source
+    assert 'q2_spacetime.pdf' not in source
     checks['exponent_notation_and_figures'] = 'PASS'
     report = {'scope': 'Q2 user revision; no PDE rerun or official workbook modification',
               'status': 'PASS', 'checks': checks}

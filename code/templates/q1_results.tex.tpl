@@ -1,36 +1,25 @@
-\Needspace{0.42\textheight}
+\Needspace{6\baselineskip}
 \subsection{结果分析}
 
-\Needspace{4\baselineskip}
-\noindent\textbf{（1）温度分布}
+\noindent\textbf{（1）规定时空点结果}
 
-规定时刻和径向位置的温度见表~\ref{tab:q1-temperature}，结果保留四位小数。
+规定时刻和径向位置的温度、干基含水率分别见表~\ref{tab:q1-temperature} 和表~\ref{tab:q1-moisture}，结果保留四位小数。
 
 \input{tables/q1_temperature}
-
-由表~\ref{tab:q1-temperature} 可知，\textbf{药材表面先升温，中心响应滞后}，这是由于表面直接与热风换热，而中心升温依赖内部导热。$1800\,\mathrm{s}$ 时，中心与表面温度相差 $@@TEMP_GAP@@\,{}^\circ\mathrm{C}$，且均低于同期烘房温度 $@@ENV_END@@\,{}^\circ\mathrm{C}$，说明预热阶段结束时仍存在内外温差。
-
-\Needspace{4\baselineskip}
-\noindent\textbf{（2）含水率分布}
-
-相同时空位置的干基含水率见表~\ref{tab:q1-moisture}。
-
 \input{tables/q1_moisture}
 
-由表~\ref{tab:q1-moisture} 可知，\textbf{失水主要集中在外层}。$1800\,\mathrm{s}$ 时，表面含水率已降至 $@@SURFACE_C@@\,\mathrm{kg/kg}$，半径 $1\,\mathrm{cm}$ 处仍接近初值。中心结果在四位小数下为 $2.5500$，表明其变化很小。
+药材表面先升温、失水，中心响应滞后。$1800\,\mathrm{s}$ 时中心与表面温差为 $@@TEMP_GAP@@\,{}^\circ\mathrm{C}$，二者仍低于烘房温度 $@@ENV_END@@\,{}^\circ\mathrm{C}$；表面含水率已降至 $@@SURFACE_C@@\,\mathrm{kg/kg}$，而中心四位小数下仍为 $2.5500$，表明内外热湿梯度仍然显著。
 
-\Needspace{0.62\textheight}
-\noindent\textbf{（3）传递特征}
+\Needspace{8\baselineskip}
+\noindent\textbf{（2）传递特征}
 
-将温度和含水率的径向分布及时间变化绘于图~\ref{fig:q1-fields}。
+图~\ref{fig:q1-overview} 以每秒、每隔 $0.1\,\mathrm{cm}$ 的未舍入结果给出完整时空场，并用规定时刻的径向切片核对其趋势；绘图未另作拟合平滑。
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=\textwidth]{figures/q1_fields.pdf}
-\caption{预热阶段温度与含水率的径向分布及时间变化}
-\label{fig:q1-fields}
+\includegraphics[width=\textwidth]{figures/q1_overview.pdf}
+\caption{预热阶段温度与干基含水率的时空演化及径向切片}
+\label{fig:q1-overview}
 \end{figure}
 
-图~\ref{fig:q1-fields} 显示，温度变化逐步传至中心，而明显失水仍局限于外层，与热扩散率高于水分扩散系数的量级关系一致。此外，$C$ 减小时 $D(C)$ 随之减小，外层干燥后水分向表面的扩散补给进一步受限。$1800\,\mathrm{s}$ 时，体积加权平均含水率由 $2.5500$ 降至 $@@MEAN_C@@\,\mathrm{kg/kg}$，下降 $@@DROP@@\%$；结合径向差异可知，\textbf{此时药材尚未均匀干燥}。
-
-本问得到的温度与含水率分布回答了预热阶段的时空变化问题。后续在此方程与数值处理框架中引入状态相关物性，可进一步描述全过程的传热传质。
+图~\ref{fig:q1-overview} 显示温度扰动已传至中心，而含水率低值区仍集中于外层，说明热量向内传递快于水分向外扩散；且 $C$ 降低使 $D(C)$ 减小，外层干燥后补水进一步受限。$1800\,\mathrm{s}$ 时体积加权平均含水率为 $@@MEAN_C@@\,\mathrm{kg/kg}$，较初值下降 $@@DROP@@\%$，药材尚未均匀干燥。

@@ -17,9 +17,14 @@ from typing import Any
 import matplotlib.pyplot as plt
 import numpy as np
 
+from q4_post_audit import resolve_evidence_path
 
-TABLE6_POSITIONS_CM = np.arange(9, dtype=float) * 0.5
+# Table 6 contains the five physical positions requested in the statement.
+# The final fields are stored on a 0.1 cm output grid, so the targets are
+# selected with a tolerance rather than exact floating-point equality.
+TABLE6_POSITIONS_CM = np.arange(5, dtype=float) * 0.5
 COLOURS = ("#174A70", "#2584A6", "#77AABD", "#D88A41", "#963E3E", "#6A4C93", "#3B7A57", "#B06A8A", "#6B6E70")
+plt.rcParams.update({"font.sans-serif": ["Microsoft YaHei"], "axes.unicode_minus": False})
 
 
 def safe(value: Any) -> Any:
@@ -66,7 +71,14 @@ def row_value(value: Any) -> Any:
 
 
 def position_indices(positions: np.ndarray, selected: np.ndarray) -> list[int]:
-    return [int(np.where(np.isclose(positions, value, rtol=0.0, atol=1e-10))[0][0]) for value in selected]
+    positions = np.asarray(positions, dtype=float).reshape(-1)
+    indices: list[int] = []
+    for value in np.asarray(selected, dtype=float).reshape(-1):
+        matches = np.flatnonzero(np.isclose(positions, float(value), rtol=0.0, atol=1.0e-10))
+        if len(matches) != 1:
+            raise ValueError(f"Physical position {float(value):.12g} cm is not uniquely represented.")
+        indices.append(int(matches[0]))
+    return indices
 
 
 def write_final_fields(out: Path, fields: dict[str, np.ndarray]) -> Path:
@@ -148,7 +160,11 @@ def accepted_max_history(case_dir: Path) -> tuple[np.ndarray, np.ndarray]:
     times: list[np.ndarray] = []
     values: list[np.ndarray] = []
     for item in manifest.get("segment_records", []):
-        path = Path(item["evidence_file"])
+        path, resolution = resolve_evidence_path(manifest_path, case_dir, item.get("evidence_file"))
+        if path is None:
+            raise FileNotFoundError(
+                f"Accepted-step evidence cannot be resolved: {resolution}"
+            )
         with np.load(path, allow_pickle=False) as data:
             times.append(np.asarray(data["accepted_time_s"], dtype=float))
             values.append(np.asarray(data["accepted_g_N"], dtype=float) + 0.15)
@@ -197,19 +213,22 @@ def plot_radius_profiles(out: Path, fields: dict[str, np.ndarray], endpoint_s: f
     positions = TABLE6_POSITIONS_CM
     fig, (ax_r, ax_c, ax_t) = plt.subplots(1, 3, figsize=(11.0, 3.3), constrained_layout=True)
     ax_r.plot(times_h, radius_cm, color=COLOURS[0], linewidth=1.8)
-    ax_r.set(xlabel="Drying time (h)", ylabel="Radius (cm)", title="Measured radius and extension")
+    ax_r.set(xlabel="烘干时间/h", ylabel="半径/cm", title="半径随时间的变化")
     ax_r.grid(alpha=0.2)
     for i, time_h in enumerate(times_h):
         mask = np.asarray(table["domain_mask"])[i]
         ax_c.plot(positions[mask], np.asarray(table["moisture_kg_per_kg"])[i][mask], marker="o", markersize=2.2, linewidth=1.0, color=COLOURS[i % len(COLOURS)], label=f"{time_h:g} h")
-    ax_c.axhline(0.15, color=COLOURS[4], linestyle="--", linewidth=0.8, label="Target 0.15")
-    ax_c.set(xlabel="Physical position (cm)", ylabel="Moisture C (kg/kg)", title="Radial moisture profiles")
+    ax_c.axhline(0.15, color=COLOURS[4], linestyle="--", linewidth=0.8, label="阈值 0.15")
+    ax_c.set(xlabel="距中心的物理距离/cm", ylabel="干基含水率/(kg/kg)", title="径向含水率分布")
     ax_c.grid(alpha=0.2)
     ax_c.legend(frameon=False, fontsize=6.5, ncol=2)
     for i, time_h in enumerate(times_h):
         mask = np.asarray(table["domain_mask"])[i]
         ax_t.plot(positions[mask], np.asarray(table["temperature_C"])[i][mask], marker="o", markersize=2.2, linewidth=1.0, color=COLOURS[i % len(COLOURS)], label=f"{time_h:g} h")
-    ax_t.set(xlabel="Physical position (cm)", ylabel="Temperature (°C)", title="Radial temperature profiles")
+    ax_t.set(xlabel="距中心的物理距离/cm", ylabel="温度/°C", title="径向温度分布")
+    # The temperature variation is small, but an offset axis obscures the
+    # physical values in a paper figure (e.g. ``1e-5 + 4.99999e1``).
+    ax_t.ticklabel_format(axis="y", style="plain", useOffset=False)
     ax_t.grid(alpha=0.2)
     path = out / "q4_radius_and_distribution.png"
     fig.savefig(path, dpi=220, bbox_inches="tight")
@@ -224,13 +243,13 @@ def plot_max_history(out: Path, case_dir: Path, endpoint_s: float) -> tuple[Path
     ax.plot(time_h, maximum, color=COLOURS[0], linewidth=1.3)
     ax.axhline(0.15, color=COLOURS[4], linestyle="--", linewidth=0.8)
     ax.axvline(endpoint_s / 3600.0, color=COLOURS[4], linestyle=":", linewidth=0.8)
-    ax.set(xlabel="Drying time (h)", ylabel="Maximum moisture (kg/kg)", title="Full-time threshold history")
+    ax.set(xlabel="烘干时间/h", ylabel="全域最大含水率/(kg/kg)", title="全过程最大含水率")
     ax.grid(alpha=0.2)
     zoom = times >= endpoint_s - 900.0
     axz.plot((times[zoom] - endpoint_s), maximum[zoom] - 0.15, color=COLOURS[0], linewidth=1.3)
     axz.axhline(0.0, color=COLOURS[4], linestyle="--", linewidth=0.8)
     axz.axvline(0.0, color=COLOURS[4], linestyle=":", linewidth=0.8)
-    axz.set(xlabel="Time relative to endpoint (s)", ylabel="g_N (kg/kg)", title="Endpoint crossing (15 min)")
+    axz.set(xlabel="相对达标时刻/s", ylabel="$g_N$/(kg/kg)", title="达标前 15 min 局部放大")
     axz.grid(alpha=0.2)
     combined = out / "q4_max_moisture_full_and_endpoint.png"
     fig.savefig(combined, dpi=220, bbox_inches="tight")
@@ -238,7 +257,7 @@ def plot_max_history(out: Path, case_dir: Path, endpoint_s: float) -> tuple[Path
     fig, ax = plt.subplots(figsize=(5.3, 3.2), constrained_layout=True)
     ax.plot(time_h, maximum, color=COLOURS[0], linewidth=1.3)
     ax.axhline(0.15, color=COLOURS[4], linestyle="--", linewidth=0.8)
-    ax.set(xlabel="Drying time (h)", ylabel="Maximum moisture (kg/kg)", title="Full-time maximum moisture")
+    ax.set(xlabel="烘干时间/h", ylabel="全域最大含水率/(kg/kg)", title="全过程最大含水率")
     ax.grid(alpha=0.2)
     full = out / "q4_max_moisture_full.png"
     fig.savefig(full, dpi=220, bbox_inches="tight")
@@ -247,7 +266,7 @@ def plot_max_history(out: Path, case_dir: Path, endpoint_s: float) -> tuple[Path
     ax.plot(times[zoom] - endpoint_s, maximum[zoom] - 0.15, color=COLOURS[0], linewidth=1.3)
     ax.axhline(0.0, color=COLOURS[4], linestyle="--", linewidth=0.8)
     ax.axvline(0.0, color=COLOURS[4], linestyle=":", linewidth=0.8)
-    ax.set(xlabel="Time relative to endpoint (s)", ylabel="g_N (kg/kg)", title="Endpoint crossing detail")
+    ax.set(xlabel="相对达标时刻/s", ylabel="$g_N$/(kg/kg)", title="达标时刻局部放大")
     ax.grid(alpha=0.2)
     zoom_path = out / "q4_max_moisture_endpoint_zoom.png"
     fig.savefig(zoom_path, dpi=220, bbox_inches="tight")

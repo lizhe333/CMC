@@ -2,7 +2,7 @@
 
 This script is deliberately a presentation-only step.  It reads the already
 validated paper CSVs (and validation JSON), checks their contract, writes the
-two LaTeX tables, and copies the accepted Q2 PDFs into ``paper``.
+two LaTeX tables, and copies the accepted unified Q2 figure into ``paper``.
 It never calls the Q2 solver or recomputes a numerical trajectory.
 """
 
@@ -115,19 +115,15 @@ def generate(project_root: Path) -> dict[str, str]:
         encoding="utf-8",
     )
 
-    source_figure = results / "q2_fields.pdf"
-    target_figure = figure_dir / "q2_fields.pdf"
+    source_figure = results / "q2_combined_fields.pdf"
+    target_figure = figure_dir / "q2_combined_fields.pdf"
+    if not source_figure.is_file():
+        raise FileNotFoundError(f"missing accepted combined figure: {source_figure}")
     shutil.copy2(source_figure, target_figure)
-    source_spacetime = results / "q2_spacetime.pdf"
-    target_spacetime = figure_dir / "q2_spacetime.pdf"
-    if not source_spacetime.is_file():
-        raise FileNotFoundError(f"missing accepted spacetime figure: {source_spacetime}")
-    shutil.copy2(source_spacetime, target_spacetime)
     return {
         "temperature_table": str(temperature_path),
         "moisture_table": str(moisture_path),
-        "figure": str(target_figure),
-        "spacetime_figure": str(target_spacetime),
+        "combined_figure": str(target_figure),
         "source_validation": str(validation_path),
     }
 

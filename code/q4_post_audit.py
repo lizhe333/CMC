@@ -62,6 +62,77 @@ def latest_run(base: Path) -> Path:
     return max(candidates, key=lambda p: p.stat().st_mtime)
 
 
+def resolve_evidence_path(
+    manifest_path: Path,
+    case_dir: Path,
+    evidence_name: Any,
+) -> tuple[Path | None, dict[str, Any]]:
+    """Resolve a manifest evidence name without changing its provenance.
+
+    ``q4_solver`` writes absolute names when the formal run is executed.  A
+    copied result tree can nevertheless retain those names while its large
+    block files live in a sibling tree.  The manifest name remains the
+    authoritative reference; this helper only tries the usual relative
+    interpretations and an explicit ``CUMCM_2026_A``/``CMC`` tree alias when
+    the recorded absolute path is absent.  It returns the path actually
+    opened together with the resolution route so the read-back report cannot
+    hide a relocated evidence file.
+    """
+    if not isinstance(evidence_name, str) or not evidence_name.strip():
+        return None, {"status": "FAIL", "reason": "empty_evidence_name"}
+    raw_text = evidence_name.strip()
+    raw_path = Path(raw_text)
+    candidates: list[tuple[str, Path]] = []
+
+    def add(label: str, candidate: Path) -> None:
+        try:
+            resolved = candidate.expanduser().resolve()
+        except OSError:
+            resolved = candidate.expanduser()
+        if not any(existing == resolved for _, existing in candidates):
+            candidates.append((label, resolved))
+
+    if raw_path.is_absolute():
+        add("manifest_absolute", raw_path)
+        # The two project trees are separate copies on this host.  This
+        # fallback is deliberately limited to the known directory name and
+        # is considered valid only if the exact basename is present.
+        raw_string = str(raw_path)
+        for source, target in (("CUMCM_2026_A", "CMC"), ("CMC", "CUMCM_2026_A")):
+            if source in raw_string:
+                add(f"explicit_tree_alias:{source}->{target}", Path(raw_string.replace(source, target)))
+    else:
+        # Relative manifests are interpreted from the manifest directory
+        # first, then the stage and run roots for compatibility with older
+        # development evidence.
+        add("manifest_relative_to_case", manifest_path.parent / raw_path)
+        add("manifest_relative_to_stage", case_dir.parent / raw_path)
+        add("manifest_relative_to_run", case_dir.parent.parent / raw_path)
+
+    existing = [(label, path) for label, path in candidates if path.is_file()]
+    if not existing:
+        return None, {
+            "status": "FAIL",
+            "reason": "missing_evidence_file",
+            "manifest_name": raw_text,
+            "candidates": [{"route": label, "path": str(path)} for label, path in candidates],
+        }
+    # The exact recorded path wins.  If it is absent, the first explicit
+    # route is deterministic; report every existing candidate to expose any
+    # ambiguity rather than silently selecting by modification time.
+    selected_label, selected_path = existing[0]
+    return selected_path, {
+        "status": "PASS",
+        "route": selected_label,
+        "manifest_name": raw_text,
+        "opened_path": str(selected_path),
+        "other_existing_candidates": [
+            {"route": label, "path": str(path)}
+            for label, path in existing[1:]
+        ],
+    }
+
+
 def audit_blocks(case_dir: Path) -> dict[str, Any]:
     manifest_path = case_dir / "q4_blocks_manifest.json"
     if not manifest_path.exists():
@@ -83,9 +154,14 @@ def audit_blocks(case_dir: Path) -> dict[str, Any]:
         evidence_name = record.get("evidence_file")
         if not evidence_name:
             return {"status": "FAIL", "reason": "block_record_has_no_evidence_file", "record": record}
-        evidence_path = Path(evidence_name)
-        if not evidence_path.exists():
-            return {"status": "FAIL", "reason": "missing_block_evidence", "path": str(evidence_path)}
+        evidence_path, resolution = resolve_evidence_path(manifest_path, case_dir, evidence_name)
+        if evidence_path is None:
+            return {
+                "status": "FAIL",
+                "reason": "missing_block_evidence",
+                "path": str(evidence_name),
+                "resolution": resolution,
+            }
         try:
             with np.load(evidence_path, allow_pickle=False) as block:
                 keys = set(block.files)
@@ -120,7 +196,9 @@ def audit_blocks(case_dir: Path) -> dict[str, Any]:
         row = {
             "block_index": int(record.get("block_index", -1)),
             "segment": record.get("segment"),
+            "manifest_path": str(evidence_name),
             "path": str(evidence_path),
+            "path_resolution": resolution,
             "start_s": float(accepted_t[0]),
             "end_s": float(accepted_t[-1]),
             "accepted_states": int(len(accepted_t)),
@@ -149,6 +227,75 @@ def audit_blocks(case_dir: Path) -> dict[str, Any]:
         "max_adjacent_moisture_abs": max_moisture_jump,
         "max_adjacent_radius_abs_m": max_radius_jump,
         "switch_14400_rows": switch_rows,
+    }
+
+
+def audit_space_convergence(space: dict[str, Any]) -> dict[str, Any]:
+    """Audit only the selected final grid pair as the hard convergence gate.
+
+    The formal runner intentionally records early pairs that motivate
+    continuing to a finer grid.  Their ``pass=false`` values are trend
+    evidence, not a reason to invalidate the selected final pair.
+    """
+    comparisons = list(space.get("comparisons") or [])
+    selected_final = space.get("selected_final_n")
+    final_pair = None
+    if selected_final is not None:
+        matching = [
+            item for item in comparisons
+            if item.get("fine_n") is not None and int(item["fine_n"]) == int(selected_final)
+        ]
+        if matching:
+            final_pair = matching[-1]
+    gate_pass = bool(
+        space.get("status") == "PASS"
+        and selected_final is not None
+        and final_pair is not None
+        and bool(final_pair.get("pass", False))
+    )
+    return {
+        "status": "PASS" if gate_pass else "FAIL",
+        "formal_status": space.get("status"),
+        "selected_final_n": selected_final,
+        "comparison_count": len(comparisons),
+        "nonfinal_comparisons": [
+            {
+                "coarse_n": item.get("coarse_n"),
+                "fine_n": item.get("fine_n"),
+                "pass": bool(item.get("pass", False)),
+            }
+            for item in comparisons
+            if final_pair is None or item is not final_pair
+        ],
+        "final_comparison": final_pair,
+        "reason": None if gate_pass else "selected_final_pair_not_PASS",
+    }
+
+
+def targeted_regression_tests(run_root: Path) -> dict[str, Any]:
+    """Exercise the two known post-audit regressions without integrating."""
+    case_manifest = run_root / "cases" / "case_A" / "q4_blocks_manifest.json"
+    if not case_manifest.exists():
+        raise AssertionError(f"missing regression fixture: {case_manifest}")
+    manifest = read_json(case_manifest)
+    first_record = (manifest.get("segment_records") or [])[0]
+    resolved, resolution = resolve_evidence_path(case_manifest, case_manifest.parent, first_record.get("evidence_file"))
+    if resolved is None or not resolved.is_file():
+        raise AssertionError("absolute/relative evidence path regression is not repaired")
+    space_path = run_root / "space" / "space_convergence.json"
+    space = read_json(space_path)
+    space_audit = audit_space_convergence(space)
+    if space_audit.get("status") != "PASS":
+        raise AssertionError("early exploratory convergence pairs incorrectly fail the final-pair gate")
+    return {
+        "status": "PASS",
+        "evidence_path_resolution": resolution,
+        "space_final_pair": {
+            "selected_final_n": space_audit.get("selected_final_n"),
+            "comparison_count": space_audit.get("comparison_count"),
+            "formal_status": space_audit.get("formal_status"),
+            "final_pair_pass": bool((space_audit.get("final_comparison") or {}).get("pass", False)),
+        },
     }
 
 
@@ -210,9 +357,14 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-root", type=Path, default=None, help="formal run directory; omitted means the latest completed run")
     parser.add_argument("--base", type=Path, default=None, help="results/q4/formal directory used for latest-run discovery")
+    parser.add_argument("--self-test", action="store_true", help="run targeted read-back regressions without rewriting result files")
     args = parser.parse_args(argv)
     base = (args.base or Path(__file__).resolve().parents[1] / "results" / "q4" / "formal").resolve()
     run_root = (args.run_root.resolve() if args.run_root else latest_run(base))
+    if args.self_test:
+        result = targeted_regression_tests(run_root)
+        print(json.dumps(safe(result), ensure_ascii=False))
+        return 0
     failures: list[str] = []
     validation_path = run_root / "q4_formal_validation.json"
     config_path = run_root / "run_config.json"
@@ -241,7 +393,8 @@ def main(argv: list[str] | None = None) -> int:
                 failures.append(f"case_{case}_readback_failed")
     space = validation.get("space") or {}
     time_check = validation.get("time") or {}
-    if space.get("status") != "PASS" or not all(item.get("pass", False) for item in space.get("comparisons", [])):
+    space_audit = audit_space_convergence(space)
+    if space_audit.get("status") != "PASS":
         failures.append("space_convergence_not_PASS")
     if time_check.get("status") != "PASS" or not (time_check.get("comparison") or {}).get("pass", False):
         failures.append("time_convergence_not_PASS")
@@ -258,6 +411,7 @@ def main(argv: list[str] | None = None) -> int:
         "failures": failures,
         "case_audits": case_audits,
         "space_status": space.get("status"),
+        "space_convergence": space_audit,
         "time_status": time_check.get("status"),
         "factorial_status": (validation.get("factorial") or {}).get("status"),
         "q3_regression_status": (validation.get("q3_regression") or {}).get("status"),

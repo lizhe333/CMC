@@ -121,7 +121,7 @@ def generate(paper_only=False):
 - 附件 3 模板未提供，按题面附录 1 重建工作表名称、坐标和数据布局。
 - results/q1/q1_fields.npz：未舍入状态数组、时空坐标与守恒记录。
 - results/q1/q1_temperature_full.csv 和 q1_moisture_full.csv：完整未舍入结果；对应的 *_paper.csv 是论文指定表格。
-- results/q1/q1_fields.pdf 与 q1_fields.png：由结果数组直接生成的四面板图，径向曲线使用规定的 21 个输出点。
+- results/q1/q1_overview.pdf 与 q1_overview.png：由结果数组直接生成的紧凑四面板图；二维时空场使用全部输出点，径向切片使用规定的 21 个位置。
 - results/q1/q1_validation.json：输入路径、参数、环境、逐级收敛与运行状态。
 - results/q1/mass_balance.csv：平均含水率、累计外流和守恒残差；最大残差 {final['max_mass_balance_residual']:.8g}。
 - paper/tables/q1_*.tex 和 paper/sections/q1_*_text.tex：由真实结果生成的表格与讨论。

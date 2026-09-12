@@ -42,7 +42,7 @@ def main():
     plt.rcParams.update({"font.family": family, "font.size": 10,
                          "pdf.fonttype": 42, "axes.unicode_minus": False,
                          "axes.linewidth": .6})
-    fig, axes = plt.subplots(2, 1, figsize=(7.2, 4.5), sharex=True)
+    fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.65), sharex=True)
     for j, ax in enumerate(axes):
         ax.axvspan(0, .5, color="#e8edf2", alpha=.8, linewidth=0)
         ax.axvline(.5, color="#777777", linewidth=.7, linestyle="--")
@@ -62,14 +62,14 @@ def main():
     axes[0].text(.25, 51.6, "第一问", ha="center", va="top", fontsize=9, color="#555555")
     axes[0].text(.98, .08, "(a) 烘房温度", transform=axes[0].transAxes, fontsize=10, ha="right")
     axes[1].set_ylabel("水分浓度（kg/kg）")
-    axes[1].set_xlabel("时间（h）")
     axes[1].set_ylim(.017, .054)
     axes[1].set_yticks([.02, .03, .04, .05])
     axes[1].text(.98, .08, "(b) 烘房水分浓度", transform=axes[1].transAxes, fontsize=10, ha="right")
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles[::-1], labels[::-1], loc="upper center", ncol=2,
-               frameon=False, bbox_to_anchor=(.53, 1.0), fontsize=9)
-    fig.subplots_adjust(left=.13, right=.98, top=.91, bottom=.12, hspace=.17)
+               frameon=False, bbox_to_anchor=(.5, 1.0), fontsize=9)
+    fig.supxlabel("时间（h）", fontsize=10, y=.035)
+    fig.subplots_adjust(left=.09, right=.99, top=.83, bottom=.20, wspace=.27)
     fig.savefig(root / "paper/figures/ambient_boundary.pdf", bbox_inches="tight", pad_inches=.04)
     fig.savefig(root / "figures/ambient_boundary.png", dpi=300, bbox_inches="tight", pad_inches=.04)
     plt.close(fig)
@@ -77,6 +77,7 @@ def main():
               "sampling_interval_s": 60, "range_s": [0, 14400],
               "interpolation": "piecewise linear (numpy.interp)",
               "plot_interval_s": 1, "all_original_points_shown": True,
+              "layout": "side-by-side (1x2)",
               "smoothing": False, "extrapolation": False,
               "q1_boundary_max_absolute_difference": float(np.max(np.abs(curves[:len(previous)]-previous[:, 1:]))),
               "first_sample": data[0].tolist(), "last_sample": data[-1].tolist()}
